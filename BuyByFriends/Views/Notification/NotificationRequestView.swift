@@ -19,12 +19,10 @@ struct NotificationRequestView: View {
                         Button(action: {
                             print("tapped")
                         }) {
-                            if let imageURLString = vm.binding.userInfos[num].profileImage {
-                                AsyncImage(url: URL(string: imageURLString)) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    ProgressView()
-                                }
+                            AsyncImage(url: URL(string: vm.binding.userInfos[num].profileImage)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                ProgressView()
                             }
                         }
                         .scaledToFill()

@@ -40,12 +40,10 @@ struct SearchFriendsView: View {
                         Button(action: {
                             print("tapped")
                         }) {
-                            if let imageURLString = vm.binding.userInfos[num].profileImage {
-                                AsyncImage(url: URL(string: imageURLString)) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    ProgressView()
-                                }
+                            AsyncImage(url: URL(string: vm.binding.userInfos[num].profileImage)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                ProgressView()
                             }
                         }
                         .scaledToFill()
@@ -127,20 +125,17 @@ struct ShareViewInSearchFrindView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            if let imageURLString = appState.session.userInfo.profileImage {
-                AsyncImage(url: URL(string: imageURLString)) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-                .scaledToFill()
-                .clipShape(Circle())
-                .frame(
-                    width: UIScreen.main.bounds.width*0.15,
-                    height: UIScreen.main.bounds.width*0.15
-                )
+            AsyncImage(url: URL(string: appState.session.userInfo.profileImage)) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
             }
-            
+            .scaledToFill()
+            .clipShape(Circle())
+            .frame(
+                width: UIScreen.main.bounds.width*0.15,
+                height: UIScreen.main.bounds.width*0.15
+            )
             VStack(alignment: .leading, spacing: 5) {
                 Text("友達を招待する")
                     .font(.system(size: 18, weight: .bold))
