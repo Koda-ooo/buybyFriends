@@ -12,19 +12,20 @@ import StripePaymentSheet
 
 final class PurchaseViewModel: ViewModelObject {
     final class Input: InputObject {
-        let startToMoveInsertAdressView = PassthroughSubject<Void, Never>()
         let startToCreatePaymentIntent = PassthroughSubject<Post, Never>()
         let startToUpdatePost = PassthroughSubject<(postID:String, buyerID: String), Never>()
+        let startToCreateDelivery = PassthroughSubject<Post, Never>()
         let showPaymentSheet = PassthroughSubject<Void, Never>()
     }
     
     final class Binding: BindingObject {
-        @Published var adress = "住所を追加する"
+        @Published var adress: Adress = Adress(dic: [:])
         @Published var paymentMethodParams: STPPaymentMethodParams?
         @Published var paymentSheet = PaymentSheet(paymentIntentClientSecret: "", configuration: PaymentSheet.Configuration())
         
         // 遷移系
         @Published var isMovedInsertAdressView = false
+        @Published var isMovedInsertPersonalInfo = false
         @Published var isMovedFinishPurchaseView = false
         @Published var isPresentedPaymentSheet = false
     }
@@ -38,20 +39,19 @@ final class PurchaseViewModel: ViewModelObject {
     private var cancellables = Set<AnyCancellable>()
     @Published private var isBusy: Bool = false
     private let purchaseProvider: PurchaseProviderProtocol
+    private let deliveryProvider: DeliveryProviderObject
     
     
-    init(purchaseProvider: PurchaseProviderProtocol = PurchaseProvider()) {
+    init(
+        purchaseProvider: PurchaseProviderProtocol = PurchaseProvider(),
+        deliveryProvider: DeliveryProviderObject = DeliveryProvider()
+    ) {
         self.purchaseProvider = purchaseProvider
+        self.deliveryProvider = deliveryProvider
         
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
-        /// 住所入力画面へ遷移
-        let isMovedInsertAdressView = input.startToMoveInsertAdressView
-            .flatMap {
-                Just(true)
-            }
         
         /// PaymentIntent作成
         input.startToCreatePaymentIntent
@@ -93,10 +93,22 @@ final class PurchaseViewModel: ViewModelObject {
             }
             .store(in: &cancellables)
         
-        /// 組み立てたストリームを反映
-        cancellables.formUnion([
-            isMovedInsertAdressView.assign(to: \.isMovedInsertAdressView, on: binding)
-        ])
+        ///配送タスクの作成
+        input.startToCreateDelivery
+            .flatMap { post in
+                deliveryProvider.createDelivery(post: post, adress: binding.adress)
+            }
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("finished")
+                case .failure(let err):
+                    print(err.localizedDescription)
+                }
+            } receiveValue: { _ in
+                print("FINISH")
+            }
+            .store(in: &cancellables)
         
         self.input = input
         self.binding = binding

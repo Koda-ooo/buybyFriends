@@ -14,6 +14,7 @@ import StripePaymentSheet
 
 struct PurchaseView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = PurchaseViewModel()
     let post: Post
@@ -44,12 +45,16 @@ struct PurchaseView: View {
             }
             
             Button(action: {
-                
+                vm.binding.isMovedInsertAdressView.toggle()
             }) {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("お届け先情報").bold()
-                        Text(vm.binding.adress)
+                        if self.vm.binding.adress.postNumber != "" {
+                            Text(self.vm.binding.adress.postNumber)
+                        } else {
+                            Text("住所を追加する")
+                        }
                     }
                     Spacer()
                     Image(systemName:  "chevron.right")
@@ -58,7 +63,6 @@ struct PurchaseView: View {
             }
             .frame(maxWidth: .infinity, minHeight: 70)
 
-            
             Button(action: {
                 vm.input.startToCreatePaymentIntent.send(post)
             }) {
@@ -91,8 +95,21 @@ struct PurchaseView: View {
                 
             }
         }
-        .navigationDestination(isPresented: vm.$binding.isMovedFinishPurchaseView) {
-            FinishPurchaseView(post: post)
+        .navigationDestination(for: Destination.Purchase.self) { selected in
+            switch selected {
+            case .editAdress:
+                EditShippingAdressView(vm: self.vm)
+            case .editPersonalInfo:
+                EditPersonalInfoView(vm: self.vm)
+            case .finishPurchase:
+                FinishPurchaseView(post: post)
+            }
+        }
+        .onChange(of: vm.binding.isMovedFinishPurchaseView) { _ in
+            path.path.append(Destination.Purchase.finishPurchase)
+        }
+        .onChange(of: vm.binding.isMovedInsertAdressView) { _ in
+            path.path.append(Destination.Purchase.editAdress)
         }
         .paymentSheet(
             isPresented: vm.$binding.isPresentedPaymentSheet,
@@ -101,6 +118,7 @@ struct PurchaseView: View {
             switch result {
             case .completed:
                 vm.input.startToUpdatePost.send((postID: post.id, buyerID: appState.session.userInfo.id))
+                vm.input.startToCreateDelivery.send(post)
             case .canceled:
                 print("canceled")
             case .failed(error: let error):

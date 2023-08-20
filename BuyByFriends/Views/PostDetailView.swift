@@ -9,6 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct PostDetailView: View {
+    @EnvironmentObject var path: Path
     @EnvironmentObject var tabBar: HideTabBar
     @StateObject var vm = PostDetailViewModel()
     @Binding var isShownPostDetailView: Bool
@@ -142,7 +143,7 @@ struct PostDetailView: View {
                     Spacer()
                     Button(action: {
                         //購入手続きへの導線
-                        vm.input.startToMovePurchaseView.send()
+                        vm.binding.isMovedPurchaseView.toggle()
                     }) {
                         Text("購入する")
                             .font(.system(size: 15, weight: .medium))
@@ -157,8 +158,14 @@ struct PostDetailView: View {
         .onAppear {
             vm.input.startToFetchUserInfo.send(vm.binding.post.userUID)
         }
-        .navigationDestination(isPresented: vm.$binding.isMovedPurchaseView) {
-            PurchaseView(post: vm.binding.post)
+        .navigationDestination(for: Destination.PostDetail.self) { selected in
+            switch selected {
+            case .purchase:
+                PurchaseView(post: vm.binding.post)
+            }
+        }
+        .onChange(of: vm.binding.isMovedPurchaseView) { _ in
+            path.path.append(Destination.PostDetail.purchase)
         }
     }
     

@@ -44,4 +44,14 @@ enum Destination {
         case selfIntroduction
         case instagram
     }
+    
+    enum Purchase {
+        case editAdress
+        case editPersonalInfo
+        case finishPurchase
+    }
+    
+    enum PostDetail {
+        case purchase
+    }
 }

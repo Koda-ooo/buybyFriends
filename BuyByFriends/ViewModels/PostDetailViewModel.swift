@@ -19,8 +19,6 @@ final class PostDetailViewModel: ViewModelObject {
         // ブックマーク
         let startToAddBookmarkPosts = PassthroughSubject<Void, Never>()
         let startToRemoveBookmarkPosts = PassthroughSubject<Void, Never>()
-        
-        let startToMovePurchaseView = PassthroughSubject<Void, Never>()
     }
     
     final class Binding: BindingObject {
@@ -131,17 +129,6 @@ final class PostDetailViewModel: ViewModelObject {
             } receiveValue: { result in
                 binding.bookmarkFlag = !result
             }.store(in: &cancellables)
-
-        
-        let isMovedPurchaseView = input.startToMovePurchaseView
-            .flatMap {
-                Just(true)
-            }
-        
-        // 組み立てたストリームをbindingに反映
-        cancellables.formUnion([
-            isMovedPurchaseView.assign(to: \.isMovedPurchaseView, on: binding)
-        ])
         
         self.input = input
         self.binding = binding

@@ -146,6 +146,10 @@
 		568A1D6B29F797B0005DEA24 /* BirthDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568A1D6A29F797B0005DEA24 /* BirthDayViewModel.swift */; };
 		568A1D6D29F797BF005DEA24 /* ProfileImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568A1D6C29F797BF005DEA24 /* ProfileImageViewModel.swift */; };
 		568A1D6F29F797CC005DEA24 /* InventoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568A1D6E29F797CC005DEA24 /* InventoryListViewModel.swift */; };
+		569B58652A921E46005B0422 /* Delivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B58642A921E46005B0422 /* Delivery.swift */; };
+		569B58672A9220CB005B0422 /* DeliveryProviderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B58662A9220CB005B0422 /* DeliveryProviderObject.swift */; };
+		569B58692A922168005B0422 /* DeliveryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B58682A922168005B0422 /* DeliveryProvider.swift */; };
+		569B586B2A92376C005B0422 /* EditPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B586A2A92376C005B0422 /* EditPersonalInfoView.swift */; };
 		56C1C0FF29FE3500001A2BC4 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C1C0FE29FE3500001A2BC4 /* PostViewModel.swift */; };
 		56ED87D12A5175CF001045C1 /* MyPageHumbergerMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ED87D02A5175CF001045C1 /* MyPageHumbergerMenuView.swift */; };
 		56ED87D32A52C549001045C1 /* WithdrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ED87D22A52C549001045C1 /* WithdrawView.swift */; };
@@ -318,6 +322,10 @@
 		568A1D6A29F797B0005DEA24 /* BirthDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthDayViewModel.swift; sourceTree = "<group>"; };
 		568A1D6C29F797BF005DEA24 /* ProfileImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageViewModel.swift; sourceTree = "<group>"; };
 		568A1D6E29F797CC005DEA24 /* InventoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryListViewModel.swift; sourceTree = "<group>"; };
+		569B58642A921E46005B0422 /* Delivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delivery.swift; sourceTree = "<group>"; };
+		569B58662A9220CB005B0422 /* DeliveryProviderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryProviderObject.swift; sourceTree = "<group>"; };
+		569B58682A922168005B0422 /* DeliveryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryProvider.swift; sourceTree = "<group>"; };
+		569B586A2A92376C005B0422 /* EditPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalInfoView.swift; sourceTree = "<group>"; };
 		56C1C0FE29FE3500001A2BC4 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		56ED87D02A5175CF001045C1 /* MyPageHumbergerMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageHumbergerMenuView.swift; sourceTree = "<group>"; };
 		56ED87D22A52C549001045C1 /* WithdrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawView.swift; sourceTree = "<group>"; };
@@ -491,6 +499,7 @@
 				56460AF029FA654E00908E41 /* Destination.swift */,
 				568206AC2A134B7400664D2A /* PaymentConfig.swift */,
 				5683E9B22A203FF200C833FD /* ChatRoom.swift */,
+				569B58642A921E46005B0422 /* Delivery.swift */,
 				5683E9BD2A20A19200C833FD /* Message */,
 			);
 			path = Models;
@@ -529,6 +538,7 @@
 				568206912A10B75100664D2A /* PostDetailView.swift */,
 				568206952A1107A200664D2A /* PurchaseView.swift */,
 				56ED87F82A5EEF53001045C1 /* EditShippingAdressView.swift */,
+				569B586A2A92376C005B0422 /* EditPersonalInfoView.swift */,
 				568206B42A16675B00664D2A /* FinishPurchaseView.swift */,
 				5653EFDD2A1AF747000688EF /* SearchFriendsView.swift */,
 				5653EFE32A1B78A0000688EF /* Notification */,
@@ -575,6 +585,7 @@
 				5653EFEE2A1B89F7000688EF /* FriendProvider.swift */,
 				5683E9B62A20410800C833FD /* ChatRoomProvider.swift */,
 				5683E9CA2A218D1500C833FD /* MessageProvider.swift */,
+				569B58682A922168005B0422 /* DeliveryProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -592,6 +603,7 @@
 				5683E9B42A20408200C833FD /* ChatRoomProviderObject.swift */,
 				5683E9C82A218CCE00C833FD /* MessageProviderObject.swift */,
 				5653EFDB2A19FEBC000688EF /* DataProviderObject.swift */,
+				569B58662A9220CB005B0422 /* DeliveryProviderObject.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -970,6 +982,7 @@
 				565303242A19CA8D003C12CE /* InventoryListProvider.swift in Sources */,
 				5655FE112A0B3E16002B2E0A /* ListFriendsView.swift in Sources */,
 				5653032B2A19D058003C12CE /* LogInView.swift in Sources */,
+				569B58652A921E46005B0422 /* Delivery.swift in Sources */,
 				5632E52C29E10B6C0024C19C /* ContentView.swift in Sources */,
 				56EDA28D29FF72A200052E9E /* SelectCategoryView.swift in Sources */,
 				5653032F2A19D2FD003C12CE /* UIApplication+CloseKeyboard.swift in Sources */,
@@ -996,6 +1009,7 @@
 				5632E56929E10EC10024C19C /* InventoryListView.swift in Sources */,
 				56ED87E82A55B9AF001045C1 /* RequestWithdrawlViewModel.swift in Sources */,
 				56ED87D92A52C5B3001045C1 /* ShippingAdressView.swift in Sources */,
+				569B58672A9220CB005B0422 /* DeliveryProviderObject.swift in Sources */,
 				564B428229F0D59D003E6F6E /* ViewModelObject.swift in Sources */,
 				5653EFE02A1AFF5E000688EF /* SearchFriendsViewModel.swift in Sources */,
 				5683E9B72A20410800C833FD /* ChatRoomProvider.swift in Sources */,
@@ -1024,6 +1038,7 @@
 				5653EFDC2A19FEBC000688EF /* DataProviderObject.swift in Sources */,
 				56ED87F92A5EEF53001045C1 /* EditShippingAdressView.swift in Sources */,
 				5683E9E32A2AE65800C833FD /* UITabBar+changeTabBarState.swift in Sources */,
+				569B586B2A92376C005B0422 /* EditPersonalInfoView.swift in Sources */,
 				565303322A19E9D4003C12CE /* FlexibleView.swift in Sources */,
 				56F997F52A065E2A00A39C6B /* Firestore+Combine.swift in Sources */,
 				5632E56129E10E3F0024C19C /* UserIDVIew.swift in Sources */,
@@ -1052,6 +1067,7 @@
 				56EDA29329FF9F2300052E9E /* SelectConditionView.swift in Sources */,
 				5632E56B29E10EF90024C19C /* PermissionsView.swift in Sources */,
 				5655FE242A0B5CB1002B2E0A /* ListError.swift in Sources */,
+				569B58692A922168005B0422 /* DeliveryProvider.swift in Sources */,
 				5655FE0E2A0B38D7002B2E0A /* CustomBackButton.swift in Sources */,
 				56F2743529FE705B001E9425 /* SwiftUIPHPicker.swift in Sources */,
 				5683E9AF2A203B5800C833FD /* MessageListView.swift in Sources */,
