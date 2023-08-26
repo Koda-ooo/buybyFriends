@@ -40,13 +40,11 @@ struct PostDetailView: View {
                 Button(action: {
                     print("tapped")
                 }) {
-                    if let imageURLString = vm.output.userInfo.profileImage {
-                        KFImage.url(URL(string: imageURLString))
-                            .resizable()
-                            .placeholder {
-                                ProgressView().foregroundColor(.gray)
-                            }
-                    }
+                    KFImage.url(URL(string: vm.output.userInfo.profileImage))
+                        .resizable()
+                        .placeholder {
+                            ProgressView().foregroundColor(.gray)
+                        }
                 }
                 .scaledToFill()
                 .clipShape(Circle())
