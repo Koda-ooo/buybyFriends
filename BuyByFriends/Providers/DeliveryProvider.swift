@@ -19,7 +19,17 @@ struct DeliveryProvider: DeliveryProviderObject {
             
             let docData: [String:Any] = [
                 "id": docID,
-                "adress": adress,
+                "adress": [
+                    "postNumber": adress.postNumber,
+                    "prefecture": adress.prefecture,
+                    "city": adress.city,
+                    "number": adress.number,
+                    "buildingName": adress.buildingName,
+                    "kanjiName": adress.kanjiName,
+                    "kanaName": adress.kanaName,
+                    "phoneNumber": adress.phoneNumber,
+                    "email": adress.email
+                ],
                 "userIDs": userIDs,
                 "postID": post.id,
                 "isSent": false,

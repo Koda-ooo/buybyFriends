@@ -7,13 +7,14 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 import FirebaseFunctions
 import FirebaseFirestore
 import Stripe
 
 protocol PurchaseProviderProtocol {
     func createPaymentIntent(post: Post) -> AnyPublisher<String, Error>
-    func updatePost(postID: String, buyerID: String) -> AnyPublisher<Bool, Error>
+    func updatePost(postID: String) -> AnyPublisher<Bool, Error>
 }
 
 final class PurchaseProvider: PurchaseProviderProtocol {
@@ -36,8 +37,10 @@ final class PurchaseProvider: PurchaseProviderProtocol {
         }.eraseToAnyPublisher()
     }
     
-    func updatePost(postID: String, buyerID: String) -> AnyPublisher<Bool, Error> {
+    func updatePost(postID: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            
             Firestore.firestore().collection("Posts").whereField("id", isEqualTo: postID).getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -48,7 +51,7 @@ final class PurchaseProvider: PurchaseProviderProtocol {
                 
                 document.updateData([
                     "isSold": true,
-                    "buyer": buyerID
+                    "buyer": uid
                 ]) { err in
                     if let err = err {
                         print("Error updating document: \(err)")

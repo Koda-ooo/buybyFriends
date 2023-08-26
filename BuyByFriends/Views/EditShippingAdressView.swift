@@ -15,6 +15,8 @@ struct EditShippingAdressView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+                .frame(height: 30)
             List {
                 ForEach(ShippingAdress.allCases, id: \.self) { selected in
                     switch selected {
@@ -22,9 +24,11 @@ struct EditShippingAdressView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             Text("郵便番号").bold()
                             TextField("半角数字7桁で入力", text: vm.$binding.adress.postNumber)
+                                .keyboardType(.phonePad)
                         }
                         .frame(height: EditShippingAdressView.rowHeight)
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        .listRowSeparator(.hidden, edges: .top)
                         
                     case .prefecture:
                         VStack(alignment: .leading, spacing: 20) {
@@ -63,6 +67,9 @@ struct EditShippingAdressView: View {
             .frame(height: 5*EditShippingAdressView.rowHeight)
             .scrollDisabled(true)
             
+            Spacer()
+                .frame(height: 30)
+            
             Button(action: {
                 self.vm.binding.isMovedInsertPersonalInfo.toggle()
             }) {
@@ -73,9 +80,11 @@ struct EditShippingAdressView: View {
                     )
             }
             .foregroundColor(.white)
-            .background(.black)
+            .background(vm.output.isEnableNextButton ? Color.gray:Color.black)
             .bold()
             .cornerRadius(UIScreen.main.bounds.width*0.3/3)
+            .disabled(!vm.output.isEnableNextButton)
+            
             
             Spacer()
         }
@@ -89,7 +98,6 @@ struct EditShippingAdressView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    self.vm.binding.adress = Adress(dic: [:])
                     path.path.removeLast()
                 }) {
                     Image(systemName: "chevron.left")

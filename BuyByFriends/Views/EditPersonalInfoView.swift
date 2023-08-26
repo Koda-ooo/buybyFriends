@@ -15,8 +15,11 @@ struct EditPersonalInfoView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+                .frame(height: 30)
+            
             List {
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text("お届け先住所").bold()
                     VStack(alignment: .leading) {
                         Text(vm.binding.adress.postNumber)
@@ -27,6 +30,7 @@ struct EditPersonalInfoView: View {
                 }
                 .frame(height: EditShippingAdressView.rowHeight + 30)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowSeparator(.hidden, edges: .top)
                 .padding(
                     EdgeInsets(
                         top: 0,
@@ -72,7 +76,11 @@ struct EditPersonalInfoView: View {
             .frame(height: 5*EditShippingAdressView.rowHeight + 50)
             .scrollDisabled(true)
             
+            Spacer()
+                .frame(height: 30)
+            
             Button(action: {
+                self.vm.input.startToSaveAdress.send()
                 path.path.removeLast(2)
             }) {
                 Text("登録する")
@@ -82,9 +90,10 @@ struct EditPersonalInfoView: View {
                     )
             }
             .foregroundColor(.white)
-            .background(.black)
+            .background(vm.output.isEnableRegisterButton ? Color.gray:Color.black)
             .bold()
             .cornerRadius(UIScreen.main.bounds.width*0.3/3)
+            .disabled(!vm.output.isEnableRegisterButton)
             
             Spacer()
         }
@@ -95,7 +104,6 @@ struct EditPersonalInfoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    self.vm.binding.adress = Adress(dic: [:])
                     self.path.path.removeLast()
                 }) {
                     Image(systemName: "chevron.left")

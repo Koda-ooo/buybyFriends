@@ -13,16 +13,24 @@ import StripeCardScan
 import StripePaymentSheet
 
 struct PurchaseView: View {
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var path: Path
-    @EnvironmentObject var appState: AppState
-    @StateObject var vm = PurchaseViewModel()
-    let post: Post
+    @StateObject var vm: PurchaseViewModel
+    @Binding var isShownPostDetailView: Bool
+    
+    init(vm: PurchaseViewModel = PurchaseViewModel(),
+         post: Post,
+         isShownPostDetailView: Binding<Bool>
+    ) {
+        vm.input.startToGetAdress.send()
+        vm.binding.post = post
+        _vm = StateObject(wrappedValue: vm)
+        _isShownPostDetailView = isShownPostDetailView
+    }
     
     var body: some View {
         VStack {
             HStack(spacing: 20) {
-                if let imageURLString = post.images.first {
+                if let imageURLString = self.vm.binding.post.images.first {
                     KFImage.url(URL(string: imageURLString))
                         .resizable()
                         .placeholder {
@@ -35,9 +43,9 @@ struct PurchaseView: View {
                         .cornerRadius(5)
                 }
                 VStack(alignment: .leading) {
-                    Text(post.category)
-                    Text(post.explain)
-                    Text("¥\(post.price)")
+                    Text(self.vm.binding.post.category)
+                    Text(self.vm.binding.post.explain)
+                    Text("¥\(self.vm.binding.post.price)")
                         .padding(.top, 10)
                         .foregroundColor(.gray)
                 }
@@ -64,7 +72,7 @@ struct PurchaseView: View {
             .frame(maxWidth: .infinity, minHeight: 70)
 
             Button(action: {
-                vm.input.startToCreatePaymentIntent.send(post)
+                vm.input.startToCreatePaymentIntent.send()
             }) {
                 Text("決済へ進む")
                     .frame(
@@ -73,9 +81,10 @@ struct PurchaseView: View {
                     )
             }
             .foregroundColor(.white)
-            .background(.black)
+            .background(vm.output.isEnablePurchaseButton ? Color.gray:Color.black)
             .bold()
             .cornerRadius(5)
+            .disabled(!vm.output.isEnablePurchaseButton)
             
             Spacer()
         }
@@ -87,7 +96,7 @@ struct PurchaseView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    self.path.path.removeLast()
                 })  {
                     Image(systemName:  "chevron.left")
                         .accentColor(.black)
@@ -102,7 +111,7 @@ struct PurchaseView: View {
             case .editPersonalInfo:
                 EditPersonalInfoView(vm: self.vm)
             case .finishPurchase:
-                FinishPurchaseView(post: post)
+                FinishPurchaseView(isShownPostDetailView: self.$isShownPostDetailView, post: self.vm.binding.post)
             }
         }
         .onChange(of: vm.binding.isMovedFinishPurchaseView) { _ in
@@ -117,8 +126,8 @@ struct PurchaseView: View {
         ) { result in
             switch result {
             case .completed:
-                vm.input.startToUpdatePost.send((postID: post.id, buyerID: appState.session.userInfo.id))
-                vm.input.startToCreateDelivery.send(post)
+                vm.input.startToUpdatePost.send()
+                vm.input.startToCreateDelivery.send()
             case .canceled:
                 print("canceled")
             case .failed(error: let error):
@@ -130,7 +139,8 @@ struct PurchaseView: View {
 }
 
 struct PurchaseView_Previews: PreviewProvider {
+    @State static var isShownPostDetailView = true
     static var previews: some View {
-        PurchaseView(post: Post(dic: [:]))
+        PurchaseView(post: Post(dic: [:]), isShownPostDetailView: $isShownPostDetailView)
     }
 }

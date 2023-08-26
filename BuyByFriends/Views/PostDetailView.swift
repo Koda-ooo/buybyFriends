@@ -161,7 +161,7 @@ struct PostDetailView: View {
         .navigationDestination(for: Destination.PostDetail.self) { selected in
             switch selected {
             case .purchase:
-                PurchaseView(post: vm.binding.post)
+                PurchaseView(post: vm.binding.post, isShownPostDetailView: self.$isShownPostDetailView)
             }
         }
         .onChange(of: vm.binding.isMovedPurchaseView) { _ in

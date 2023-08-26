@@ -9,7 +9,9 @@ import SwiftUI
 
 struct FinishPurchaseView: View {
     @EnvironmentObject var path: Path
+    @EnvironmentObject var tabBar: HideTabBar
     @ObservedObject var vm = FinishPurchaseViewModel()
+    @Binding var isShownPostDetailView: Bool
     let post: Post
     
     var body: some View {
@@ -79,7 +81,9 @@ struct FinishPurchaseView: View {
             Spacer()
             
             Button(action: {
+                isShownPostDetailView.toggle()
                 path.path.removeLast(path.path.count)
+                tabBar.isHidden = false
             }) {
                 Text("ホームへ戻る")
                     .frame(maxWidth: .infinity, minHeight: 70)
@@ -96,7 +100,9 @@ struct FinishPurchaseView: View {
 }
 
 struct FinishPurchaseView_Previews: PreviewProvider {
+    @State static var isShownPostDetailView = true
+    
     static var previews: some View {
-        FinishPurchaseView(post: Post(dic: [:]))
+        FinishPurchaseView(isShownPostDetailView: $isShownPostDetailView, post: Post(dic: [:]))
     }
 }

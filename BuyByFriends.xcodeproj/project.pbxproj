@@ -94,6 +94,8 @@
 		5655FE222A0B5B3A002B2E0A /* QuerySnapshotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5655FE212A0B5B3A002B2E0A /* QuerySnapshotPublisher.swift */; };
 		5655FE242A0B5CB1002B2E0A /* ListError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5655FE232A0B5CB1002B2E0A /* ListError.swift */; };
 		5655FE282A0C9351002B2E0A /* AuthPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5655FE272A0C9351002B2E0A /* AuthPublisher.swift */; };
+		5671B8A22A999F2400C06C8F /* UserDefaultProviderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5671B8A12A999F2400C06C8F /* UserDefaultProviderObject.swift */; };
+		5671B8A42A999F6300C06C8F /* UserDefaultProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5671B8A32A999F6300C06C8F /* UserDefaultProvider.swift */; };
 		5682068C2A0E218A00664D2A /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5682068B2A0E218A00664D2A /* ImageLoader.swift */; };
 		5682068F2A10ACD600664D2A /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 5682068E2A10ACD600664D2A /* Nuke */; };
 		568206922A10B75100664D2A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568206912A10B75100664D2A /* PostDetailView.swift */; };
@@ -280,6 +282,8 @@
 		5655FE212A0B5B3A002B2E0A /* QuerySnapshotPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuerySnapshotPublisher.swift; sourceTree = "<group>"; };
 		5655FE232A0B5CB1002B2E0A /* ListError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListError.swift; sourceTree = "<group>"; };
 		5655FE272A0C9351002B2E0A /* AuthPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPublisher.swift; sourceTree = "<group>"; };
+		5671B8A12A999F2400C06C8F /* UserDefaultProviderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultProviderObject.swift; sourceTree = "<group>"; };
+		5671B8A32A999F6300C06C8F /* UserDefaultProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultProvider.swift; sourceTree = "<group>"; };
 		5682068B2A0E218A00664D2A /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		568206912A10B75100664D2A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		568206932A10BE8D00664D2A /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
@@ -586,6 +590,7 @@
 				5683E9B62A20410800C833FD /* ChatRoomProvider.swift */,
 				5683E9CA2A218D1500C833FD /* MessageProvider.swift */,
 				569B58682A922168005B0422 /* DeliveryProvider.swift */,
+				5671B8A32A999F6300C06C8F /* UserDefaultProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -604,6 +609,7 @@
 				5683E9C82A218CCE00C833FD /* MessageProviderObject.swift */,
 				5653EFDB2A19FEBC000688EF /* DataProviderObject.swift */,
 				569B58662A9220CB005B0422 /* DeliveryProviderObject.swift */,
+				5671B8A12A999F2400C06C8F /* UserDefaultProviderObject.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -1019,6 +1025,7 @@
 				56F2743729FE7739001E9425 /* PostProvier.swift in Sources */,
 				5683E9E52A2AE68900C833FD /* UIView+allSubViews.swift in Sources */,
 				5653031B2A19C6B2003C12CE /* AuthProviderObject.swift in Sources */,
+				5671B8A22A999F2400C06C8F /* UserDefaultProviderObject.swift in Sources */,
 				56C1C0FF29FE3500001A2BC4 /* PostViewModel.swift in Sources */,
 				5653031D2A19C722003C12CE /* UserInfoProviderObject.swift in Sources */,
 				56EDA28F29FF9F0800052E9E /* SelectBrandView.swift in Sources */,
@@ -1090,6 +1097,7 @@
 				5632E55B29E10DC10024C19C /* PhoneNumberView.swift in Sources */,
 				56ED87D52A52C55B001045C1 /* PurchasedItemsView.swift in Sources */,
 				56ED87EA2A55BEE9001045C1 /* EditProfileView.swift in Sources */,
+				5671B8A42A999F6300C06C8F /* UserDefaultProvider.swift in Sources */,
 				5683E9B32A203FF200C833FD /* ChatRoom.swift in Sources */,
 				5655FE152A0B3EB5002B2E0A /* ListViewModel.swift in Sources */,
 				5632E56529E10E690024C19C /* BirthDayView.swift in Sources */,
