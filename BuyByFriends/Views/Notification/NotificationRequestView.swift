@@ -8,18 +8,26 @@
 import SwiftUI
 
 struct NotificationRequestView: View {
-    @EnvironmentObject var appState: AppState
     @StateObject var vm: NotificationViewModel
+    @State var friendRequestList: [String]
+    
+    init(vm: NotificationViewModel = NotificationViewModel(), friendRequestList: [String]) {
+        if !friendRequestList.isEmpty {
+            vm.input.startToFetchUserInfos.send(friendRequestList)
+        }
+        _vm = StateObject(wrappedValue: vm)
+        self.friendRequestList = friendRequestList
+    }
     
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(0..<vm.binding.userInfos.count, id: \.self) { num in
+                ForEach(self.friendRequestList, id: \.self) { uid in
                     HStack(spacing: 20) {
                         Button(action: {
                             print("tapped")
                         }) {
-                            AsyncImage(url: URL(string: vm.binding.userInfos[num].profileImage)) { image in
+                            AsyncImage(url: URL(string: vm.binding.userInfos.first(where: {$0.id == uid})?.profileImage ?? "")) { image in
                                 image.resizable()
                             } placeholder: {
                                 ProgressView()
@@ -33,17 +41,17 @@ struct NotificationRequestView: View {
                         )
                         
                         VStack(alignment: .leading, spacing: 5) {
-                            Text(vm.binding.userInfos[num].name)
+                            Text(vm.binding.userInfos.first(where: { $0.id == uid })?.name ?? "")
                                 .font(.system(size: 20, weight: .bold))
-                            Text("@"+vm.binding.userInfos[num].userID)
+                            Text("@"+(vm.binding.userInfos.first(where: {$0.id == uid})?.userID ?? ""))
                                 .font(.system(size: 17))
                                 .foregroundColor(.gray)
                         }
                         Spacer()
                         // 申請
                         Button(action: {
-                            vm.input.startToAcceptFriendRequest.send(vm.binding.userInfos[num].id)
-                            vm.binding.userInfos.remove(at: num)
+                            vm.input.startToAcceptFriendRequest.send(vm.binding.userInfos.first(where: {$0.id == uid})?.id ?? "")
+                            friendRequestList.removeAll(where: {$0 == uid})
                         }) {
                             Text("追加する")
                                 .foregroundColor(.white)
@@ -59,16 +67,11 @@ struct NotificationRequestView: View {
                 .padding()
             }
         }
-        .onAppear() {
-            if !appState.session.friend.requestList.isEmpty {
-                vm.input.startToFetchUserInfosOfRequest.send(appState.session.friend.requestList)
-            }
-        }
     }
 }
 
 struct NotificationRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationTodoView(vm: NotificationViewModel())
+        NotificationRequestView(vm: NotificationViewModel(), friendRequestList: [])
     }
 }

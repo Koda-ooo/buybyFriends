@@ -81,7 +81,7 @@ struct PurchaseView: View {
                     )
             }
             .foregroundColor(.white)
-            .background(vm.output.isEnablePurchaseButton ? Color.gray:Color.black)
+            .background(vm.output.isEnablePurchaseButton ? Color.black:Color.gray)
             .bold()
             .cornerRadius(5)
             .disabled(!vm.output.isEnablePurchaseButton)

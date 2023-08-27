@@ -80,7 +80,7 @@ struct EditShippingAdressView: View {
                     )
             }
             .foregroundColor(.white)
-            .background(vm.output.isEnableNextButton ? Color.gray:Color.black)
+            .background(vm.output.isEnableNextButton ? Color.black:Color.gray)
             .bold()
             .cornerRadius(UIScreen.main.bounds.width*0.3/3)
             .disabled(!vm.output.isEnableNextButton)

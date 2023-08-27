@@ -11,12 +11,19 @@ import FirebaseFirestore
 
 final class NotificationViewModel: ViewModelObject {
     final class Input: InputObject {
-        let startToFetchUserInfosOfRequest = PassthroughSubject<[String], Never>()
+        let startToFetchUserInfos = PassthroughSubject<[String], Never>()
+        let startToFetchPosts = PassthroughSubject<[String], Never>()
         let startToAcceptFriendRequest = PassthroughSubject<String, Never>()
+        
+        let startToUpdateIsSentFlag = PassthroughSubject<Delivery, Never>()
+        let startToUpdateIsReceivedFlag = PassthroughSubject<Delivery, Never>()
+        let startToUpdateIsFinishFlag = PassthroughSubject<(delivery: Delivery, post: Post), Never>()
+        let startToUpdateBudget = PassthroughSubject<Int, Never>()
     }
     
     final class Binding: BindingObject {
         @Published var userInfos: [UserInfo] = []
+        @Published var posts: [Post] = []
     }
     
     final class Output: OutputObject {
@@ -32,25 +39,31 @@ final class NotificationViewModel: ViewModelObject {
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
     private let chatRoomProvider: ChatRoomProviderObject
+    private let postProvider: PostProviderProtocol
+    private let deliveryProvider: DeliveryProviderObject
     
     init(
         userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
         notificationProvider: NotificationProviderObject = NotificationProvider(),
         friendProvider: FriendProviderObject = FriendProvider(),
-        chatRoomProvider: ChatRoomProviderObject = ChatRoomProvider()
+        chatRoomProvider: ChatRoomProviderObject = ChatRoomProvider(),
+        postProvider: PostProviderProtocol = PostProvider(),
+        deliveryProvider: DeliveryProviderObject = DeliveryProvider()
     ) {
         self.userInfoProvider = userInfoProvider
         self.notificationProvider = notificationProvider
         self.friendProvider = friendProvider
         self.chatRoomProvider = chatRoomProvider
+        self.postProvider = postProvider
+        self.deliveryProvider = deliveryProvider
         
         let input = Input()
         let binding = Binding()
         let output = Output()
         
-        input.startToFetchUserInfosOfRequest
+        input.startToFetchUserInfos
             .flatMap { uids in
-                userInfoProvider.fetchUserInfosInFriendRequest(query: Firestore.firestore()
+                userInfoProvider.observeUserInfos(query: Firestore.firestore()
                         .collection("UserInfos")
                         .whereField("id", in: uids)
                 )
@@ -124,6 +137,88 @@ final class NotificationViewModel: ViewModelObject {
                     print("finished")
                 }
             }) { _ in
+            }
+            .store(in: &cancellables)
+        
+        input.startToFetchPosts
+            .flatMap { postIDs in
+                postProvider.observePosts(query: Firestore.firestore()
+                    .collection("Posts")
+                    .whereField("id", in: postIDs))
+            }
+            .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    print(err.localizedDescription)
+                case .finished:
+                    print("FINISH")
+                }
+            } receiveValue: { posts in
+                binding.posts = posts
+            }
+            .store(in: &cancellables)
+        
+        input.startToUpdateIsSentFlag
+            .flatMap { delivery in
+                deliveryProvider.updateIsSent(delivery: delivery)
+            }
+            .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    print(err.localizedDescription)
+                case .finished:
+                    print("FINISH")
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
+        
+        input.startToUpdateIsReceivedFlag
+            .flatMap { delivery in
+                deliveryProvider.updateIsReceive(delivery: delivery)
+            }
+            .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    print(err.localizedDescription)
+                case .finished:
+                    print("FINISH")
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
+        
+        input.startToUpdateIsFinishFlag
+            .flatMap { (delivery, post) in
+                deliveryProvider.updateIsFinish(delivery: delivery, post: post)
+            }
+            .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    print(err.localizedDescription)
+                case .finished:
+                    print("FINISH")
+                }
+            } receiveValue: { price in
+                input.startToUpdateBudget.send(price)
+            }
+            .store(in: &cancellables)
+        
+        input.startToUpdateBudget
+            .flatMap { mount in
+                userInfoProvider.updateBudget(mount: mount)
+            }
+            .sink { completion in
+                switch completion {
+                case .failure(let err):
+                    print(err.localizedDescription)
+                case .finished:
+                    print("FINISH")
+                }
+            } receiveValue: { _ in
+                
             }
             .store(in: &cancellables)
         

@@ -12,6 +12,8 @@ struct Delivery: Identifiable, Hashable, Decodable {
     var id: String
     var adress: Adress
     var userIDs: [String]
+    var buyerID: String
+    var sellerID: String
     var postID: String
     var isSent: Bool
     var isReceived: Bool
@@ -20,8 +22,10 @@ struct Delivery: Identifiable, Hashable, Decodable {
     
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
-        self.adress = dic["adress"] as? Adress ?? Adress(dic: [:])
+        self.adress = Adress(dic: dic["adress"] as? [String : Any] ?? [:])
         self.postID = dic["postID"] as? String ?? ""
+        self.buyerID = dic["buyerID"] as? String ?? ""
+        self.sellerID = dic["sellerID"] as? String ?? ""
         self.userIDs = dic["userIDs"] as? [String] ?? []
         self.isSent = dic["isSent"] as? Bool ?? false
         self.isReceived = dic["isReceived"] as? Bool ?? false

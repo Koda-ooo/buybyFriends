@@ -72,7 +72,7 @@ final class UserInfoProvider: UserInfoProviderObject {
         }.eraseToAnyPublisher()
     }
     
-    func fetchUserInfosInFriendRequest(query: Query) -> AnyPublisher<[UserInfo], ListError> {
+    func observeUserInfos(query: Query) -> AnyPublisher<[UserInfo], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[UserInfo], ListError> in
                 do {
@@ -83,6 +83,7 @@ final class UserInfoProvider: UserInfoProviderObject {
                         .setFailureType(to: ListError.self)
                         .eraseToAnyPublisher()
                 } catch {
+                    print("check: Parsing error")
                     return Fail(error: .default(description: "Parsing error"))
                         .eraseToAnyPublisher()
                 }
@@ -126,9 +127,13 @@ final class UserInfoProvider: UserInfoProviderObject {
                 "birthDay": userInfo.birthDay,
                 "profileImage": imageURL,
                 "inventoryList": userInfo.inventoryList,
+                "selfIntroduction": "",
+                "instagramID": "",
                 "budget": 0,
                 "createdAt": Timestamp(),
-                "fcmToken": UserDefaults.standard.string(forKey: "fcmToken") ?? ""
+                "fcmToken": UserDefaults.standard.string(forKey: "fcmToken") ?? "",
+                "favoritePosts": [],
+                "bookmarkPosts": []
             ]
             
             saveDocument.setData(
@@ -140,6 +145,23 @@ final class UserInfoProvider: UserInfoProviderObject {
                 }
                 print("Firestoreへの保存に成功しました。")
                 promise(.success(true))
+            }
+        }.eraseToAnyPublisher()
+    }
+    
+    func updateBudget(mount: Int) -> AnyPublisher<Void, Error> {
+        return Future<Void, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let document = Firestore.firestore().collection("UserInfos").document(uid)
+            let updateList: [String: Any] = [
+                "budget": FieldValue.increment(Int64(mount))
+            ]
+            
+            document.updateData(updateList) { err in
+                if let err = err {
+                    return promise(.failure(err.self))
+                }
+                promise(.success(()))
             }
         }.eraseToAnyPublisher()
     }

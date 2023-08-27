@@ -15,6 +15,7 @@ final class InitialViewModel: ViewModelObject {
         let startToObserveAuthChange = PassthroughSubject<Void, Never>()
         let startToObserveNotification = PassthroughSubject<Void, Never>()
         let startToObserveFriend = PassthroughSubject<Void, Never>()
+        let startToObserveDelivery = PassthroughSubject<Void, Never>()
         
         let startToLogOut = PassthroughSubject<Void, Never>()
         
@@ -33,6 +34,7 @@ final class InitialViewModel: ViewModelObject {
         @Published fileprivate(set) var userInfo = UserInfo(dic: [:])
         @Published fileprivate(set) var notification: Notification = Notification(dic: [:])
         @Published fileprivate(set) var friend: Friend = Friend(dic: [:])
+        @Published fileprivate(set) var delivery: [Delivery] = [Delivery(dic: [:])]
         @Published fileprivate(set) var uid: String = ""
         
         @Published fileprivate(set) var isSignIn: Bool = false
@@ -48,16 +50,19 @@ final class InitialViewModel: ViewModelObject {
     private let userInfoProvider: UserInfoProviderObject
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
+    private let deliveryProvider: DeliveryProviderObject
     
     init(authProvider: AuthProviderObject = AuthProvider(),
          userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
          notificationProvider: NotificationProviderObject = NotificationProvider(),
-         friendProvider: FriendProviderObject = FriendProvider()
+         friendProvider: FriendProviderObject = FriendProvider(),
+         deliveryProvider: DeliveryProviderObject = DeliveryProvider()
     ) {
         self.authProvider = authProvider
         self.userInfoProvider = userInfoProvider
         self.notificationProvider = notificationProvider
         self.friendProvider = friendProvider
+        self.deliveryProvider = deliveryProvider
         
         let input = Input()
         let binding = Binding()
@@ -95,6 +100,7 @@ final class InitialViewModel: ViewModelObject {
                     input.startToFetchUserInfo.send(result!.uid)
                     input.startToObserveNotification.send()
                     input.startToObserveFriend.send()
+                    input.startToObserveDelivery.send()
                     output.uid = result!.uid
                 } else {
                     output.userInfo = UserInfo(dic: [:])
@@ -145,6 +151,31 @@ final class InitialViewModel: ViewModelObject {
             } receiveValue: { result in
                 if result.count != 0 {
                     output.friend = result[0]
+                }
+            }
+            .store(in: &cancellables)
+        
+        /// Delivery情報取得
+        input.startToObserveDelivery
+            .flatMap {
+                deliveryProvider.observeDelivery(
+                    query: Firestore.firestore()
+                        .collection("Deliveries")
+                        .whereField("userIDs", arrayContains: Auth.auth().currentUser?.uid ?? "")
+                        .whereField("isFinish", isEqualTo: false)
+                )
+            }.sink { completion in
+                switch completion {
+                case .finished:
+                    print("finished")
+                case .failure(let err):
+                    print(err.localizedDescription)
+                }
+            } receiveValue: { result in
+                if result.count != 0 {
+                    output.delivery = result
+                } else {
+                    output.delivery = []
                 }
             }
             .store(in: &cancellables)

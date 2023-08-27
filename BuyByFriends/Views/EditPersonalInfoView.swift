@@ -90,7 +90,7 @@ struct EditPersonalInfoView: View {
                     )
             }
             .foregroundColor(.white)
-            .background(vm.output.isEnableRegisterButton ? Color.gray:Color.black)
+            .background(vm.output.isEnableRegisterButton ? Color.black:Color.gray)
             .bold()
             .cornerRadius(UIScreen.main.bounds.width*0.3/3)
             .disabled(!vm.output.isEnableRegisterButton)

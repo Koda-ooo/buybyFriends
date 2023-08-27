@@ -15,8 +15,8 @@ struct Friend: Identifiable, Hashable, Decodable {
     
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
-        self.friendList = dic["friendList"] as? [String] ?? [""]
-        self.requestList = dic["requestList"] as? [String] ?? [""]
-        self.ngList = dic["ngList"] as? [String] ?? [""]
+        self.friendList = dic["friendList"] as? [String] ?? []
+        self.requestList = dic["requestList"] as? [String] ?? []
+        self.ngList = dic["ngList"] as? [String] ?? []
     }
 }

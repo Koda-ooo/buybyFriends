@@ -58,6 +58,9 @@ struct InitialView: View {
             .onChange(of: vm.output.friend) { friend in
                 appState.session.friend = friend
             }
+            .onChange(of: vm.output.delivery) { delivery in
+                appState.session.delivery = delivery
+            }
         } else {
             if vm.output.isSignIn == true {
                 UsernameView()
@@ -78,6 +81,9 @@ struct InitialView: View {
                     .onChange(of: vm.output.friend) { friend in
                         appState.session.friend = friend
                     }
+                    .onChange(of: vm.output.delivery, perform: { delivery in
+                        appState.session.delivery = delivery
+                    })
                     .onChange(of: vm.output.uid) { uid in
                         appState.session.userInfo.id = uid
                     }

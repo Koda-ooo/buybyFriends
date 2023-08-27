@@ -20,7 +20,7 @@ struct UserInfo: Identifiable, Equatable, Codable, Hashable {
     var budget: Int
     var createdAt: Timestamp
     var fcmToken: String
-    var favaritePosts: [String]
+    var favoritePosts: [String]
     var bookmarkPosts: [String]
 
     init(dic: [String: Any]) {
@@ -29,13 +29,13 @@ struct UserInfo: Identifiable, Equatable, Codable, Hashable {
         self.userID = dic["userID"] as? String ?? ""
         self.birthDay = dic["birthDay"] as? Date ?? Date()
         self.profileImage = dic["profileImage"] as? String ?? ""
-        self.inventoryList = dic["inventoryList"] as? [String] ?? [""]
+        self.inventoryList = dic["inventoryList"] as? [String] ?? []
         self.selfIntroduction = dic["selfIntroduction"] as? String ?? ""
         self.instagramID = dic["instagramID"] as? String ?? ""
         self.budget = dic["budget"] as? Int ?? 0
         self.createdAt = dic["createdAt"] as? Timestamp ?? Timestamp()
         self.fcmToken = dic["fcmToken"] as? String ?? ""
-        self.favaritePosts = dic["favaritePosts"] as? [String] ?? [""]
-        self.bookmarkPosts = dic["bookmarkPosts"] as? [String] ?? [""]
+        self.favoritePosts = dic["favoritePosts"] as? [String] ?? []
+        self.bookmarkPosts = dic["bookmarkPosts"] as? [String] ?? []
     }
 }

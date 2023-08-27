@@ -13,9 +13,10 @@ protocol UserInfoProviderObject {
     func fetchUserInfo(id: String) -> AnyPublisher<UserInfo, Error>
     func fetchUserInfoo(id: String) -> AnyPublisher<UserInfo?, Error>
     func fetchUserInfos(userID: String) -> AnyPublisher<[UserInfo],Error>
-    func fetchUserInfosInFriendRequest(query: Query) -> AnyPublisher<[UserInfo], ListError>
+    func observeUserInfos(query: Query) -> AnyPublisher<[UserInfo], ListError>
     func uploadProfileImage(image: Data) -> AnyPublisher<String, Error>
     func uploadUserInfo(userInfo: UserInfo, imageURL: String) -> AnyPublisher<Bool,Error>
+    func updateBudget(mount: Int) -> AnyPublisher<Void, Error>
     func addFavaritePosts(postID: String) -> AnyPublisher<Bool, Error>
     func removeFavaritePosts(postID: String) -> AnyPublisher<Bool, Error>
     func addBookmarkPosts(postID: String) -> AnyPublisher<Bool, Error>
