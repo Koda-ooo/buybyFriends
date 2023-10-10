@@ -23,7 +23,7 @@ final class InventoryViewModel: ViewModelObject {
     }
     
     final class Output: OutputObject {
-        @Published fileprivate(set) var inventoryList: [Inventory] = []
+        @Published fileprivate(set) var inventoryByGenre: [InventoryGenre: [Inventory]] = [:]
         @Published fileprivate(set) var isFinishedUploadUserInfo = false
     }
     
@@ -68,7 +68,10 @@ final class InventoryViewModel: ViewModelObject {
                     print("Error:", err.localizedDescription)
                 }
             }, receiveValue: { response in
-                output.inventoryList = response
+                for genre in InventoryGenre.allCases {
+                    let itemsInGenre = response.filter { $0.genreID == genre.rawValue }
+                    output.inventoryByGenre[genre] = itemsInGenre
+                }
             })
             .store(in: &cancellables)
         
@@ -77,7 +80,17 @@ final class InventoryViewModel: ViewModelObject {
             .sink(receiveCompletion: { completion in
                 print("receiveCompletion: \(completion)")
             }, receiveValue: { inventory in
-                output.inventoryList[inventory.sequence].selected.toggle()
+                
+                if let genre = InventoryGenre(rawValue: inventory.genreID), var itemsForGenre = output.inventoryByGenre[genre] {
+                    itemsForGenre = itemsForGenre.map { item in
+                            var mutableItem = item
+                            if mutableItem.id == inventory.id {
+                                mutableItem.selected.toggle()
+                            }
+                            return mutableItem
+                        }
+                        output.inventoryByGenre[genre] = itemsForGenre
+                }
                 if binding.selectedInventoryList.contains(inventory.name) == false {
                     binding.selectedInventoryList.append(inventory.name)
                 } else {

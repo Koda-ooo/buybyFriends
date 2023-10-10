@@ -14,55 +14,74 @@ struct InventoryListView: View {
     
     var body: some View {
         VStack(alignment: .leading ,spacing: 30) {
-            Text("持ち物を教えてください。")
-                .font(.system(size: 20, weight: .black))
-            FlexibleView(
-                data:  vm.output.inventoryList,
-                spacing: 10,
-                alignment: .leading
-            ) { item in
-                Button(action: {
-                    vm.input.inventoryListTapped.send(item)
-                }) {
-                    HStack {
-                        Text(item.name)
-                            .font(.system(size: 13))
-                            .bold()
-                        if vm.output.inventoryList[item.sequence].selected {
-                            Image(systemName: "checkmark")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10, height: 10)
-                        } else {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10, height: 10)
+            ZStack(alignment: .topLeading) {
+                ZStack(alignment: .bottom) {
+                    ScrollView {
+                        Spacer()
+                            .frame(height: 60)
+                        
+                        ForEach(vm.output.inventoryByGenre.keys.sorted(), id: \.self) { genre in
+                            VStack(alignment: .leading) {
+                                Text(genre.text)
+                                    .font(.system(size: 18, weight: .heavy))
+                                
+                                FlexibleView(
+                                    data:  vm.output.inventoryByGenre[genre] ?? [],
+                                    spacing: 12,
+                                    alignment: .leading
+                                ) { item in
+                                    Button(action: {
+                                        vm.input.inventoryListTapped.send(item)
+                                    }) {
+                                        HStack {
+                                            Text(item.name)
+                                                .font(.system(size: 16, weight: .bold))
+                                            if item.selected {
+                                                Image(systemName: "checkmark")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 10, height: 10)
+                                            } else {
+                                                Image(systemName: "plus")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 10, height: 10)
+                                            }
+                                        }
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 8)
+                                        .foregroundColor(item.selected ? .white : .black)
+                                        .background(item.selected ? .black : .white)
+                                        .cornerRadius(10)
+                                    }
+                                }
+                            }
+                            .padding(.bottom, 12)
                         }
+                        
+                        Spacer()
+                            .frame(height: 80)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .foregroundColor(vm.output.inventoryList[item.sequence].selected ? .white : .black)
-                    .background(vm.output.inventoryList[item.sequence].selected ? .black : .gray)
-                    .cornerRadius(10)
+                    Button(action: {
+                        appState.session.userInfo.inventoryList = vm.binding.selectedInventoryList
+                        vm.binding.userInfo = appState.session.userInfo
+                        vm.input.startButByFriends.send()
+                    }) {
+                        Text("Start BuyByFriends")
+                            .frame(maxWidth: .infinity, minHeight: 70)
+                            .font(.system(size: 20, weight: .bold))
+                    }
+                    .accentColor(Color.white)
+                    .background(Color.black)
+                    .cornerRadius(.infinity)
+                    .padding(.top, 50)
+                    .padding(.trailing, 30)
                 }
+                Text("持ち物を教えてください。")
+                    .font(.system(size: 20, weight: .black))
             }
-            Button(action: {
-                appState.session.userInfo.inventoryList = vm.binding.selectedInventoryList
-                vm.binding.userInfo = appState.session.userInfo
-                vm.input.startButByFriends.send()
-            }) {
-                Text("Start BuyByFriends")
-                    .frame(maxWidth: .infinity, minHeight: 70)
-                    .font(.system(size: 20, weight: .bold))
-            }
-            .accentColor(Color.white)
-            .background(Color.black)
-            .cornerRadius(.infinity)
-            .padding(.top, 50)
-            .padding(.trailing, 30)
         }
-        .padding(.leading, 30)
+        .padding(.leading, 20)
         .background(Image("main")
             .edgesIgnoringSafeArea(.all)
         )
@@ -75,6 +94,7 @@ struct InventoryListView: View {
             vm.input.inventoryListViewDidLoad.send()
         }
         .navigationBarBackButtonHidden(true)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -85,7 +105,7 @@ struct InventoryListView: View {
                 }
             }
         }
-
+        
     }
 }
 
