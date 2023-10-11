@@ -36,6 +36,8 @@ enum Destination {
     
     enum MyPage {
         case editProfile
+        case wishList
+        case InventoryList
     }
     
     enum EditProfile: CaseIterable {

@@ -182,6 +182,10 @@
 		56F2743729FE7739001E9425 /* PostProvier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2743629FE7739001E9425 /* PostProvier.swift */; };
 		56F997F52A065E2A00A39C6B /* Firestore+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F997F42A065E2A00A39C6B /* Firestore+Combine.swift */; };
 		56F997F72A0667CB00A39C6B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F997F62A0667CB00A39C6B /* Post.swift */; };
+		DF367C392AD5B7DA0029056C /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C382AD5B7DA0029056C /* WishListView.swift */; };
+		DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3A2AD5B9E80029056C /* EditWishListView.swift */; };
+		DF367C3D2AD60F760029056C /* EditWishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */; };
+		DF367C3F2AD61CEE0029056C /* HalfWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -359,6 +363,10 @@
 		56F2743629FE7739001E9425 /* PostProvier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProvier.swift; sourceTree = "<group>"; };
 		56F997F42A065E2A00A39C6B /* Firestore+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firestore+Combine.swift"; sourceTree = "<group>"; };
 		56F997F62A0667CB00A39C6B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		DF367C382AD5B7DA0029056C /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
+		DF367C3A2AD5B9E80029056C /* EditWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListView.swift; sourceTree = "<group>"; };
+		DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListViewModel.swift; sourceTree = "<group>"; };
+		DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -710,6 +718,9 @@
 			isa = PBXGroup;
 			children = (
 				564B426529ED1C04003E6F6E /* MyPageView.swift */,
+				DF367C382AD5B7DA0029056C /* WishListView.swift */,
+				DF367C3A2AD5B9E80029056C /* EditWishListView.swift */,
+				DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */,
 				56ED87E92A55BEE9001045C1 /* EditProfileView.swift */,
 				56ED87EB2A55BF18001045C1 /* EditProfileNameView.swift */,
 				56ED87ED2A55BF25001045C1 /* EditProfileUsername.swift */,
@@ -764,6 +775,7 @@
 			isa = PBXGroup;
 			children = (
 				565302592A17415D003C12CE /* MyPageViewModel.swift */,
+				DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */,
 				56ED87F32A55C490001045C1 /* EditProfileViewModel.swift */,
 				56ED87E12A52CF07001045C1 /* WithdrawViewModel.swift */,
 				56ED87E72A55B9AF001045C1 /* RequestWithdrawlViewModel.swift */,
@@ -976,6 +988,7 @@
 				5683E9D52A24DC1B00C833FD /* ChatMedia.swift in Sources */,
 				56ED87EC2A55BF18001045C1 /* EditProfileNameView.swift in Sources */,
 				5655FE222A0B5B3A002B2E0A /* QuerySnapshotPublisher.swift in Sources */,
+				DF367C3F2AD61CEE0029056C /* HalfWishListView.swift in Sources */,
 				568206B12A13506800664D2A /* PaymentGatewayController.swift in Sources */,
 				5683E9C52A20A63F00C833FD /* MessageView.swift in Sources */,
 				5653025A2A17415D003C12CE /* MyPageViewModel.swift in Sources */,
@@ -996,6 +1009,7 @@
 				5683E9C12A20A1CA00C833FD /* ChatMessage.swift in Sources */,
 				564B427F29EFBC65003E6F6E /* AuthError.swift in Sources */,
 				564B428829F28BB8003E6F6E /* ListView.swift in Sources */,
+				DF367C392AD5B7DA0029056C /* WishListView.swift in Sources */,
 				5632E55929E10D7D0024C19C /* WelcomeView.swift in Sources */,
 				5655FE0A2A0B3248002B2E0A /* SelectShoesSizeView.swift in Sources */,
 				5655FE282A0C9351002B2E0A /* AuthPublisher.swift in Sources */,
@@ -1030,6 +1044,7 @@
 				5653031D2A19C722003C12CE /* UserInfoProviderObject.swift in Sources */,
 				56EDA28F29FF9F0800052E9E /* SelectBrandView.swift in Sources */,
 				5653EFF92A1F2DB1000688EF /* PushNotificationSender.swift in Sources */,
+				DF367C3D2AD60F760029056C /* EditWishListViewModel.swift in Sources */,
 				564B427929EFB44D003E6F6E /* PhoneNumberViewModel.swift in Sources */,
 				5683E9E72A2AE75100C833FD /* HideTabBar.swift in Sources */,
 				5683E9D12A24709800C833FD /* UIColor+rbga.swift in Sources */,
@@ -1042,6 +1057,7 @@
 				564B426629ED1C04003E6F6E /* MyPageView.swift in Sources */,
 				568A1D6D29F797BF005DEA24 /* ProfileImageViewModel.swift in Sources */,
 				5683E9D72A24DD3100C833FD /* MessageKindType.swift in Sources */,
+				DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */,
 				5653EFDC2A19FEBC000688EF /* DataProviderObject.swift in Sources */,
 				56ED87F92A5EEF53001045C1 /* EditShippingAdressView.swift in Sources */,
 				5683E9E32A2AE65800C833FD /* UITabBar+changeTabBarState.swift in Sources */,

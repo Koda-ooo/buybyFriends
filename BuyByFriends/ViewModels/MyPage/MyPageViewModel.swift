@@ -16,6 +16,7 @@ final class MyPageViewModel: ViewModelObject {
     
     final class Binding: BindingObject {
         @Published var isShownMyPageHumbergerMenu: Bool = false
+        @Published var isShownHalfWishListView: Bool = false
     }
     
     final class Output: OutputObject {

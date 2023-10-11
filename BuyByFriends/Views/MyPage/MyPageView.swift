@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @EnvironmentObject var appState: AppState
     @StateObject var vm: MyPageViewModel = MyPageViewModel()
     var userUID: String
     
@@ -89,9 +90,8 @@ struct MyPageView: View {
             
             
             HStack(spacing: 30) {
-                Button(action: {
-                    
-                }) {
+            
+                NavigationLink(value: Destination.MyPage.InventoryList) {
                     Text("持ち物リスト")
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .font(.system(size: 15, weight: .medium))
@@ -99,21 +99,33 @@ struct MyPageView: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(Color.gray, lineWidth: 2)
                         )
-                }
-                .foregroundColor(.gray)
+                }.foregroundColor(.gray)
                 
-                Button(action: {
+                if !appState.session.userInfo.wishList.isEmpty {
+                    Button(action: {
+                        vm.binding.isShownHalfWishListView.toggle()
+                    }) {
+                        Text("ウィッシュリスト")
+                            .frame(maxWidth: .infinity, minHeight: 56)
+                            .font(.system(size: 15, weight: .medium))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(Color.gray, lineWidth: 2)
+                            )
+                    }
+                    .foregroundColor(.gray)
                     
-                }) {
-                    Text("ウィッシュリスト")
-                        .frame(maxWidth: .infinity, minHeight: 56)
-                        .font(.system(size: 15, weight: .medium))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.gray, lineWidth: 2)
-                        )
+                } else {
+                    NavigationLink(value: Destination.MyPage.wishList) {
+                        Text("ウィッシュリスト")
+                            .frame(maxWidth: .infinity, minHeight: 56)
+                            .font(.system(size: 15, weight: .medium))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(Color.gray, lineWidth: 2)
+                            )
+                    }.foregroundColor(.gray)
                 }
-                .foregroundColor(.gray)
             }
             .padding(.horizontal)
             
@@ -142,8 +154,16 @@ struct MyPageView: View {
         }
         .navigationTitle("プロフィール")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Destination.MyPage.self) { _ in
-            EditProfileView()
+        .navigationDestination(for: Destination.MyPage.self) { destination in
+            switch destination {
+            case .editProfile:
+                EditProfileView()
+            case .InventoryList:
+                EmptyView()
+            case .wishList:
+                WishListView()
+            }
+            
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -161,6 +181,10 @@ struct MyPageView: View {
         }
         .sheet(isPresented: vm.$binding.isShownMyPageHumbergerMenu){
             MyPageHumbergerMenuView()
+        }
+        .sheet(isPresented: vm.$binding.isShownHalfWishListView){
+            HalfWishListView()
+                .presentationDetents([.height(240)])
         }
         .onAppear {
             self.vm.input.startToFetchInfos.send(userUID)

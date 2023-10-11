@@ -233,4 +233,21 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
+    
+    func saveWishList(genre: InventoryGenre, text: String) -> AnyPublisher<Bool, Error> {
+        return Future<Bool, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let document = Firestore.firestore().collection("UserInfos").document(uid)
+            let updateList: [String: Any] = [
+                "wishList": ["\(genre.rawValue)": text]
+            ]
+            
+            document.updateData(updateList) { err in
+                if let err = err {
+                    return promise(.failure(err.self))
+                }
+                promise(.success((true)))
+            }
+        }.eraseToAnyPublisher()
+    }
 }
