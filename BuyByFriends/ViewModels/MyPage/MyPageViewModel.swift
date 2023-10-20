@@ -7,14 +7,18 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 import FirebaseFirestore
 
 final class MyPageViewModel: ViewModelObject {
     final class Input: InputObject {
-        let startToFetchInfos = PassthroughSubject<String, Never>()
+        let startToFetchInfos = PassthroughSubject<Void, Never>()
     }
     
     final class Binding: BindingObject {
+        @Published var uid: String = ""
+        
+        @Published var isMyPage: Bool = false
         @Published var isShownMyPageHumbergerMenu: Bool = false
     }
     
@@ -49,9 +53,17 @@ final class MyPageViewModel: ViewModelObject {
         let binding = Binding()
         let output = Output()
         
+        let isValidMyPage = binding.$uid
+            .map { uid in
+                return uid == Auth.auth().currentUser?.uid
+            }
+            .replaceError(with: false)
+        
         input.startToFetchInfos
-            .flatMap { userUID in
-                userInfoProvider.fetchUserInfo(id: userUID)
+            .flatMap {
+                userInfoProvider.observeUserInfos(query: Firestore.firestore()
+                    .collection("UserInfos")
+                    .whereField("id", isEqualTo: binding.uid))
             }
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -61,15 +73,17 @@ final class MyPageViewModel: ViewModelObject {
                     print("finished")
                 }
             }) { result in
-                output.userInfo = result
+                if let userInfo = result.first {
+                    output.userInfo = userInfo
+                }
             }
             .store(in: &cancellables)
         
         input.startToFetchInfos
-            .flatMap { userUID in
+            .flatMap {
                 postProvider.observePosts(query: Firestore.firestore()
                     .collection("Posts")
-                    .whereField("userUID", isEqualTo: userUID)
+                    .whereField("userUID", isEqualTo: binding.uid)
                 )
             }
             .sink(receiveCompletion: { completion in
@@ -90,8 +104,11 @@ final class MyPageViewModel: ViewModelObject {
             .store(in: &cancellables)
         
         input.startToFetchInfos
-            .flatMap { userUID in
-                friendProvider.fetchFriend(uid: userUID)
+            .flatMap {
+                friendProvider.observeFriend(query: Firestore.firestore()
+                    .collection("Friends")
+                    .whereField("id", isEqualTo: binding.uid)
+                )
             }
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -101,12 +118,15 @@ final class MyPageViewModel: ViewModelObject {
                     print("finished")
                 }
             }) { result in
-                output.friend = result
+                if let friend = result.first {
+                    output.friend = friend
+                }
             }
             .store(in: &cancellables)
         
         /// 組み立てたストリームを反映
         cancellables.formUnion([
+            isValidMyPage.assign(to: \.isMyPage, on: binding)
         ])
         
         self.input = input

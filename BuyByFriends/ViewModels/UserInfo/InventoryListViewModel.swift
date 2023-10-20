@@ -77,16 +77,15 @@ final class InventoryViewModel: ViewModelObject {
             .sink(receiveCompletion: { completion in
                 print("receiveCompletion: \(completion)")
             }, receiveValue: { inventory in
-                output.inventoryList[inventory.sequence].selected.toggle()
-                if binding.selectedInventoryList.contains(inventory.name) == false {
-                    binding.selectedInventoryList.append(inventory.name)
+                guard let index = output.inventoryList.firstIndex(where: {$0.id == inventory.id}) else { return }
+                output.inventoryList[index].selected.toggle()
+                if binding.selectedInventoryList.contains(output.inventoryList[index].name) == false {
+                    binding.selectedInventoryList.append(output.inventoryList[index].name)
                 } else {
-                    binding.selectedInventoryList.removeAll(where: {$0 == inventory.name} )
+                    binding.selectedInventoryList.removeAll(where: {$0 == output.inventoryList[index].name} )
                 }
             })
             .store(in: &cancellables)
-        
-        
         
         /// ユーザー情報作成（画像保存→ユーザー情報保存）
         input.startButByFriends

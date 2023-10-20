@@ -9,10 +9,11 @@ import SwiftUI
 
 struct MyPageView: View {
     @StateObject var vm: MyPageViewModel = MyPageViewModel()
-    var userUID: String
     
-    init(userUID: String) {
-        self.userUID = userUID
+    init(vm: MyPageViewModel = MyPageViewModel(), userUID uid: String) {
+        vm.binding.uid = uid
+        vm.input.startToFetchInfos.send()
+        _vm = StateObject(wrappedValue: vm)
     }
     
     var body: some View {
@@ -42,7 +43,11 @@ struct MyPageView: View {
                             Spacer()
                             VStack(spacing: 5) {
                                 Text("\(vm.output.friend.friendList.count)")
-                                Text("フレンド")
+                                if vm.binding.isMyPage {
+                                    Text("bokunoフレンド")
+                                } else {
+                                    Text("darekanoフレンド")
+                                }
                             }
                         }
                         .padding(.leading, 20)
@@ -89,9 +94,7 @@ struct MyPageView: View {
             
             
             HStack(spacing: 30) {
-                Button(action: {
-                    
-                }) {
+                NavigationLink(value: Destination.MyPage.inventoryList) {
                     Text("持ち物リスト")
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .font(.system(size: 15, weight: .medium))
@@ -102,9 +105,7 @@ struct MyPageView: View {
                 }
                 .foregroundColor(.gray)
                 
-                Button(action: {
-                    
-                }) {
+                NavigationLink(value: Destination.MyPage.wishList) {
                     Text("ウィッシュリスト")
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .font(.system(size: 15, weight: .medium))
@@ -115,7 +116,7 @@ struct MyPageView: View {
                 }
                 .foregroundColor(.gray)
             }
-            .padding(.horizontal)
+            .padding([.horizontal, .bottom])
             
             LazyVGrid(
                 columns: Array(repeating: .init(.flexible(), spacing: 5), count: 3),
@@ -142,8 +143,12 @@ struct MyPageView: View {
         }
         .navigationTitle("プロフィール")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Destination.MyPage.self) { _ in
-            EditProfileView()
+        .navigationDestination(for: Destination.MyPage.self) { destination in
+            switch destination {
+            case .editProfile: EditProfileView()
+            case .inventoryList: MyPageInventoryListView(userInfo: vm.output.userInfo, isMyPage: vm.binding.isMyPage)
+            case .wishList: MyPageWishListView()
+            }
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -161,9 +166,6 @@ struct MyPageView: View {
         }
         .sheet(isPresented: vm.$binding.isShownMyPageHumbergerMenu){
             MyPageHumbergerMenuView()
-        }
-        .onAppear {
-            self.vm.input.startToFetchInfos.send(userUID)
         }
     }
 }

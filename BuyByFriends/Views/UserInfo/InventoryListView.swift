@@ -12,41 +12,55 @@ struct InventoryListView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm = InventoryViewModel()
     
+    init() {
+        UINavigationBar.appearance().barTintColor = UIColor.clear
+    }
+    
     var body: some View {
-        VStack(alignment: .leading ,spacing: 30) {
-            Text("持ち物を教えてください。")
-                .font(.system(size: 20, weight: .black))
-            FlexibleView(
-                data:  vm.output.inventoryList,
-                spacing: 10,
-                alignment: .leading
-            ) { item in
-                Button(action: {
-                    vm.input.inventoryListTapped.send(item)
-                }) {
-                    HStack {
-                        Text(item.name)
-                            .font(.system(size: 13))
-                            .bold()
-                        if vm.output.inventoryList[item.sequence].selected {
-                            Image(systemName: "checkmark")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10, height: 10)
-                        } else {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 10, height: 10)
-                        }
+        ScrollView {
+            VStack(alignment: .leading ,spacing: 30) { 
+                Text("持ち物を教えてください。")
+                    .font(.system(size: 20, weight: .black))
+                
+                GenreView(
+                    datas: InventoryGenre.names(),
+                    spacing: 10) { genre in
+                        Text(genre.debugDescription)
+                        
+//                        FlexibleView(
+//                            data:  vm.output.inventoryList,
+//                            spacing: 10,
+//                            alignment: .leading
+//                        ) { item in
+//                            Button(action: {
+//                                vm.input.inventoryListTapped.send(item)
+//                            }) {
+//                                HStack {
+//                                    Text(item.name)
+//                                        .font(.system(size: 13))
+//                                        .bold()
+//                                    if item.selected {
+//                                        Image(systemName: "checkmark")
+//                                            .resizable()
+//                                            .scaledToFit()
+//                                            .frame(width: 10, height: 10)
+//                                    } else {
+//                                        Image(systemName: "plus")
+//                                            .resizable()
+//                                            .scaledToFit()
+//                                            .frame(width: 10, height: 10)
+//                                    }
+//                                }
+//                                .padding(.horizontal, 16)
+//                                .padding(.vertical, 8)
+//                                .foregroundColor(item.selected ? .white : .black)
+//                                .background(item.selected ? .black : .gray)
+//                                .cornerRadius(10)
+//                            }
+//                        }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .foregroundColor(vm.output.inventoryList[item.sequence].selected ? .white : .black)
-                    .background(vm.output.inventoryList[item.sequence].selected ? .black : .gray)
-                    .cornerRadius(10)
-                }
             }
+            
             Button(action: {
                 appState.session.userInfo.inventoryList = vm.binding.selectedInventoryList
                 vm.binding.userInfo = appState.session.userInfo
@@ -85,7 +99,6 @@ struct InventoryListView: View {
                 }
             }
         }
-
     }
 }
 
