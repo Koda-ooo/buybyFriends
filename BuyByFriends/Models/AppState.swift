@@ -14,6 +14,7 @@ final class AppState: ObservableObject{
         var userInfo: UserInfo = UserInfo(dic: [:])
         var notification: Notification = Notification(dic: [:])
         var friend: Friend = Friend(dic: [:])
+        var posts: [Post] = []
         var delivery: [Delivery] = []
         
         var userImage = UIImage()

@@ -186,6 +186,7 @@
 		DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3A2AD5B9E80029056C /* EditWishListView.swift */; };
 		DF367C3D2AD60F760029056C /* EditWishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */; };
 		DF367C3F2AD61CEE0029056C /* HalfWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */; };
+		DFBC1F672ADA469B00E99BC3 /* HalfWishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBC1F662ADA469B00E99BC3 /* HalfWishListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -367,6 +368,7 @@
 		DF367C3A2AD5B9E80029056C /* EditWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListView.swift; sourceTree = "<group>"; };
 		DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListViewModel.swift; sourceTree = "<group>"; };
 		DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListView.swift; sourceTree = "<group>"; };
+		DFBC1F662ADA469B00E99BC3 /* HalfWishListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -778,6 +780,7 @@
 				DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */,
 				56ED87F32A55C490001045C1 /* EditProfileViewModel.swift */,
 				56ED87E12A52CF07001045C1 /* WithdrawViewModel.swift */,
+				DFBC1F662ADA469B00E99BC3 /* HalfWishListViewModel.swift */,
 				56ED87E72A55B9AF001045C1 /* RequestWithdrawlViewModel.swift */,
 			);
 			path = MyPage;
@@ -1056,6 +1059,7 @@
 				5653EFF32A1EF711000688EF /* NotificationTodoView.swift in Sources */,
 				564B426629ED1C04003E6F6E /* MyPageView.swift in Sources */,
 				568A1D6D29F797BF005DEA24 /* ProfileImageViewModel.swift in Sources */,
+				DFBC1F672ADA469B00E99BC3 /* HalfWishListViewModel.swift in Sources */,
 				5683E9D72A24DD3100C833FD /* MessageKindType.swift in Sources */,
 				DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */,
 				5653EFDC2A19FEBC000688EF /* DataProviderObject.swift in Sources */,

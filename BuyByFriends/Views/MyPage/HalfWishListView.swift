@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct HalfWishListView: View {
+    
+    @StateObject private var vm: HalfWishListViewModel
+    @FocusState private var focusedField: Bool
+    
+    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo) {
+        vm.binding.userInfo = userInfo
+        _vm = StateObject(wrappedValue: vm)
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if let key = vm.binding.userInfo.wishList.keys.first {
+            Text("\(key)")
+        }
     }
 }
 
 struct HalfWishListView_Previews: PreviewProvider {
     static var previews: some View {
-        HalfWishListView()
+        HalfWishListView(userInfo: UserInfo(dic: [:]))
     }
 }

@@ -10,17 +10,18 @@ import SwiftUI
 struct MyPageView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm: MyPageViewModel = MyPageViewModel()
-    var userUID: String
     
-    init(userUID: String) {
-        self.userUID = userUID
+    init(vm: MyPageViewModel = MyPageViewModel(), userUID: String) {
+        vm.binding.userUID = userUID
+        vm.startToFetchInfos()
+        _vm = StateObject(wrappedValue: vm)
     }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    AsyncImage(url: URL(string: vm.output.userInfo.profileImage)) { image in
+                    AsyncImage(url: URL(string: vm.binding.isMyMyPage ? appState.session.userInfo.profileImage : vm.output.userInfo.profileImage)) { image in
                         image.resizable()
                     } placeholder: {
                         ProgressView()
@@ -37,13 +38,15 @@ struct MyPageView: View {
                         HStack {
                             Spacer()
                             VStack(spacing: 5) {
-                                Text("\(vm.output.posts.count)")
+                                Text("\(vm.binding.isMyMyPage ? appState.session.posts.count : vm.output.posts.count)")
                                 Text("出品")
                             }
                             Spacer()
-                            VStack(spacing: 5) {
-                                Text("\(vm.output.friend.friendList.count)")
-                                Text("フレンド")
+                            if vm.binding.isMyMyPage {
+                                VStack(spacing: 5) {
+                                    Text("\(vm.output.friend.friendList.count)")
+                                    Text("フレンド")
+                                }
                             }
                         }
                         .padding(.leading, 20)
@@ -72,16 +75,15 @@ struct MyPageView: View {
                         Image(uiImage: UIImage(named: "monochrome_Instagram") ?? UIImage())
                     }
                     
-                    Text(vm.output.userInfo.name)
+                    Text(vm.binding.isMyMyPage ? appState.session.userInfo.name : vm.output.userInfo.name)
                         .font(.system(size: 20, weight: .bold))
-                    
                 }
                 
-                Text("@\(vm.output.userInfo.userID)")
+                Text("@\(vm.binding.isMyMyPage ? appState.session.userInfo.userID : vm.output.userInfo.userID)")
                     .font(.system(size: 17, weight: .regular))
                 
                 if vm.output.userInfo.selfIntroduction != "" {
-                    Text("\(vm.output.userInfo.selfIntroduction)")
+                    Text("\(vm.binding.isMyMyPage ? appState.session.userInfo.selfIntroduction : vm.output.userInfo.selfIntroduction)")
                         .font(.system(size: 17, weight: .regular))
                 }
             }
@@ -133,7 +135,7 @@ struct MyPageView: View {
                 columns: Array(repeating: .init(.flexible(), spacing: 5), count: 3),
                 spacing: 5
             ) {
-                ForEach(vm.output.posts) { post in
+                ForEach(vm.binding.isMyMyPage ? appState.session.posts : vm.output.posts) { post in
                     NavigationLink(value: post) {
                         if let imageURLString = post.images.first {
                             AsyncImage(url: URL(string: imageURLString)) { image in
@@ -183,11 +185,8 @@ struct MyPageView: View {
             MyPageHumbergerMenuView()
         }
         .sheet(isPresented: vm.$binding.isShownHalfWishListView){
-            HalfWishListView()
+            HalfWishListView(userInfo: appState.session.userInfo)
                 .presentationDetents([.height(240)])
-        }
-        .onAppear {
-            self.vm.input.startToFetchInfos.send(userUID)
         }
     }
 }

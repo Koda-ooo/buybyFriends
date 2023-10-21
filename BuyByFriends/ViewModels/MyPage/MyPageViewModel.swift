@@ -7,14 +7,18 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 import FirebaseFirestore
 
 final class MyPageViewModel: ViewModelObject {
     final class Input: InputObject {
-        let startToFetchInfos = PassthroughSubject<String, Never>()
+        let startToFetchInfos = PassthroughSubject<Void, Never>()
     }
     
     final class Binding: BindingObject {
+        @Published var userUID: String = ""
+        
+        @Published var isMyMyPage: Bool = false
         @Published var isShownMyPageHumbergerMenu: Bool = false
         @Published var isShownHalfWishListView: Bool = false
     }
@@ -51,8 +55,8 @@ final class MyPageViewModel: ViewModelObject {
         let output = Output()
         
         input.startToFetchInfos
-            .flatMap { userUID in
-                userInfoProvider.fetchUserInfo(id: userUID)
+            .flatMap {
+                userInfoProvider.fetchUserInfo(id: binding.userUID)
             }
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -92,7 +96,7 @@ final class MyPageViewModel: ViewModelObject {
         
         input.startToFetchInfos
             .flatMap { userUID in
-                friendProvider.fetchFriend(uid: userUID)
+                friendProvider.fetchFriend(uid: binding.userUID)
             }
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -113,5 +117,15 @@ final class MyPageViewModel: ViewModelObject {
         self.input = input
         self.binding = binding
         self.output = output
+    }
+    
+    func startToFetchInfos() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        if binding.userUID != uid {
+            self.input.startToFetchInfos.send()
+            self.binding.isMyMyPage = false
+        } else {
+            self.binding.isMyMyPage = true
+        }
     }
 }

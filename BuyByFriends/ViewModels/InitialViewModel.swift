@@ -16,6 +16,7 @@ final class InitialViewModel: ViewModelObject {
         let startToObserveNotification = PassthroughSubject<Void, Never>()
         let startToObserveFriend = PassthroughSubject<Void, Never>()
         let startToObserveDelivery = PassthroughSubject<Void, Never>()
+        let startToObservePosts = PassthroughSubject<Void, Never>()
         
         let startToLogOut = PassthroughSubject<Void, Never>()
         
@@ -34,7 +35,8 @@ final class InitialViewModel: ViewModelObject {
         @Published fileprivate(set) var userInfo = UserInfo(dic: [:])
         @Published fileprivate(set) var notification: Notification = Notification(dic: [:])
         @Published fileprivate(set) var friend: Friend = Friend(dic: [:])
-        @Published fileprivate(set) var delivery: [Delivery] = [Delivery(dic: [:])]
+        @Published fileprivate(set) var delivery: [Delivery] = []
+        @Published fileprivate(set) var posts: [Post] = []
         @Published fileprivate(set) var uid: String = ""
         
         @Published fileprivate(set) var isSignIn: Bool = false
@@ -51,18 +53,21 @@ final class InitialViewModel: ViewModelObject {
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
     private let deliveryProvider: DeliveryProviderObject
+    private let postProvider: PostProviderProtocol
     
     init(authProvider: AuthProviderObject = AuthProvider(),
          userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
          notificationProvider: NotificationProviderObject = NotificationProvider(),
          friendProvider: FriendProviderObject = FriendProvider(),
-         deliveryProvider: DeliveryProviderObject = DeliveryProvider()
+         deliveryProvider: DeliveryProviderObject = DeliveryProvider(),
+         postProvider: PostProviderProtocol = PostProvider()
     ) {
         self.authProvider = authProvider
         self.userInfoProvider = userInfoProvider
         self.notificationProvider = notificationProvider
         self.friendProvider = friendProvider
         self.deliveryProvider = deliveryProvider
+        self.postProvider = postProvider
         
         let input = Input()
         let binding = Binding()
@@ -101,6 +106,7 @@ final class InitialViewModel: ViewModelObject {
                     input.startToObserveNotification.send()
                     input.startToObserveFriend.send()
                     input.startToObserveDelivery.send()
+                    input.startToObservePosts.send()
                     output.uid = result!.uid
                 } else {
                     output.userInfo = UserInfo(dic: [:])
@@ -198,6 +204,29 @@ final class InitialViewModel: ViewModelObject {
                 output.userInfo = result
                 output.isLoggedIn = true
                 
+            }
+            .store(in: &cancellables)
+        
+        ///　投稿情報を取得
+        input.startToObservePosts
+            .flatMap {
+                postProvider.observePosts(query: Firestore.firestore()
+                    .collection("Posts")
+                    .whereField("userUID", isEqualTo: Auth.auth().currentUser?.uid ?? "")
+                )
+            }
+            .sink { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let err):
+                    print(err)
+                }
+            } receiveValue: { result in
+                if !result.isEmpty {
+                    output.posts = result
+                } else {
+                    output.posts = []
+                }
             }
             .store(in: &cancellables)
         
