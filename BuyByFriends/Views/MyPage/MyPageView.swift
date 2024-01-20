@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @EnvironmentObject var appState: AppState
     @StateObject var vm: MyPageViewModel = MyPageViewModel()
     
     init(vm: MyPageViewModel = MyPageViewModel(), userUID uid: String) {
@@ -20,7 +21,7 @@ struct MyPageView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    AsyncImage(url: URL(string: vm.output.userInfo.profileImage)) { image in
+                    AsyncImage(url: URL(string: vm.binding.isMyMyPage ? appState.session.userInfo.profileImage : vm.output.userInfo.profileImage)) { image in
                         image.resizable()
                     } placeholder: {
                         ProgressView()
@@ -37,7 +38,7 @@ struct MyPageView: View {
                         HStack {
                             Spacer()
                             VStack(spacing: 5) {
-                                Text("\(vm.output.posts.count)")
+                                Text("\(vm.binding.isMyMyPage ? appState.session.posts.count : vm.output.posts.count)")
                                 Text("出品")
                             }
                             Spacer()
@@ -76,16 +77,15 @@ struct MyPageView: View {
                         Image(uiImage: UIImage(named: "monochrome_Instagram") ?? UIImage())
                     }
                     
-                    Text(vm.output.userInfo.name)
+                    Text(vm.binding.isMyMyPage ? appState.session.userInfo.name : vm.output.userInfo.name)
                         .font(.system(size: 20, weight: .bold))
-                    
                 }
                 
-                Text("@\(vm.output.userInfo.userID)")
+                Text("@\(vm.binding.isMyMyPage ? appState.session.userInfo.userID : vm.output.userInfo.userID)")
                     .font(.system(size: 17, weight: .regular))
                 
                 if vm.output.userInfo.selfIntroduction != "" {
-                    Text("\(vm.output.userInfo.selfIntroduction)")
+                    Text("\(vm.binding.isMyMyPage ? appState.session.userInfo.selfIntroduction : vm.output.userInfo.selfIntroduction)")
                         .font(.system(size: 17, weight: .regular))
                 }
             }
@@ -102,8 +102,7 @@ struct MyPageView: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(Color.gray, lineWidth: 2)
                         )
-                }
-                .foregroundColor(.gray)
+                }.foregroundColor(.gray)
                 
                 NavigationLink(value: Destination.MyPage.wishList) {
                     Text("ウィッシュリスト")
@@ -114,7 +113,6 @@ struct MyPageView: View {
                                 .stroke(Color.gray, lineWidth: 2)
                         )
                 }
-                .foregroundColor(.gray)
             }
             .padding([.horizontal, .bottom])
             
@@ -122,7 +120,7 @@ struct MyPageView: View {
                 columns: Array(repeating: .init(.flexible(), spacing: 5), count: 3),
                 spacing: 5
             ) {
-                ForEach(vm.output.posts) { post in
+                ForEach(vm.binding.isMyMyPage ? appState.session.posts : vm.output.posts) { post in
                     NavigationLink(value: post) {
                         if let imageURLString = post.images.first {
                             AsyncImage(url: URL(string: imageURLString)) { image in
@@ -149,7 +147,6 @@ struct MyPageView: View {
             case .inventoryList: MyPageInventoryListView(userInfo: vm.output.userInfo, isMyPage: vm.binding.isMyPage)
             case .wishList: MyPageWishListView()
             }
-        }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: {

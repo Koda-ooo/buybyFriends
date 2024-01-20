@@ -76,7 +76,7 @@ struct InventoryListView: View {
             .padding(.top, 50)
             .padding(.trailing, 30)
         }
-        .padding(.leading, 30)
+        .padding(.leading, 20)
         .background(Image("main")
             .edgesIgnoringSafeArea(.all)
         )
@@ -89,6 +89,7 @@ struct InventoryListView: View {
             vm.input.inventoryListViewDidLoad.send()
         }
         .navigationBarBackButtonHidden(true)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {

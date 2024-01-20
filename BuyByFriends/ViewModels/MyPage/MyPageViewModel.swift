@@ -20,6 +20,7 @@ final class MyPageViewModel: ViewModelObject {
         
         @Published var isMyPage: Bool = false
         @Published var isShownMyPageHumbergerMenu: Bool = false
+        @Published var isShownHalfWishListView: Bool = false
     }
     
     final class Output: OutputObject {
@@ -132,5 +133,15 @@ final class MyPageViewModel: ViewModelObject {
         self.input = input
         self.binding = binding
         self.output = output
+    }
+    
+    func startToFetchInfos() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        if binding.userUID != uid {
+            self.input.startToFetchInfos.send()
+            self.binding.isMyMyPage = false
+        } else {
+            self.binding.isMyMyPage = true
+        }
     }
 }

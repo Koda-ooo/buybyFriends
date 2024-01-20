@@ -109,3 +109,40 @@ enum InventoryGenre {
         ]
     }
 }
+
+enum InventoryGenre: Int, CaseIterable, Comparable {
+    
+    static func < (lhs: InventoryGenre, rhs: InventoryGenre) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+    
+    case outer = 1
+    case tops = 2
+    case bottoms = 3
+    case allIn = 4
+    case shoes = 5
+    case accessory = 6
+    case goods = 7
+    case other = 100
+    
+    var text: String {
+        switch self {
+        case .outer:
+            return "アウター"
+        case .tops:
+            return "トップス"
+        case .bottoms:
+            return "ボトムス"
+        case .allIn:
+            return "オールイン"
+        case .shoes:
+            return "シューズ"
+        case .accessory:
+            return "アクセサリー"
+        case .goods:
+            return "小物"
+        case .other:
+            return "その他"
+        }
+    }
+}
