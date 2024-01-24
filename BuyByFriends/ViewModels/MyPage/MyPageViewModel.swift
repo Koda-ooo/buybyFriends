@@ -12,6 +12,9 @@ import FirebaseFirestore
 final class MyPageViewModel: ViewModelObject {
     final class Input: InputObject {
         let startToFetchInfos = PassthroughSubject<String, Never>()
+//        // モックデータ読み込み用のイベントを追加 kota
+//        let loadMockData = PassthroughSubject<Void, Never>()
+
     }
     
     final class Binding: BindingObject {
@@ -106,6 +109,7 @@ final class MyPageViewModel: ViewModelObject {
             }
             .store(in: &cancellables)
         
+       
         /// 組み立てたストリームを反映
         cancellables.formUnion([
         ])
@@ -113,5 +117,12 @@ final class MyPageViewModel: ViewModelObject {
         self.input = input
         self.binding = binding
         self.output = output
+        
+//        // モックデータを読み込む処理を追加 Kota
+//            input.loadMockData
+//                .sink { [weak self] _ in
+//                    self?.output.userInfo = UserInfo.MOCK_USER.first { $0.id == "1" } ?? UserInfo(dic: [:])
+//                }
+//                .store(in: &cancellables)
     }
 }

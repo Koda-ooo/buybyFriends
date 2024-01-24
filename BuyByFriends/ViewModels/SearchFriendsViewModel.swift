@@ -16,6 +16,10 @@ final class SearchFriendsViewModel: ViewModelObject {
         let startToFetchUserInfoByUserID = PassthroughSubject<Void, Never>()
         let startToRequestToBeFriend = PassthroughSubject<Void, Never>()
         let startNotToBeFriend = PassthroughSubject<Void, Never>()
+        
+//        // モックデータ読み込み用のイベントを追加 kota
+//        let loadMockData = PassthroughSubject<Void, Never>()
+
     }
     
     final class Binding: BindingObject {
@@ -53,6 +57,10 @@ final class SearchFriendsViewModel: ViewModelObject {
         let input = Input()
         let binding = Binding()
         let output = Output()
+        
+////       ダミーユーザーの読み込み kota
+//        self.binding.userInfos = UserInfo.MOCK_USER
+
         
         input.startToFetchUserInfoByUserID
             .flatMap {

@@ -41,19 +41,21 @@ struct EditWishListView: View {
             Rectangle()
                 .frame(height: 0.5)
                 .foregroundColor(.gray)
-
+            
             Spacer()
             
             Button(action: {
                 vm.input.startToSaveWishList.send()
             }) {
                 Text("登録する")
-                    .frame(maxWidth: 150, minHeight: 60)
-                    .font(.system(size: 15, weight: .medium))
+                    .frame(maxWidth: 128, minHeight: 48)
+                    .font(.system(size: 15, weight: .bold))
             }
-            .accentColor(Color.black)
-            .background(.white)
-            .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black, lineWidth: 1))
+            .foregroundColor(.white)
+            //.accentColor(Color.white)
+            .background(.black)
+            //.overlay(RoundedRectangle(cornerRadius: 15).stroke(.black, lineWidth: 1))
+            .cornerRadius(20)
             
             Spacer()
             
@@ -64,11 +66,25 @@ struct EditWishListView: View {
                 path.path.removeLast(path.path.count)
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    print("check")
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
+                }
+
+            }
+        }
     }
 }
 
 struct EditWishListView_Previews: PreviewProvider {
     static var previews: some View {
-        EditWishListView(genre: .outer)
+        NavigationView {
+            EditWishListView(genre: .outer)
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }

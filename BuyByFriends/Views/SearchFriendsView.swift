@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SearchFriendsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @StateObject var vm = SearchFriendsViewModel()
     
+////    ユーザーカードビューの追加 kota
+//    var userCardView: UserCardView
+////    グリッド
+//    private let gridItems: [GridItem] = [
+//        .init(.flexible(), spacing: 1),
+//        .init(.flexible(), spacing: 1),
+//        .init(.flexible(), spacing: 1)
+//    ]
+
+
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -89,14 +100,49 @@ struct SearchFriendsView: View {
                             .background(.black)
                             .cornerRadius(20)
                         }
-                        
-                        
+
                     }
+                    
                 }
                 .padding()
             }
+            
+////          友達の表示を6人だけする。6人以上いる場合はもっとみるを表示させて、友達のリストを表示させる。
+//            HStack {
+//                Text("友達")
+//                Spacer()
+//                Button {
+////                    もっと見るページへナビゲーションで実装
+//                    print("もっとみるへ移動")
+//                } label: {
+////                    if文で"もっとみる" Button を出し分ける
+//                    HStack {
+//                        Text("もっとみる")
+//                        Image(systemName: "chevron.right")
+//                    }
+//                }
+//            }
+//            .padding()
+////           友達の表示 kota
+//            LazyVGrid(columns: gridItems, spacing: 1) {
+//                ForEach(vm.binding.userInfos) { value in
+//                    HStack {
+//                        Image(vm.binding.userInfos.image)
+//                        Text(vm.binding.userInfos.userID)
+//                    }
+//                }
+//            }
+            
+            
+            
+
+
         }
-        .navigationTitle("探す")
+        
+
+        
+        
+        .navigationTitle("BuyByFriends")
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -161,8 +207,15 @@ struct ShareViewInSearchFrindView: View {
     }
 }
 
+
+    
+
+
+
 struct SearchFriendsView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchFriendsView()
+//        FriendsView().environmentObject(AppState())
+        SearchFriendsView().environmentObject(AppState())
+//        ShareViewInSearchFrindView().environmentObject(AppState())
     }
 }

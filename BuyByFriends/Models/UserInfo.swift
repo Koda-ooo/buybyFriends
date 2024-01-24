@@ -41,3 +41,4 @@ struct UserInfo: Identifiable, Equatable, Codable, Hashable {
         self.wishList = dic["wishList"] as? [[Int:String]] ?? [[:]]
     }
 }
+

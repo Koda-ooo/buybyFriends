@@ -20,11 +20,16 @@ struct MyPageView: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
+//                    元のコード
                     AsyncImage(url: URL(string: vm.output.userInfo.profileImage)) { image in
                         image.resizable()
                     } placeholder: {
                         ProgressView()
                     }
+////                    モック画像呼び出し↓ Kota
+//                    Image(vm.output.userInfo.profileImage)
+//                        .resizable()
+                    
                     .frame(
                         width: UIScreen.main.bounds.height*0.11,
                         height: UIScreen.main.bounds.height*0.11
@@ -187,13 +192,27 @@ struct MyPageView: View {
                 .presentationDetents([.height(240)])
         }
         .onAppear {
-            self.vm.input.startToFetchInfos.send(userUID)
+//                vm.input.loadMockData.send() // モックデータを読み込む
+            self.vm.input.startToFetchInfos.send(userUID) /*元のコード*/
         }
     }
 }
 
+// 元のプレビュー
 struct MyPageView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageView(userUID: "")
+        MyPageView(userUID: "CL5obaAWkIVCqmH0Nl2avs3tFCi2").environmentObject(AppState())
     }
 }
+
+//// モック用プレビュー
+//struct MyPageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyPageView(userUID: "1").environmentObject(AppState()) // ここで任意のuserUIDを設定
+//            .onAppear {
+//                let viewModel = MyPageViewModel()
+//                viewModel.input.loadMockData.send() // モックデータを読み込む
+//                viewModel.input.startToFetchInfos.send("1") // IDが"1"のユーザーデータをフェッチ
+//            }
+//    }
+//}
