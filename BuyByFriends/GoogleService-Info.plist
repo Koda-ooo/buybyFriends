@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>69534701599-pgcct0nk60ibfql6mc4shn6gq936rknb.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.69534701599-pgcct0nk60ibfql6mc4shn6gq936rknb</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCaeXM-Ae98MVTSInIl_mhLEBkLRDF3fIM</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ToyaSuzuki.BuyByFriends</string>
+	<string>app.koda.BuyByFriends</string>
 	<key>PROJECT_ID</key>
 	<string>buybyfriends-b3354</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:69534701599:ios:24144e5efc935257b9dd2a</string>
+	<string>1:69534701599:ios:a4c97e81203d7cfdb9dd2a</string>
 </dict>
 </plist>

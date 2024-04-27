@@ -142,7 +142,6 @@
 		5683E9D72A24DD3100C833FD /* MessageKindType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5683E9D62A24DD3100C833FD /* MessageKindType.swift */; };
 		5683E9DD2A25B0DD00C833FD /* Agrume in Frameworks */ = {isa = PBXBuildFile; productRef = 5683E9DC2A25B0DD00C833FD /* Agrume */; };
 		5683E9DF2A26E05400C833FD /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 5683E9DE2A26E05400C833FD /* FirebaseAppCheck */; };
-		5683E9E12A2ADBB000C833FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5683E9E02A2ADBB000C833FD /* GoogleService-Info.plist */; };
 		5683E9E32A2AE65800C833FD /* UITabBar+changeTabBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5683E9E22A2AE65700C833FD /* UITabBar+changeTabBarState.swift */; };
 		5683E9E52A2AE68900C833FD /* UIView+allSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5683E9E42A2AE68900C833FD /* UIView+allSubViews.swift */; };
 		5683E9E72A2AE75100C833FD /* HideTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5683E9E62A2AE75100C833FD /* HideTabBar.swift */; };
@@ -157,6 +156,7 @@
 		569B58672A9220CB005B0422 /* DeliveryProviderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B58662A9220CB005B0422 /* DeliveryProviderObject.swift */; };
 		569B58692A922168005B0422 /* DeliveryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B58682A922168005B0422 /* DeliveryProvider.swift */; };
 		569B586B2A92376C005B0422 /* EditPersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569B586A2A92376C005B0422 /* EditPersonalInfoView.swift */; };
+		56B1297A2BDC8D2E007504F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56B129792BDC8D2E007504F8 /* GoogleService-Info.plist */; };
 		56C1C0FF29FE3500001A2BC4 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C1C0FE29FE3500001A2BC4 /* PostViewModel.swift */; };
 		56ED87D12A5175CF001045C1 /* MyPageHumbergerMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ED87D02A5175CF001045C1 /* MyPageHumbergerMenuView.swift */; };
 		56ED87D32A52C549001045C1 /* WithdrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ED87D22A52C549001045C1 /* WithdrawView.swift */; };
@@ -330,7 +330,6 @@
 		5683E9D22A24930D00C833FD /* UIImage+loadURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+loadURL.swift"; sourceTree = "<group>"; };
 		5683E9D42A24DC1B00C833FD /* ChatMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMedia.swift; sourceTree = "<group>"; };
 		5683E9D62A24DD3100C833FD /* MessageKindType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKindType.swift; sourceTree = "<group>"; };
-		5683E9E02A2ADBB000C833FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5683E9E22A2AE65700C833FD /* UITabBar+changeTabBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+changeTabBarState.swift"; sourceTree = "<group>"; };
 		5683E9E42A2AE68900C833FD /* UIView+allSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+allSubViews.swift"; sourceTree = "<group>"; };
 		5683E9E62A2AE75100C833FD /* HideTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideTabBar.swift; sourceTree = "<group>"; };
@@ -345,6 +344,8 @@
 		569B58662A9220CB005B0422 /* DeliveryProviderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryProviderObject.swift; sourceTree = "<group>"; };
 		569B58682A922168005B0422 /* DeliveryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryProvider.swift; sourceTree = "<group>"; };
 		569B586A2A92376C005B0422 /* EditPersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalInfoView.swift; sourceTree = "<group>"; };
+		56B129782BDC882F007504F8 /* BuyByFriendsRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BuyByFriendsRelease.entitlements; sourceTree = "<group>"; };
+		56B129792BDC8D2E007504F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		56C1C0FE29FE3500001A2BC4 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		56ED87D02A5175CF001045C1 /* MyPageHumbergerMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageHumbergerMenuView.swift; sourceTree = "<group>"; };
 		56ED87D22A52C549001045C1 /* WithdrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawView.swift; sourceTree = "<group>"; };
@@ -441,6 +442,7 @@
 				5632E54329E10B6D0024C19C /* BuyByFriendsUITests */,
 				5632E52729E10B6C0024C19C /* Products */,
 				5655FDFE2A079CEF002B2E0A /* Frameworks */,
+				56B129772BDC80FD007504F8 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -457,9 +459,10 @@
 		5632E52829E10B6C0024C19C /* BuyByFriends */ = {
 			isa = PBXGroup;
 			children = (
+				56B129792BDC8D2E007504F8 /* GoogleService-Info.plist */,
+				56B129782BDC882F007504F8 /* BuyByFriendsRelease.entitlements */,
 				564B427729ED39A9003E6F6E /* BuyByFriends.entitlements */,
 				564B427629ED398F003E6F6E /* Info.plist */,
-				5683E9E02A2ADBB000C833FD /* GoogleService-Info.plist */,
 				5632E52929E10B6C0024C19C /* BuyByFriendsApp.swift */,
 				5632E52B29E10B6C0024C19C /* ContentView.swift */,
 				564B428029F0D589003E6F6E /* Protocol */,
@@ -776,6 +779,14 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		56B129772BDC80FD007504F8 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				DF367C3C2AD60F760029056C /* EditWishListViewModel.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		56C1C0FD29FE34C3001A2BC4 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -968,7 +979,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5683E9E12A2ADBB000C833FD /* GoogleService-Info.plist in Resources */,
+				56B1297A2BDC8D2E007504F8 /* GoogleService-Info.plist in Resources */,
 				5632E53129E10B6D0024C19C /* Preview Assets.xcassets in Resources */,
 				5632E52E29E10B6D0024C19C /* Assets.xcassets in Resources */,
 			);
@@ -1306,10 +1317,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BuyByFriends/BuyByFriends.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BuyByFriends/Preview Content\"";
-				DEVELOPMENT_TEAM = 9K3B3ZYB2V;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 4HYAZPGSFC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BuyByFriends/Info.plist;
@@ -1324,9 +1337,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ToyaSuzuki.BuyByFriends;
+				PRODUCT_BUNDLE_IDENTIFIER = app.koda.BuyByFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = BuyByFriends;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1341,12 +1355,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BuyByFriends/BuyByFriends.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BuyByFriends/BuyByFriendsRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BuyByFriends/Preview Content\"";
-				DEVELOPMENT_TEAM = 9K3B3ZYB2V;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 4HYAZPGSFC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BuyByFriends/Info.plist;
@@ -1361,9 +1377,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ToyaSuzuki.BuyByFriends;
+				PRODUCT_BUNDLE_IDENTIFIER = app.koda.BuyByFriends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = BuyByFriends;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
