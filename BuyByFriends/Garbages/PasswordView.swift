@@ -20,6 +20,7 @@ struct PasswordView: View {
         VStack(alignment: .leading, spacing: 30){
             Text("パスワードを入力してください。")
                 .font(.system(size: 20, weight: .medium))
+                .foregroundColor(.black)
                 .padding(.top, 30)
             
             HStack {
