@@ -12,7 +12,6 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseMessaging
-import FirebaseAppCheck
 import Stripe
 
 @main
@@ -33,24 +32,6 @@ struct BuyByFriendsApp: App {
     }
 }
 
-class MyAppCheckProviderFactory: NSObject, AppCheckProviderFactory {
-  func createProvider(with app: FirebaseApp) -> AppCheckProvider? {
-    #if targetEnvironment(simulator)
-    // App Attest is not available on simulators.
-    // Use a debug provider.
-    let provider = AppCheckDebugProvider(app: app)
-
-    // Print only locally generated token to avoid a valid token leak on CI.
-    print("Firebase App Check debug token: \(provider?.localDebugToken() ?? "" )")
-
-    return provider
-    #else
-    // Use App Attest provider on real devices.
-    return AppAttestProvider(app: app)
-    #endif
-  }
-}
-
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
     
@@ -58,9 +39,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        
-        let providerFactory = MyAppCheckProviderFactory()
-        AppCheck.setAppCheckProviderFactory(providerFactory)
         
         // Push通知許可のポップアップを表示
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]

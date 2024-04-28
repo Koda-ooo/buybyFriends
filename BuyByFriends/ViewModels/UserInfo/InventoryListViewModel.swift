@@ -80,13 +80,7 @@ final class InventoryViewModel: ViewModelObject {
             .sink(receiveCompletion: { completion in
                 print("receiveCompletion: \(completion)")
             }, receiveValue: { inventory in
-                guard let index = output.inventoryList.firstIndex(where: {$0.id == inventory.id}) else { return }
-                output.inventoryList[index].selected.toggle()
-                if binding.selectedInventoryList.contains(output.inventoryList[index].name) == false {
-                    binding.selectedInventoryList.append(output.inventoryList[index].name)
-                } else {
-                    binding.selectedInventoryList.removeAll(where: {$0 == output.inventoryList[index].name} )
-                }
+                // TODO: 実装
             })
             .store(in: &cancellables)
         

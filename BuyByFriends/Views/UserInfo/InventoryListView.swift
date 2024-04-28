@@ -22,11 +22,11 @@ struct InventoryListView: View {
                 Text("持ち物を教えてください。")
                     .font(.system(size: 20, weight: .black))
                 
-                GenreView(
-                    datas: InventoryGenre.names(),
-                    spacing: 10) { genre in
-                        Text(genre.debugDescription)
-                        
+//                GenreView(
+//                    datas: InventoryGenre.names(),
+//                    spacing: 10) { genre in
+//                        Text(genre.debugDescription)
+//                        
 //                        FlexibleView(
 //                            data:  vm.output.inventoryList,
 //                            spacing: 10,
@@ -58,7 +58,7 @@ struct InventoryListView: View {
 //                                .cornerRadius(10)
 //                            }
 //                        }
-                    }
+//                    }
             }
             
             Button(action: {
