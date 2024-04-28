@@ -16,6 +16,7 @@ struct WelcomeView: View {
                 Spacer()
                 Text("BuyByFriend")
                     .font(.system(size: 30, weight: .heavy))
+                    .foregroundColor(.black)
                 Spacer()
                 NavigationLink(value: Destination.Welcome.phoneNumberVerification) {
                     Text("Get started")
@@ -28,15 +29,18 @@ struct WelcomeView: View {
                 
                 VStack {
                     Text("本アプリでは「Get started」を押した時点で")
+                        .foregroundColor(.black)
                     HStack(spacing: 0) {
                         if let url = URL(string: "https://www.apple.com/") {
                             Link("利用規約", destination: url)
                         }
                         Text("と")
+                            .foregroundColor(.black)
                         if let url = URL(string: "https://www.apple.com/") {
                             Link("プライバシーポリシー", destination: url)
                         }
                         Text("に同意いただいたことになります。")
+                            .foregroundColor(.black)
                     }
                 }
                 .font(.system(size: 12, weight: .medium))
