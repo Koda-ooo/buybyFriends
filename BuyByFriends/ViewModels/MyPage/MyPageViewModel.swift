@@ -137,11 +137,11 @@ final class MyPageViewModel: ViewModelObject {
     
     func startToFetchInfos() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        if binding.userUID != uid {
+        if binding.uid != uid {
             self.input.startToFetchInfos.send()
-            self.binding.isMyMyPage = false
+            self.binding.isMyPage = false
         } else {
-            self.binding.isMyMyPage = true
+            self.binding.isMyPage = true
         }
     }
 }
