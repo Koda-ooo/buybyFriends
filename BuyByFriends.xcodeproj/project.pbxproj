@@ -320,7 +320,6 @@
 		5683E9C82A218CCE00C833FD /* MessageProviderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProviderObject.swift; sourceTree = "<group>"; };
 		5683E9CA2A218D1500C833FD /* MessageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProvider.swift; sourceTree = "<group>"; };
 		5683E9CD2A21BC1A00C833FD /* MessageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MessageKit; sourceTree = "<group>"; };
-		5683E9CF2A21BF2B00C833FD /* InputBarAccessoryView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = InputBarAccessoryView; path = ../../Desktop/MessageKit/InputBarAccessoryView; sourceTree = "<group>"; };
 		5683E9D02A24709800C833FD /* UIColor+rbga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+rbga.swift"; sourceTree = "<group>"; };
 		5683E9D22A24930D00C833FD /* UIImage+loadURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+loadURL.swift"; sourceTree = "<group>"; };
 		5683E9D42A24DC1B00C833FD /* ChatMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMedia.swift; sourceTree = "<group>"; };
@@ -428,7 +427,6 @@
 			isa = PBXGroup;
 			children = (
 				5632E52829E10B6C0024C19C /* BuyByFriends */,
-				5683E9CF2A21BF2B00C833FD /* InputBarAccessoryView */,
 				5683E9CD2A21BC1A00C833FD /* MessageKit */,
 				5632E53929E10B6D0024C19C /* BuyByFriendsTests */,
 				5632E54329E10B6D0024C19C /* BuyByFriendsUITests */,
