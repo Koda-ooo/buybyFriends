@@ -16,6 +16,7 @@ struct BirthDayView: View {
         VStack(alignment: .leading, spacing: 30){
             Text("生年月日を入力してください。")
                 .font(.system(size: 20, weight: .black))
+                .foregroundColor(.black)
                 .padding(.top, 30)
             
             DatePicker("", selection: vm.$binding.birthDay,

@@ -17,6 +17,7 @@ struct UsernameView: View {
             VStack(alignment: .leading, spacing: 30){
                 Text("名前を入力してください。")
                     .font(.system(size: 20, weight: .black))
+                    .foregroundColor(.black)
                     .padding(.top, 80)
                 
                 TextField("Your name", text: vm.$binding.username)

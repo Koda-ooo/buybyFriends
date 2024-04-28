@@ -16,6 +16,7 @@ struct UserIDVIew: View {
         VStack(alignment: .leading, spacing: 30){
             Text("ユーザー名を入力してください。")
                 .font(.system(size: 20, weight: .black))
+                .foregroundColor(.black)
                 .padding(.top, 30)
             
             HStack{

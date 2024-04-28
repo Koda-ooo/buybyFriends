@@ -16,6 +16,7 @@ struct VerificationCodeView: View {
         VStack(alignment: .leading, spacing: 30){
             Text("認証コードを入力してください。")
                 .font(.system(size: 20, weight: .black))
+                .foregroundColor(.black)
                 .padding(.top, 30)
             
             TextField("123456", text: vm.$binding.verificationCode)
@@ -29,6 +30,7 @@ struct VerificationCodeView: View {
             
             Text("認証コードが届くまで60秒ほどお待ちください")
                 .font(.system(size: 12, weight: .medium))
+                .foregroundColor(.black)
                 .padding(.top, -10)
             
             // 同意して始める

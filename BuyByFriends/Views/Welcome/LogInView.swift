@@ -16,10 +16,12 @@ struct LogInView: View {
         VStack(alignment: .leading, spacing: 20){
             Text("電話番号を入力してください。")
                 .font(.system(size: 20, weight: .black))
+                .foregroundColor(.black)
                 .padding(.top, 30)
             
             Text("電話番号は会員登録のみに利用され、\n外部に公表されることは一切ございません。")
                 .font(.system(size: 15, weight: .medium))
+                .foregroundColor(.black)
                 .padding(.bottom, 30)
             
             VStack(spacing: 50) {
