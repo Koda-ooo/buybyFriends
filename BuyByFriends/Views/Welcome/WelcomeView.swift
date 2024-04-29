@@ -16,27 +16,31 @@ struct WelcomeView: View {
                 Spacer()
                 Text("BuyByFriend")
                     .font(.system(size: 30, weight: .heavy))
+                    .foregroundColor(Asset.jetBlack.swiftUIColor)
                 Spacer()
                 NavigationLink(value: Destination.Welcome.phoneNumberVerification) {
                     Text("Get started")
                         .frame(maxWidth: .infinity, minHeight: 70)
-                        .foregroundColor(.white)
+                        .foregroundColor(Asset.white.swiftUIColor)
                 }
-                .background(.black)
+                .background(Asset.jetBlack.swiftUIColor)
                 .cornerRadius(.infinity)
                 .padding(.horizontal, 30)
                 
                 VStack {
                     Text("本アプリでは「Get started」を押した時点で")
+                        .foregroundColor(Asset.jetBlack.swiftUIColor)
                     HStack(spacing: 0) {
                         if let url = URL(string: "https://www.apple.com/") {
                             Link("利用規約", destination: url)
                         }
                         Text("と")
+                            .foregroundColor(Asset.jetBlack.swiftUIColor)
                         if let url = URL(string: "https://www.apple.com/") {
                             Link("プライバシーポリシー", destination: url)
                         }
                         Text("に同意いただいたことになります。")
+                            .foregroundColor(Asset.jetBlack.swiftUIColor)
                     }
                 }
                 .font(.system(size: 12, weight: .medium))
@@ -45,7 +49,7 @@ struct WelcomeView: View {
                 NavigationLink(value: Destination.Welcome.logIn) {
                     Text("ログイン")
                         .frame(maxWidth: .infinity, minHeight: 70)
-                        .foregroundColor(.black)
+                        .foregroundColor(Asset.jetBlack.swiftUIColor)
                 }
                 .cornerRadius(.infinity)
                 .padding(.horizontal, 30)
