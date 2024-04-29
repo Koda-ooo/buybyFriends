@@ -14,8 +14,6 @@ struct WelcomeView: View {
         NavigationStack(path: $path.path) {
             VStack(spacing: 20){
                 Spacer()
-//                Image(Asset.share.name)
-//                Asset.instagram
                 Text("BuyByFriend")
                     .font(.system(size: 30, weight: .heavy))
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
