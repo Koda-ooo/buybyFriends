@@ -29,7 +29,7 @@ struct ProfileImageView: View {
                             height: UIScreen.main.bounds.width*0.5
                         )
                 } else {
-                    Image("noimage")
+                    Asset.noimage.swiftUIImage
                         .resizable()
                         .aspectRatio(1,contentMode: .fit)
                         .clipShape(Circle())
