@@ -14,33 +14,35 @@ struct WelcomeView: View {
         NavigationStack(path: $path.path) {
             VStack(spacing: 20){
                 Spacer()
+//                Image(Asset.share.name)
+//                Asset.instagram
                 Text("BuyByFriend")
                     .font(.system(size: 30, weight: .heavy))
-                    .foregroundColor(Asset.jetBlack.swiftUIColor)
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 Spacer()
                 NavigationLink(value: Destination.Welcome.phoneNumberVerification) {
                     Text("Get started")
                         .frame(maxWidth: .infinity, minHeight: 70)
-                        .foregroundColor(Asset.white.swiftUIColor)
+                        .foregroundColor(Asset.Colors.white.swiftUIColor)
                 }
-                .background(Asset.jetBlack.swiftUIColor)
+                .background(Asset.Colors.jetBlack.swiftUIColor)
                 .cornerRadius(.infinity)
                 .padding(.horizontal, 30)
                 
                 VStack {
                     Text("本アプリでは「Get started」を押した時点で")
-                        .foregroundColor(Asset.jetBlack.swiftUIColor)
+                        .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     HStack(spacing: 0) {
                         if let url = URL(string: "https://www.apple.com/") {
                             Link("利用規約", destination: url)
                         }
                         Text("と")
-                            .foregroundColor(Asset.jetBlack.swiftUIColor)
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                         if let url = URL(string: "https://www.apple.com/") {
                             Link("プライバシーポリシー", destination: url)
                         }
                         Text("に同意いただいたことになります。")
-                            .foregroundColor(Asset.jetBlack.swiftUIColor)
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
                 }
                 .font(.system(size: 12, weight: .medium))
@@ -49,7 +51,7 @@ struct WelcomeView: View {
                 NavigationLink(value: Destination.Welcome.logIn) {
                     Text("ログイン")
                         .frame(maxWidth: .infinity, minHeight: 70)
-                        .foregroundColor(Asset.jetBlack.swiftUIColor)
+                        .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 }
                 .cornerRadius(.infinity)
                 .padding(.horizontal, 30)

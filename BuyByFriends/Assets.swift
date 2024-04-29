@@ -24,29 +24,35 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
-  internal static let beige = ColorAsset(name: "beige")
-  internal static let chromeYellow = ColorAsset(name: "chromeYellow")
-  internal static let jetBlack = ColorAsset(name: "jetBlack")
-  internal static let lightGray = ColorAsset(name: "lightGray")
-  internal static let orange = ColorAsset(name: "orange")
-  internal static let silver = ColorAsset(name: "silver")
-  internal static let stormGreen = ColorAsset(name: "stormGreen")
-  internal static let white = ColorAsset(name: "white")
-  internal static let bookmark = ImageAsset(name: "bookmark")
-  internal static let circleCross = ImageAsset(name: "circleCross")
-  internal static let envelope = ImageAsset(name: "envelope")
-  internal static let heart = ImageAsset(name: "heart")
-  internal static let note = ImageAsset(name: "note")
-  internal static let shoppingBag = ImageAsset(name: "shoppingBag")
-  internal static let signout = ImageAsset(name: "signout")
-  internal static let truck = ImageAsset(name: "truck")
-  internal static let yen = ImageAsset(name: "yen")
-  internal static let etc = ImageAsset(name: "Etc")
-  internal static let instagram = ImageAsset(name: "Instagram")
-  internal static let line = ImageAsset(name: "LINE")
-  internal static let link = ImageAsset(name: "Link")
-  internal static let twitter = ImageAsset(name: "Twitter")
-  internal static let monochromeInstagram = ImageAsset(name: "monochrome_Instagram")
+  internal enum Colors {
+    internal static let beige = ColorAsset(name: "Colors/beige")
+    internal static let chromeYellow = ColorAsset(name: "Colors/chromeYellow")
+    internal static let jetBlack = ColorAsset(name: "Colors/jetBlack")
+    internal static let lightGray = ColorAsset(name: "Colors/lightGray")
+    internal static let orange = ColorAsset(name: "Colors/orange")
+    internal static let silver = ColorAsset(name: "Colors/silver")
+    internal static let stormGreen = ColorAsset(name: "Colors/stormGreen")
+    internal static let white = ColorAsset(name: "Colors/white")
+  }
+  internal enum Icons {
+    internal static let bookmark = ImageAsset(name: "Icons/bookmark")
+    internal static let circleCross = ImageAsset(name: "Icons/circleCross")
+    internal static let envelope = ImageAsset(name: "Icons/envelope")
+    internal static let heart = ImageAsset(name: "Icons/heart")
+    internal static let note = ImageAsset(name: "Icons/note")
+    internal static let shoppingBag = ImageAsset(name: "Icons/shoppingBag")
+    internal static let signout = ImageAsset(name: "Icons/signout")
+    internal static let truck = ImageAsset(name: "Icons/truck")
+    internal static let yen = ImageAsset(name: "Icons/yen")
+  }
+  internal enum Sns {
+    internal static let etc = ImageAsset(name: "SNS/Etc")
+    internal static let instagram = ImageAsset(name: "SNS/Instagram")
+    internal static let line = ImageAsset(name: "SNS/LINE")
+    internal static let link = ImageAsset(name: "SNS/Link")
+    internal static let twitter = ImageAsset(name: "SNS/Twitter")
+    internal static let monochromeInstagram = ImageAsset(name: "SNS/monochrome_Instagram")
+  }
   internal static let main = ImageAsset(name: "main")
   internal static let noimage = ImageAsset(name: "noimage")
 }
