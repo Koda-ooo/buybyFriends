@@ -184,6 +184,7 @@
 		56F2743729FE7739001E9425 /* PostProvier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2743629FE7739001E9425 /* PostProvier.swift */; };
 		56F997F52A065E2A00A39C6B /* Firestore+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F997F42A065E2A00A39C6B /* Firestore+Combine.swift */; };
 		56F997F72A0667CB00A39C6B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F997F62A0667CB00A39C6B /* Post.swift */; };
+		6C3D6B222BDF85710011AFEE /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3D6B212BDF85710011AFEE /* Assets.swift */; };
 		DF367C392AD5B7DA0029056C /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C382AD5B7DA0029056C /* WishListView.swift */; };
 		DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3A2AD5B9E80029056C /* EditWishListView.swift */; };
 		DF367C3F2AD61CEE0029056C /* HalfWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */; };
@@ -370,6 +371,7 @@
 		56F2743629FE7739001E9425 /* PostProvier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProvier.swift; sourceTree = "<group>"; };
 		56F997F42A065E2A00A39C6B /* Firestore+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firestore+Combine.swift"; sourceTree = "<group>"; };
 		56F997F62A0667CB00A39C6B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		6C3D6B212BDF85710011AFEE /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		DF367C382AD5B7DA0029056C /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
 		DF367C3A2AD5B9E80029056C /* EditWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListView.swift; sourceTree = "<group>"; };
 		DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListView.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				5653032D2A19D257003C12CE /* ViewModifier */,
 				5653032C2A19D20E003C12CE /* Originals */,
 				5632E52D29E10B6D0024C19C /* Assets.xcassets */,
+				6C3D6B212BDF85710011AFEE /* Assets.swift */,
 				565303302A19DC27003C12CE /* Garbages */,
 				5632E52F29E10B6D0024C19C /* Preview Content */,
 			);
@@ -837,6 +840,7 @@
 				5632E52229E10B6C0024C19C /* Sources */,
 				5632E52329E10B6C0024C19C /* Frameworks */,
 				5632E52429E10B6C0024C19C /* Resources */,
+				6C3D6B202BDF84C30011AFEE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -987,6 +991,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6C3D6B202BDF84C30011AFEE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/opt/homebrew/bin:$PATH\n\nif which mint >/dev/null; then\n    # SwiftGen\n    xcrun --sdk macosx mint run swiftgen\nelse \n    echo 'warning: mint not installed.'\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5632E52229E10B6C0024C19C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1070,6 +1094,7 @@
 				5655FE0C2A0B326B002B2E0A /* SelectClothesSizeView.swift in Sources */,
 				56460AF129FA654E00908E41 /* Destination.swift in Sources */,
 				5653EFF32A1EF711000688EF /* NotificationTodoView.swift in Sources */,
+				6C3D6B222BDF85710011AFEE /* Assets.swift in Sources */,
 				564B426629ED1C04003E6F6E /* MyPageView.swift in Sources */,
 				568A1D6D29F797BF005DEA24 /* ProfileImageViewModel.swift in Sources */,
 				DFBC1F672ADA469B00E99BC3 /* HalfWishListViewModel.swift in Sources */,
