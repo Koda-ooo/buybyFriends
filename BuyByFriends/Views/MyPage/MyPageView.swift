@@ -74,7 +74,7 @@ struct MyPageView: View {
                     Button(action: {
                         
                     }) {
-                        Image(uiImage: UIImage(named: "monochrome_Instagram") ?? UIImage())
+                        Asset.Sns.monochromeInstagram.swiftUIImage
                     }
                     
                     Text(vm.binding.isMyPage ? appState.session.userInfo.name : vm.output.userInfo.name)

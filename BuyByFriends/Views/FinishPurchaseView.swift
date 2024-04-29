@@ -53,27 +53,27 @@ struct FinishPurchaseView: View {
                 Button(action: {
                     vm.convertURLToData(url: post.images.first!)
                 }) {
-                    Image(uiImage: UIImage(named: "Instagram") ?? UIImage())
+                    Asset.Sns.instagram.swiftUIImage
                 }
                 Button(action: {
                     vm.input.startToShareToLine.send()
                 }) {
-                    Image(uiImage: UIImage(named: "LINE") ?? UIImage())
+                    Asset.Sns.line.swiftUIImage
                 }
                 Button(action: {
                     vm.input.startToShareToTwitter.send()
                 }) {
-                    Image(uiImage: UIImage(named: "Twitter") ?? UIImage())
+                    Asset.Sns.twitter.swiftUIImage
                 }
                 Button(action: {
                     
                 }) {
-                    Image(uiImage: UIImage(named: "Link") ?? UIImage())
+                    Asset.Sns.link.swiftUIImage
                 }
                 Button(action: {
                     
                 }) {
-                    Image(uiImage: UIImage(named: "Etc") ?? UIImage())
+                    Asset.Sns.etc.swiftUIImage
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 70)

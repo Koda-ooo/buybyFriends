@@ -50,27 +50,27 @@ struct FinishPostView: View {
                 Button(action: {
                     shareToInstagramStory()
                 }) {
-                    Image(uiImage: UIImage(named: "Instagram") ?? UIImage())
+                    Asset.Sns.instagram.swiftUIImage
                 }
                 Button(action: {
                     shareOnLINE()
                 }) {
-                    Image(uiImage: UIImage(named: "LINE") ?? UIImage())
+                    Asset.Sns.line.swiftUIImage
                 }
                 Button(action: {
                     shareOnTwitter()
                 }) {
-                    Image(uiImage: UIImage(named: "Twitter") ?? UIImage())
+                    Asset.Sns.twitter.swiftUIImage
                 }
                 Button(action: {
                     
                 }) {
-                    Image(uiImage: UIImage(named: "Link") ?? UIImage())
+                    Asset.Sns.link.swiftUIImage
                 }
                 Button(action: {
                     
                 }) {
-                    Image(uiImage: UIImage(named: "Etc") ?? UIImage())
+                    Asset.Sns.etc.swiftUIImage
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 70)
