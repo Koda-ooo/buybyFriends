@@ -90,8 +90,9 @@ struct ProfileImageView: View {
         .sheet(isPresented: vm.$binding.isShownSelfImagePickerShown) {
             ImagePicker(sourceType: .camera, selectedImage: vm.$binding.profileImage)
         }
-        .background(Image("main")
-            .edgesIgnoringSafeArea(.all)
+        .background(
+            Asset.main.swiftUIImage
+                .edgesIgnoringSafeArea(.all)
         )
         .navigationBarBackButtonHidden(true)
         .toolbar {

@@ -77,8 +77,9 @@ struct InventoryListView: View {
             .padding(.trailing, 30)
         }
         .padding(.leading, 20)
-        .background(Image("main")
-            .edgesIgnoringSafeArea(.all)
+        .background(
+            Asset.main.swiftUIImage
+                .edgesIgnoringSafeArea(.all)
         )
         .onChange(of: vm.output.isFinishedUploadUserInfo) { result in
             appState.session.isLoggedIn = result

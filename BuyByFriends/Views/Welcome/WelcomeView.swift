@@ -58,8 +58,9 @@ struct WelcomeView: View {
             }
             .font(.system(size: 20, weight: .heavy))
             .padding(.bottom, 30)
-            .background(Image("main")
-                .edgesIgnoringSafeArea(.all)
+            .background(
+                Asset.main.swiftUIImage
+                    .edgesIgnoringSafeArea(.all)
             )
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Destination.Welcome.self) { value in

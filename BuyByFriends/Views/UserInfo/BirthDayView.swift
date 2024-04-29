@@ -38,8 +38,9 @@ struct BirthDayView: View {
             Spacer()
         }
         .frame(maxWidth: UIScreen.main.bounds.width*0.85)
-        .background(Image("main")
-            .edgesIgnoringSafeArea(.all)
+        .background(
+            Asset.main.swiftUIImage
+                .edgesIgnoringSafeArea(.all)
         )
         .navigationBarBackButtonHidden(true)
         .toolbar {
