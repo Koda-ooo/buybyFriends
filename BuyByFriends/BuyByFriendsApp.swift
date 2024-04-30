@@ -39,13 +39,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
         
         // Push通知許可のポップアップを表示
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in
-            guard granted else { return }
-            DispatchQueue.main.async {
-                application.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
+        
+        application.registerForRemoteNotifications()
+        
+        Messaging.messaging().token { token, error in
+            if let error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token {
+                print("FCM registration token: \(token)")
             }
         }
         return true
@@ -61,7 +67,7 @@ extension AppDelegate: MessagingDelegate {
     ) {
         guard let fcmToken = fcmToken else { return }
         UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
-
+        
         if let uid = Auth.auth().currentUser?.uid {
             setFcmToken(uid: uid, fcmToken: fcmToken)
         }
@@ -78,45 +84,58 @@ extension AppDelegate: MessagingDelegate {
 // MARK: - AppDelegate Push Notification
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func application(_ application: UIApplication,
-                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        if let messageID = userInfo["gcm.message_id"] {
-            print("MessageID: \(messageID)")
-        }
-        print(userInfo)
-        completionHandler(.newData)
-    }
-    
     // アプリがForeground時にPush通知を受信する処理
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
-      withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-      completionHandler([[.banner, .badge, .sound]])
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([[.banner, .badge, .sound]])
     }
     
-    func application(_ application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Messaging.messaging().apnsToken = deviceToken
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Auth.auth().setAPNSToken(deviceToken, type: . unknown)
     }
     
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
     }
     
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification notification: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if Auth.auth().canHandleNotification(notification) {
+            completionHandler(.noData)
+            return
+        }
+    }
+    
+    func application(_ application: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        if Auth.auth().canHandle(url) {
+            return true
+        }
+        return false
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        for urlContext in URLContexts {
+            let url = urlContext.url
+            Auth.auth().canHandle(url)
+        }
+    }
+    
     //  Push通知がタップされた時の処理
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                  didReceive response: UNNotificationResponse,
-                                  withCompletionHandler completionHandler: @escaping () -> Void) {
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-
+        
         if let messageID = userInfo[gcmMessageIDKey] {
-          print("Message ID from userNotificationCenter didReceive: \(messageID)")
+            print("Message ID from userNotificationCenter didReceive: \(messageID)")
         }
-
+        
         print(userInfo)
-
+        
         completionHandler()
-      }
-
+    }
+    
 }
