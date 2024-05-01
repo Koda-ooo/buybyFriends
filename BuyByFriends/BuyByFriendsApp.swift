@@ -46,17 +46,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
         
         application.registerForRemoteNotifications()
-        
-        Messaging.messaging().token { token, error in
-            if let error {
-                print("Error fetching FCM registration token: \(error)")
-            } else if let token {
-                print("FCM registration token: \(token)")
-            }
-        }
         return true
     }
     
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification notification: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if Auth.auth().canHandleNotification(notification) {
+            completionHandler(.noData)
+            return
+        }
+    }
 }
 
 extension AppDelegate: MessagingDelegate {
@@ -89,38 +89,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([[.banner, .badge, .sound]])
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Auth.auth().setAPNSToken(deviceToken, type: . unknown)
-    }
-    
-    func application(_ application: UIApplication,
-                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
-    }
-    
-    func application(_ application: UIApplication,
-                     didReceiveRemoteNotification notification: [AnyHashable : Any],
-                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        if Auth.auth().canHandleNotification(notification) {
-            completionHandler(.noData)
-            return
-        }
-    }
-    
-    func application(_ application: UIApplication, open url: URL,
-                     options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        if Auth.auth().canHandle(url) {
-            return true
-        }
-        return false
-    }
-    
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        for urlContext in URLContexts {
-            let url = urlContext.url
-            Auth.auth().canHandle(url)
-        }
     }
     
     //  Push通知がタップされた時の処理
