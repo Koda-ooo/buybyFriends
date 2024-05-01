@@ -48,8 +48,9 @@ struct LogIn_VerificationCodeView: View {
             Spacer()
         }
         .frame(maxWidth: UIScreen.main.bounds.width*0.85)
-        .background(Image("main")
-            .edgesIgnoringSafeArea(.all)
+        .background(
+            Asset.main.swiftUIImage
+                .edgesIgnoringSafeArea(.all)
         )
         .onChange(of: vm.output.isStartedBuyByFriend) { result in
             path.path.removeLast(path.path.count)

@@ -29,7 +29,7 @@ struct ProfileImageView: View {
                             height: UIScreen.main.bounds.width*0.5
                         )
                 } else {
-                    Image("noimage")
+                    Asset.noimage.swiftUIImage
                         .resizable()
                         .aspectRatio(1,contentMode: .fit)
                         .clipShape(Circle())
@@ -90,8 +90,9 @@ struct ProfileImageView: View {
         .sheet(isPresented: vm.$binding.isShownSelfImagePickerShown) {
             ImagePicker(sourceType: .camera, selectedImage: vm.$binding.profileImage)
         }
-        .background(Image("main")
-            .edgesIgnoringSafeArea(.all)
+        .background(
+            Asset.main.swiftUIImage
+                .edgesIgnoringSafeArea(.all)
         )
         .navigationBarBackButtonHidden(true)
         .toolbar {

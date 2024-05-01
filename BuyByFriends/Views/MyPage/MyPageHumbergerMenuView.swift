@@ -33,34 +33,34 @@ struct MyPageHumbergerMenuView: View {
                                 Image(systemName: "yensign.circle")
                                 Text("売上金の出金")
                             case .purchasedItems:
-                                Image("shoppingBag")
+                                Asset.Icons.shoppingBag.swiftUIImage
                                 Text("購入した商品")
                             case .likedItems:
-                                Image("heart")
+                                Asset.Icons.heart.swiftUIImage
                                 Text("いいねした商品")
                             case .bookmarkedItems:
-                                Image("bookmark")
+                                Asset.Icons.bookmark.swiftUIImage
                                 Text("保存した商品")
                             case .shippingAdress:
-                                Image("truck")
+                                Asset.Icons.truck.swiftUIImage
                                 Text("お届け先情報")
                             case .termsOfService:
-                                Image("note")
+                                Asset.Icons.note.swiftUIImage
                                 Text("利用規約")
                             case .privacyPolicy:
-                                Image("note")
+                                Asset.Icons.note.swiftUIImage
                                 Text("プライバシーポリシー")
                             case .notation:
-                                Image("note")
+                                Asset.Icons.note.swiftUIImage
                                 Text("特定商取引に基づく表記")
                             case .signout:
-                                Image("signout")
+                                Asset.Icons.signout.swiftUIImage
                                 Text("ログアウト")
                             case .deleteAccount:
-                                Image("circleCross")
+                                Asset.Icons.circleCross.swiftUIImage
                                 Text("アカウントの削除")
                             case .contact:
-                                Image("envelope")
+                                Asset.Icons.envelope.swiftUIImage
                                 Text("お問い合わせ")
                             }
                         }

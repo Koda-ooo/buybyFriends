@@ -1,0 +1,6 @@
+xcassets:
+  inputs:
+    - BuyByFriends/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: BuyByFriends/Assets.swift
