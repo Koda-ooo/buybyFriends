@@ -94,7 +94,7 @@ struct InitialView: View {
                         appState.session.userInfo.id = uid
                     }
                     .onAppear {
-                        vm.input.startToLogOut.send()
+//                        vm.input.startToLogOut.send()
                         vm.input.startToObserveAuthChange.send()
                     }
             }
