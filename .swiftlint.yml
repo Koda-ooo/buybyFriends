@@ -19,7 +19,6 @@ included:
 # 対象外のファイル・フォルダ
 excluded:
   - .swiftpm
-  - BuildTools
 
 line_length:
   warning: 300
