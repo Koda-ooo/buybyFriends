@@ -26,7 +26,7 @@ final class InventoryListProvider: InventoryListProviderObject {
                     let inventory = Inventory(dic: document.data())
                     inventoryList.append(inventory)
                 }
-                inventoryList.sort{ (m1, m2) -> Bool in
+                inventoryList.sort { (m1, m2) -> Bool in
                     let m1Date = m1.sequence
                     let m2Date = m2.sequence
                     return m1Date < m2Date

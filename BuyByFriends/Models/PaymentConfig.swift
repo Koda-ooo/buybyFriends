@@ -12,4 +12,3 @@ class PaymentConfig {
     static var shared: PaymentConfig = PaymentConfig()
     private init() { }
 }
-

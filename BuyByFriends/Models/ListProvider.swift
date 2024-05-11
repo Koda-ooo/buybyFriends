@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 final class ListProvider: ListProviderProtocol {
     let db = Firestore.firestore()
-    
+
     func observePosts(query: Query) -> AnyPublisher<[Post], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[Post], ListError> in
@@ -29,11 +29,11 @@ final class ListProvider: ListProviderProtocol {
                 }
             }.eraseToAnyPublisher()
     }
-    
+
     func downloadUserImageData(userInfo: UserInfo) -> AnyPublisher<(imageData: Data, userInfo: UserInfo), Error> {
         return Future<(imageData: Data, userInfo: UserInfo), Error> { promise in
             guard let url = URL(string: userInfo.profileImage) else { return }
-            
+
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
@@ -42,11 +42,11 @@ final class ListProvider: ListProviderProtocol {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func downloadPostImageData(imageURL: String) -> AnyPublisher<(imageData: Data, imageURL: String), Error> {
         return Future<(imageData: Data, imageURL: String), Error> { promise in
             guard let url = URL(string: imageURL) else { return }
-            
+
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
@@ -55,5 +55,5 @@ final class ListProvider: ListProviderProtocol {
             }
         }.eraseToAnyPublisher()
     }
-    
+
 }

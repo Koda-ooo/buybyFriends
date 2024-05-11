@@ -11,7 +11,7 @@ struct MessageListView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @StateObject var vm = MessageListViewModel()
-    
+
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -23,9 +23,9 @@ struct MessageListView: View {
         .padding()
         .background(Color(.systemGray6))
         .padding()
-        
+
         Spacer()
-        
+
         ScrollView {
             LazyVStack {
                 ForEach(vm.output.chatRooms, id: \.self) { chatRoom in
@@ -64,14 +64,14 @@ struct MessageListView_Previews: PreviewProvider {
 struct MessageListButtonView: View {
     @StateObject var vm: MessageListViewModel
     var chatRoom: ChatRoom
-    
+
     static var df: DateFormatter {
         let df = DateFormatter()
         df.locale = Locale(identifier: "ja_JP")
         df.dateFormat = "M/dd HH:mm"
         return df
     }
-    
+
     var body: some View {
         NavigationLink(value: chatRoom) {
             HStack(spacing: 15) {
@@ -88,7 +88,7 @@ struct MessageListButtonView: View {
                         height: UIScreen.main.bounds.width*0.15
                     )
                 }
-                
+
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 5) {
                         Text(vm.output.userInfos[chatRoom.members.first ?? ""]?.userID ?? "")
@@ -100,7 +100,7 @@ struct MessageListButtonView: View {
                             .foregroundColor(.gray)
                     }
                     Spacer()
-                    
+
                     Text(MessageListButtonView.df.string(from: vm.output.latestMessages[chatRoom.id]?.createdAt.dateValue() ?? Date()))
                         .font(.system(size: 15))
                         .foregroundColor(.gray)

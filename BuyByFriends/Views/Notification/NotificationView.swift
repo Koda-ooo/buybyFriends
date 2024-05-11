@@ -12,11 +12,11 @@ struct NotificationView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm = NotificationViewModel()
     @State private var selectedMode = modes.request
-    
+
     init(vm: NotificationViewModel = NotificationViewModel()) {
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     enum modes: String, CaseIterable, Identifiable {
         case request = "Request"
         case todo = "To Do"
@@ -38,8 +38,8 @@ struct NotificationView: View {
                 }
             }
             .padding()
-            
-            switch selectedMode{
+
+            switch selectedMode {
             case .request: NotificationRequestView(vm: self.vm,
                                                    friendRequestList: self.appState.session.friend.requestList)
             case .todo: NotificationTodoView(vm: self.vm,

@@ -11,27 +11,27 @@ struct PasswordView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = PasswordViewModel()
-    
+
     @FocusState  var focusText: Bool
     @FocusState  var focusSecure: Bool
     @State  var show: Bool = false
-    
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 30){
+        VStack(alignment: .leading, spacing: 30) {
             Text("パスワードを入力してください。")
                 .font(.system(size: 20, weight: .medium))
                 .padding(.top, 30)
-            
+
             HStack {
                 ZStack(alignment: .trailing) {
                     TextField("pass word", text: vm.$binding.password)
                         .focused($focusText)
                         .opacity(show ? 1 : 0)
-                    
+
                     SecureField("pass word", text: vm.$binding.password)
                         .focused($focusSecure)
                         .opacity(show ? 0 : 1)
-                    
+
                     Button(action: {
                         show.toggle()
                         if show {
@@ -43,7 +43,7 @@ struct PasswordView: View {
                         Image(systemName: self.show ? "eye.slash.fill" : "eye.fill")
                             .padding()
                             .font(.system(size: 15))
-                        
+
                     })
                 }
             }
@@ -54,7 +54,7 @@ struct PasswordView: View {
                 .foregroundColor(.black)
                 .background(.white)
                 .cornerRadius(5)
-            
+
             Button(action: {
             }) {
                 Text("次へ")

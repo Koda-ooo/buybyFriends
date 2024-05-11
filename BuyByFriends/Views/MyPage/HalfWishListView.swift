@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct HalfWishListView: View {
-    
+
     @StateObject private var vm: HalfWishListViewModel
     @FocusState private var focusedField: Bool
-    
+
     init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo) {
         vm.binding.userInfo = userInfo
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     var body: some View {
         if let key = vm.binding.userInfo.wishList.keys.first {
             Text("\(key)")

@@ -13,21 +13,21 @@ struct ListView: View {
     @EnvironmentObject var tabBar: HideTabBar
     @StateObject var vm: ListViewModel
     @Namespace var namespace
-    
+
     enum modes: String, CaseIterable, Identifiable {
         case friends = "Friends"
         case foryou = "For You"
         var id: String { rawValue }
     }
-    
+
     init(vm: ListViewModel = ListViewModel()) {
         vm.input.startToObserveForYouPosts.send()
         vm.input.startToObserveFriendsPosts.send()
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     @State private var selectedMode = modes.friends
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .center) {
@@ -47,10 +47,10 @@ struct ListView: View {
                         }
                         .frame(maxWidth: UIScreen.main.bounds.width*0.85)
                         .padding(.top, 20)
-                        
+
                         ListFriendsView(vm: self.vm, namespace: namespace)
                     }
-                    
+
                     if selectedMode == .foryou {
                         ScrollView(showsIndicators: false) {
                             HStack(spacing: 20) {
@@ -67,7 +67,7 @@ struct ListView: View {
                             }
                             .frame(maxWidth: UIScreen.main.bounds.width*0.85)
                             .padding(.top, 20)
-                            
+
                             ListForYouView(vm: self.vm)
                         }
                     }
@@ -81,7 +81,7 @@ struct ListView: View {
             case .notification: NotificationView()
             case .message: MessageListView()
             }
-            
+
         }
         .navigationDestination(for: ChatRoom.self) { chatRoom in
             MessageView(chatRoom: chatRoom)
@@ -95,14 +95,14 @@ struct ListView: View {
                         .font(.system(size: 17))
                 }
             }
-            
+
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 NavigationLink(value: Destination.List.notification) {
                     Image(systemName: "bell")
                         .accentColor(.black)
                         .font(.system(size: 17))
                 }
-                
+
                 NavigationLink(value: Destination.List.message) {
                     Image(systemName: "text.bubble")
                         .accentColor(.black)
@@ -110,11 +110,11 @@ struct ListView: View {
                 }
             }
         }
-        
+
         if vm.binding.isShownPostDetail {
             PostDetailView(isShownPostDetailView: vm.$binding.isShownPostDetail,
                            post: vm.binding.selectedPost,
-                           index:vm.binding.selectedIndex,
+                           index: vm.binding.selectedIndex,
                            namespace: self.namespace)
         }
     }

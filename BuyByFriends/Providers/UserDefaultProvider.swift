@@ -10,7 +10,7 @@ import Combine
 
 struct UserDefaultProvider: UserDefaultProviderObject {
     private let userdefault = UserDefaults()
-    
+
     func saveAdress(adress: Adress) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             let adressArray = [
@@ -28,7 +28,7 @@ struct UserDefaultProvider: UserDefaultProviderObject {
             promise(.success(()))
         }.eraseToAnyPublisher()
     }
-    
+
     func getAdress() -> AnyPublisher<Adress, Error> {
         return Future<Adress, Error> { promise in
             let adressArray = UserDefaults.standard.adress

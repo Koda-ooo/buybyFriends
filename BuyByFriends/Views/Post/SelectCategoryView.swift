@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectCategoryView: View {
     @ObservedObject var vm: PostViewModel
     @Binding var path: [String]
-    
+
     var body: some View {
         NavigationView {
             List(Categories.allCases, id: \.self) { category in
@@ -34,7 +34,7 @@ struct SelectCategoryView: View {
         }
         .navigationBarBackButtonHidden(true)
     }
-    
+
     private func subcategoriesList(sub: Categories) -> some View {
         let lists = sub.selectSubcategories()
         return List {

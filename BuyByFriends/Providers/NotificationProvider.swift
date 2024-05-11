@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 final class NotificationProvider: NotificationProviderObject {
-    
+
     func observeNotification(query: Query) -> AnyPublisher<[Notification], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[Notification], ListError> in
@@ -28,9 +28,9 @@ final class NotificationProvider: NotificationProviderObject {
                 }
             }.eraseToAnyPublisher()
     }
-    
+
     func uploadNotification() -> AnyPublisher<Void, Error> {
-        return Future<Void,Error> { promise in
+        return Future<Void, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let saveDocument = Firestore.firestore().collection("Notifications").document(uid)
             let uploadList: [String: Any] = [
@@ -39,10 +39,10 @@ final class NotificationProvider: NotificationProviderObject {
                 "unreadMessage": false,
                 "requests": []
             ]
-            
+
             saveDocument.setData(
                 uploadList
-            ){ (err) in
+            ) { (err) in
                 if let err = err {
                     print("Firestoreへの保存に失敗しました。\(err)")
                     promise(.failure(err.self))

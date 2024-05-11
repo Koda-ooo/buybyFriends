@@ -10,9 +10,9 @@ import SwiftUI
 struct EditShippingAdressView: View {
     @EnvironmentObject var path: Path
     @ObservedObject var vm: PurchaseViewModel
-    
+
     static let rowHeight = 80.0
-    
+
     var body: some View {
         VStack {
             Spacer()
@@ -29,7 +29,7 @@ struct EditShippingAdressView: View {
                         .frame(height: EditShippingAdressView.rowHeight)
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                         .listRowSeparator(.hidden, edges: .top)
-                        
+
                     case .prefecture:
                         VStack(alignment: .leading, spacing: 20) {
                             Text("都道府県").bold()
@@ -37,7 +37,7 @@ struct EditShippingAdressView: View {
                         }
                         .frame(height: EditShippingAdressView.rowHeight)
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                        
+
                     case .city:
                         VStack(alignment: .leading, spacing: 20) {
                             Text("市町村").bold()
@@ -45,7 +45,7 @@ struct EditShippingAdressView: View {
                         }
                         .frame(height: EditShippingAdressView.rowHeight)
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                        
+
                     case .number:
                         VStack(alignment: .leading, spacing: 20) {
                             Text("番地").bold()
@@ -53,7 +53,7 @@ struct EditShippingAdressView: View {
                         }
                         .frame(height: EditShippingAdressView.rowHeight)
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                            
+
                     case .buildingName:
                         VStack(alignment: .leading, spacing: 20) {
                             Text("建物名").bold()
@@ -66,10 +66,10 @@ struct EditShippingAdressView: View {
             }
             .frame(height: 5*EditShippingAdressView.rowHeight)
             .scrollDisabled(true)
-            
+
             Spacer()
                 .frame(height: 30)
-            
+
             Button(action: {
                 self.vm.binding.isMovedInsertPersonalInfo.toggle()
             }) {
@@ -84,8 +84,7 @@ struct EditShippingAdressView: View {
             .bold()
             .cornerRadius(UIScreen.main.bounds.width*0.3/3)
             .disabled(!vm.output.isEnableNextButton)
-            
-            
+
             Spacer()
         }
         .listStyle(.plain)
@@ -113,7 +112,6 @@ struct EditShippingAdressView_Previews: PreviewProvider {
         EditShippingAdressView(vm: PurchaseViewModel())
     }
 }
-
 
 enum ShippingAdress: CaseIterable {
     case postNumber

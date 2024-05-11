@@ -5,10 +5,10 @@
 ////  Created by 鈴木登也 on 2023/07/12.
 ////
 //
-//import Foundation
-//import Combine
+// import Foundation
+// import Combine
 //
-//final class EditShippingAdressViewModel: ViewModelObject {
+// final class EditShippingAdressViewModel: ViewModelObject {
 //    final class Input: InputObject {
 //    }
 //    
@@ -53,4 +53,4 @@
 //        self.binding = binding
 //        self.output = output
 //    }
-//}
+// }

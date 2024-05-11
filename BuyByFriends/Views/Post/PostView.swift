@@ -10,13 +10,13 @@ import Combine
 import PhotosUI
 
 struct PostView: View {
-    
+
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @StateObject var vm = PostViewModel()
     @State var path: [String] = []
     @FocusState private var focusedField: Bool
-    
+
     static var config: PHPickerConfiguration {
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -25,19 +25,18 @@ struct PostView: View {
         config.preferredAssetRepresentationMode = .current
         return config
     }
-    
+
     var gesture: some Gesture {
             DragGesture()
-                .onChanged{ value in
+                .onChanged { value in
                     if value.translation.height != 0 {
                         self.focusedField = false
                     }
                 }
         }
-    
-    
+
     let others = ["売上金受け取り方法", "商品受け渡し方法"]
-    
+
     var body: some View {
         NavigationStack(path: $path) {
             List {
@@ -51,7 +50,7 @@ struct PostView: View {
                                 .font(.system(size: 20))
                                 .frame(width: 65, height: 65)
                                 .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8,7])))
+                                    .stroke(style: StrokeStyle(dash: [8, 7])))
                                 .foregroundColor(Color.gray)
                                 .background(Color.white)
                         }
@@ -62,12 +61,12 @@ struct PostView: View {
                                 .font(.system(size: 20))
                                 .frame(width: 65, height: 65)
                                 .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8,7])))
+                                    .stroke(style: StrokeStyle(dash: [8, 7])))
                                 .foregroundColor(Color.gray)
                                 .background(Color.white)
                         }
                     } else {
-                        ForEach(0..<vm.$binding.images.count, id:\.self) { i in
+                        ForEach(0..<vm.$binding.images.count, id: \.self) { i in
                             ZStack(alignment: .topTrailing) {
                                 Image(uiImage: vm.binding.images[i])
                                     .resizable()
@@ -94,19 +93,19 @@ struct PostView: View {
                                     .font(.system(size: 15))
                                     .frame(width: 65, height: 65)
                                     .overlay(RoundedRectangle(cornerRadius: 2)
-                                        .stroke(style: StrokeStyle(dash: [8,7])))
+                                        .stroke(style: StrokeStyle(dash: [8, 7])))
                                     .foregroundColor(Color.gray)
                                     .background(Color.white)
                             }
                             .buttonStyle(PlainButtonStyle())
-                            
+
                             ForEach(vm.$binding.images.count..<4, id: \.self) { _ in
                                 Text("")
                                     .padding()
                                     .font(.system(size: 20))
                                     .frame(width: 65, height: 65)
                                     .overlay(RoundedRectangle(cornerRadius: 2)
-                                        .stroke(style: StrokeStyle(dash: [8,7])))
+                                        .stroke(style: StrokeStyle(dash: [8, 7])))
                                     .foregroundColor(Color.gray)
                                     .background(Color.white)
                             }
@@ -135,7 +134,7 @@ struct PostView: View {
                     }
                 }
                 .listRowSeparator(.visible)
-                
+
                 Text("商品の情報")
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
@@ -153,7 +152,7 @@ struct PostView: View {
                     } else {
                         HStack {
                             Button(action: {
-                                //商品の各情報入力への導線（ハーフモーダルで実装予定）
+                                // 商品の各情報入力への導線（ハーフモーダルで実装予定）
                                 vm.input.isInsertInformationButtonTapped.send(info)
                             }) {
                                 switch info {
@@ -166,12 +165,12 @@ struct PostView: View {
                                         HStack {
                                             Text("価格")
                                             Spacer()
-                                            Image(systemName:"yensign")
+                                            Image(systemName: "yensign")
                                                 .foregroundColor(.gray)
                                             if let price = vm.output.intPrice {
                                                 Text("\(price)")
                                             }
-                                            
+
                                         }
                                         TextField("", text: vm.$binding.price)
                                             .focused($focusedField)
@@ -194,7 +193,7 @@ struct PostView: View {
                 .font(.system(size: 15))
                 .frame(height: 37)
                 .listRowSeparator(.visible)
-                
+
                 Text("その他")
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
@@ -203,7 +202,7 @@ struct PostView: View {
                 ForEach(others, id: \.self) { other in
                     HStack {
                         Button(action: {
-                            //その他の各情報入力への導線（ハーフモーダルで実装予定）
+                            // その他の各情報入力への導線（ハーフモーダルで実装予定）
                         }) {
                             HStack {
                                 Text(other)
@@ -224,18 +223,18 @@ struct PostView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
-                    },label:  {
+                    }, label: {
                         Text("×")
                             .accentColor(.black)
                             .font(.system(size: 40))
                     })
-                    
+
                 }
-                
+
                 ToolbarItem(placement: .bottomBar) {
                     HStack(spacing: 20) {
                         Button(action: {
-                            //下書き保存への導線
+                            // 下書き保存への導線
                         }) {
                             Text("下書きに保存する　　")
                                 .frame(maxWidth: .infinity, minHeight: 40)
@@ -244,10 +243,9 @@ struct PostView: View {
                         .accentColor(Color.black)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth: 1))
                         .disabled(vm.output.isCreatDraftButtonEnabled)
-                        
-                        
+
                         Button(action: {
-                            //出品への導線
+                            // 出品への導線
                             vm.binding.post.images = []
                             vm.binding.post.explain = vm.binding.explain
                             vm.binding.post.category = vm.binding.category
@@ -268,7 +266,7 @@ struct PostView: View {
                         .background(vm.output.isCreatPostButtonEnabled ? Color.gray:Color.black)
                         .cornerRadius(10)
                         .disabled(vm.output.isCreatPostButtonEnabled)
-                        
+
                     }
                     .padding(.top, 10)
                 }
@@ -300,26 +298,26 @@ struct PostView: View {
             FinishPostView(appState: self.appState, vm: self.vm)
         }
     }
-    
+
 }
 
 struct PostInformationView: View {
     var title: String
     var result: String
-    
+
     var body: some View {
         HStack {
             Text(title)
             Spacer()
             Text(result)
-            Image(systemName:  "chevron.right")
+            Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
         }
     }
 }
 
 struct PostView_Previews: PreviewProvider {
-    
+
     static var previews: some View {
         PostView()
     }

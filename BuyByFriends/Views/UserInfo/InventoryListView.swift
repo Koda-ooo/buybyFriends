@@ -11,17 +11,17 @@ struct InventoryListView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = InventoryViewModel()
-    
+
     init() {
         UINavigationBar.appearance().barTintColor = UIColor.clear
     }
-    
+
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading ,spacing: 30) { 
+            VStack(alignment: .leading, spacing: 30) {
                 Text("持ち物を教えてください。")
                     .font(.system(size: 20, weight: .black))
-                
+
 //                GenreView(
 //                    datas: InventoryGenre.names(),
 //                    spacing: 10) { genre in
@@ -60,7 +60,7 @@ struct InventoryListView: View {
 //                        }
 //                    }
             }
-            
+
             Button(action: {
                 appState.session.userInfo.inventoryList = vm.binding.selectedInventoryList
                 vm.binding.userInfo = appState.session.userInfo

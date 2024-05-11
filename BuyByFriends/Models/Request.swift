@@ -12,12 +12,12 @@ struct Request: Identifiable, Hashable {
     var id: String
     var type: String
     var userID: String
-    
+
     var explain: String
     var category: String
     var brand: String
     var createdAt: Timestamp
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.type = dic["type"] as? String ?? ""
@@ -27,7 +27,7 @@ struct Request: Identifiable, Hashable {
         self.brand = dic["brand"] as? String ?? ""
         self.createdAt = dic["createdAt"] as? Timestamp ?? Timestamp()
     }
-    
+
 }
 
 enum RequestType {

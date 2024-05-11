@@ -11,18 +11,18 @@ struct ProfileImageView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = ProfileImageViewModel()
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("プロフィール写真を選択してください")
                 .font(.system(size: 20, weight: .black))
                 .padding(.bottom, 20)
-            
+
             HStack {
                 if let uiImage = vm.binding.profileImage {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .aspectRatio(1,contentMode: .fit)
+                        .aspectRatio(1, contentMode: .fit)
                         .clipShape(Circle())
                         .frame(
                             width: UIScreen.main.bounds.width*0.5,
@@ -31,7 +31,7 @@ struct ProfileImageView: View {
                 } else {
                     Asset.noimage.swiftUIImage
                         .resizable()
-                        .aspectRatio(1,contentMode: .fit)
+                        .aspectRatio(1, contentMode: .fit)
                         .clipShape(Circle())
                         .frame(
                             width: UIScreen.main.bounds.width*0.5,
@@ -40,9 +40,9 @@ struct ProfileImageView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            
+
             Spacer()
-            
+
             HStack(spacing: 10) {
                 Button(action: {
                     vm.input.imagePickerTapped.send()
@@ -54,7 +54,7 @@ struct ProfileImageView: View {
                 .accentColor(Color.white)
                 .background(Color.black)
                 .cornerRadius(.infinity)
-                
+
                 Button(action: {
                     vm.input.selfImagePickerTapped.send()
                 }) {
@@ -67,7 +67,7 @@ struct ProfileImageView: View {
                 .cornerRadius(.infinity)
             }
             .padding(.bottom, 10)
-            
+
             Button(action: {
                 self.appState.session.userImage = vm.binding.profileImage!
                 path.path.append(Destination.UserInfo.inventoryList)
@@ -86,7 +86,7 @@ struct ProfileImageView: View {
         .sheet(isPresented: vm.$binding.isShownImagePicker) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: vm.$binding.profileImage)
         }
-        
+
         .sheet(isPresented: vm.$binding.isShownSelfImagePickerShown) {
             ImagePicker(sourceType: .camera, selectedImage: vm.$binding.profileImage)
         }

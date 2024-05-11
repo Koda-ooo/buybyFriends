@@ -19,7 +19,7 @@ protocol PurchaseProviderProtocol {
 
 final class PurchaseProvider: PurchaseProviderProtocol {
     lazy var functions = Functions.functions()
-    
+
     func createPaymentIntent(post: Post) -> AnyPublisher<String, Error> {
         return Future<String, Error> { promise in
             self.functions.httpsCallable("createPaymentIntent").call(["price": post.price]) { result, err in
@@ -36,19 +36,19 @@ final class PurchaseProvider: PurchaseProviderProtocol {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func updatePost(postID: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            
+
             Firestore.firestore().collection("Posts").whereField("id", isEqualTo: postID).getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
                     print("Error updating document: \(err)")
                 }
-                
+
                 let id = querySnapshot?.documents.first?.documentID
                 let document = Firestore.firestore().collection("Posts").document(id!)
-                
+
                 document.updateData([
                     "isSold": true,
                     "buyer": uid
@@ -62,5 +62,5 @@ final class PurchaseProvider: PurchaseProviderProtocol {
             })
         }.eraseToAnyPublisher()
     }
-    
+
 }

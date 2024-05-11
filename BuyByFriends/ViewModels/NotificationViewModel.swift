@@ -14,34 +14,34 @@ final class NotificationViewModel: ViewModelObject {
         let startToFetchUserInfos = PassthroughSubject<[String], Never>()
         let startToFetchPosts = PassthroughSubject<[String], Never>()
         let startToAcceptFriendRequest = PassthroughSubject<String, Never>()
-        
+
         let startToUpdateIsSentFlag = PassthroughSubject<Delivery, Never>()
         let startToUpdateIsReceivedFlag = PassthroughSubject<Delivery, Never>()
         let startToUpdateIsFinishFlag = PassthroughSubject<(delivery: Delivery, post: Post), Never>()
         let startToUpdateBudget = PassthroughSubject<Int, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var userInfos: [UserInfo] = []
         @Published var posts: [Post] = []
     }
-    
+
     final class Output: OutputObject {
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
     @Published private var isBusy: Bool = false
-    
+
     private let userInfoProvider: UserInfoProviderObject
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
     private let chatRoomProvider: ChatRoomProviderObject
     private let postProvider: PostProviderProtocol
     private let deliveryProvider: DeliveryProviderObject
-    
+
     init(
         userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
         notificationProvider: NotificationProviderObject = NotificationProvider(),
@@ -56,11 +56,11 @@ final class NotificationViewModel: ViewModelObject {
         self.chatRoomProvider = chatRoomProvider
         self.postProvider = postProvider
         self.deliveryProvider = deliveryProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
+
         input.startToFetchUserInfos
             .flatMap { uids in
                 userInfoProvider.observeUserInfos(query: Firestore.firestore()
@@ -79,7 +79,7 @@ final class NotificationViewModel: ViewModelObject {
                 binding.userInfos = result
             }
             .store(in: &cancellables)
-        
+
         input.startToAcceptFriendRequest
             .flatMap { uid in
                 friendProvider.addMyFriendList(uid: uid)
@@ -94,7 +94,7 @@ final class NotificationViewModel: ViewModelObject {
             }) { _ in
             }
             .store(in: &cancellables)
-        
+
         input.startToAcceptFriendRequest
             .flatMap { uid in
                 friendProvider.addPartnerFriendList(uid: uid)
@@ -109,7 +109,7 @@ final class NotificationViewModel: ViewModelObject {
             }) { _ in
             }
             .store(in: &cancellables)
-        
+
         input.startToAcceptFriendRequest
             .flatMap { uid in
                 friendProvider.removeMyRequestList(uid: uid)
@@ -124,7 +124,7 @@ final class NotificationViewModel: ViewModelObject {
             }) { _ in
             }
             .store(in: &cancellables)
-        
+
         input.startToAcceptFriendRequest
             .flatMap { uid in
                 chatRoomProvider.createChatRoom(partnerID: uid)
@@ -139,7 +139,7 @@ final class NotificationViewModel: ViewModelObject {
             }) { _ in
             }
             .store(in: &cancellables)
-        
+
         input.startToFetchPosts
             .flatMap { postIDs in
                 postProvider.observePosts(query: Firestore.firestore()
@@ -157,7 +157,7 @@ final class NotificationViewModel: ViewModelObject {
                 binding.posts = posts
             }
             .store(in: &cancellables)
-        
+
         input.startToUpdateIsSentFlag
             .flatMap { delivery in
                 deliveryProvider.updateIsSent(delivery: delivery)
@@ -170,10 +170,10 @@ final class NotificationViewModel: ViewModelObject {
                     print("FINISH")
                 }
             } receiveValue: { _ in
-                
+
             }
             .store(in: &cancellables)
-        
+
         input.startToUpdateIsReceivedFlag
             .flatMap { delivery in
                 deliveryProvider.updateIsReceive(delivery: delivery)
@@ -186,10 +186,10 @@ final class NotificationViewModel: ViewModelObject {
                     print("FINISH")
                 }
             } receiveValue: { _ in
-                
+
             }
             .store(in: &cancellables)
-        
+
         input.startToUpdateIsFinishFlag
             .flatMap { (delivery, post) in
                 deliveryProvider.updateIsFinish(delivery: delivery, post: post)
@@ -205,7 +205,7 @@ final class NotificationViewModel: ViewModelObject {
                 input.startToUpdateBudget.send(price)
             }
             .store(in: &cancellables)
-        
+
         input.startToUpdateBudget
             .flatMap { mount in
                 userInfoProvider.updateBudget(mount: mount)
@@ -218,14 +218,14 @@ final class NotificationViewModel: ViewModelObject {
                     print("FINISH")
                 }
             } receiveValue: { _ in
-                
+
             }
             .store(in: &cancellables)
-        
+
         /// 組み立てたストリームを反映
         cancellables.formUnion([
         ])
-        
+
         self.input = input
         self.binding = binding
         self.output = output

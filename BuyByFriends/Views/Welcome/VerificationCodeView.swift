@@ -11,13 +11,13 @@ struct VerificationCodeView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = VerificationCodeViewModel()
-    
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 30){
+        VStack(alignment: .leading, spacing: 30) {
             Text("認証コードを入力してください。")
                 .font(.system(size: 20, weight: .black))
                 .padding(.top, 30)
-            
+
             TextField("123456", text: vm.$binding.verificationCode)
                 .padding()
                 .padding(.leading, 15)
@@ -26,11 +26,11 @@ struct VerificationCodeView: View {
                 .foregroundColor(.black)
                 .background(.white)
                 .cornerRadius(5)
-            
+
             Text("認証コードが届くまで60秒ほどお待ちください")
                 .font(.system(size: 12, weight: .medium))
                 .padding(.top, -10)
-            
+
             // 同意して始める
             Button(action: {
                 UIApplication.shared.closeKeyboard()

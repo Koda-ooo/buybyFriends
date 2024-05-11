@@ -22,7 +22,7 @@ struct Post: Identifiable, Codable, Hashable {
     var isSold: Bool
     var buyer: String
     var createdAt: Timestamp
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.userUID = dic["userUID"] as? String ?? ""
@@ -38,5 +38,5 @@ struct Post: Identifiable, Codable, Hashable {
         self.buyer = dic["buyer"] as? String ?? ""
         self.createdAt = dic["createdAt"] as? Timestamp ?? Timestamp()
     }
-    
+
 }

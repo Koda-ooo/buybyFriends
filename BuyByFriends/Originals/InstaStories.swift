@@ -23,35 +23,35 @@ class InstaStories: NSObject {
     }
 
     /// 背景画像を投稿
-    func post(bgImage:UIImage, stickerImage:UIImage? = nil, contentURL:String? = nil) -> Bool{
-        var items:[[String : Any]] = [[:]]
-        //Background Image
+    func post(bgImage: UIImage, stickerImage: UIImage? = nil, contentURL: String? = nil) -> Bool {
+        var items: [[String: Any]] = [[:]]
+        // Background Image
         let bgData = bgImage.pngData()!
         items[0].updateValue(bgData, forKey: optionsKey.bgImage.rawValue)
-        //Sticker Image
+        // Sticker Image
         if stickerImage != nil {
             let stickerData = stickerImage!.pngData()!
             items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
         }
-        //Content URL
+        // Content URL
         if contentURL != nil {
             items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
         }
         let isPosted = post(items)
         return isPosted
     }
-    
+
     /// 背景画像を投稿
-    func post(bgImage:UIImage, stickerData:Data? = nil, contentURL:String? = nil) -> Bool{
-        var items:[[String : Any]] = [[:]]
-        //Background Image
+    func post(bgImage: UIImage, stickerData: Data? = nil, contentURL: String? = nil) -> Bool {
+        var items: [[String: Any]] = [[:]]
+        // Background Image
         let bgData = bgImage.pngData()!
         items[0].updateValue(bgData, forKey: optionsKey.bgImage.rawValue)
-        //Sticker Data
+        // Sticker Data
         if let stickerData = stickerData {
             items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
         }
-        //Content URL
+        // Content URL
         if contentURL != nil {
             items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
         }
@@ -60,10 +60,10 @@ class InstaStories: NSObject {
     }
 
     /// 背景動画を投稿
-    func post(bgVideoUrl:URL, stickerImage:UIImage? = nil, contentURL:String? = nil) -> Bool{
-        var items:[[String : Any]] = [[:]]
-        //Background Video
-        var videoData:Data?
+    func post(bgVideoUrl: URL, stickerImage: UIImage? = nil, contentURL: String? = nil) -> Bool {
+        var items: [[String: Any]] = [[:]]
+        // Background Video
+        var videoData: Data?
         do {
             try videoData = Data(contentsOf: bgVideoUrl)
         } catch {
@@ -71,12 +71,12 @@ class InstaStories: NSObject {
             return false
         }
         items[0].updateValue(videoData as Any, forKey: optionsKey.bgVideo.rawValue)
-        //Sticker Image
+        // Sticker Image
         if stickerImage != nil {
             let stickerData = stickerImage!.pngData()!
             items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
         }
-        //Content URL
+        // Content URL
         if contentURL != nil {
             items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
         }
@@ -85,15 +85,15 @@ class InstaStories: NSObject {
     }
 
     /// ステッカー画像を投稿
-    func post(stickerImage:UIImage, bgTop:String = "#000000", bgBottom:String = "#000000", contentURL:String? = nil) -> Bool{
-        var items:[[String : Any]] = [[:]]
-        //Sticker Image
+    func post(stickerImage: UIImage, bgTop: String = "#000000", bgBottom: String = "#000000", contentURL: String? = nil) -> Bool {
+        var items: [[String: Any]] = [[:]]
+        // Sticker Image
         let stickerData = stickerImage.pngData()!
         items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
-        //Background Color
+        // Background Color
         items[0].updateValue(bgTop, forKey: optionsKey.bgTopColor.rawValue)
         items[0].updateValue(bgBottom, forKey: optionsKey.bgBottomColor.rawValue)
-        //Content URL
+        // Content URL
         if contentURL != nil {
             items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
         }
@@ -102,7 +102,7 @@ class InstaStories: NSObject {
     }
 
     /// Instagram Storiesへ投稿
-    private func post(_ items:[[String : Any]]) -> Bool{
+    private func post(_ items: [[String: Any]]) -> Bool {
         guard UIApplication.shared.canOpenURL(urlScheme) else {
             print("Cannot open \(urlScheme)")
             return false
@@ -117,8 +117,8 @@ class InstaStories: NSObject {
 
 // Singleton
 extension InstaStories {
-    class var Shared : InstaStories {
-        struct Static { static let instance : InstaStories = InstaStories() }
+    class var Shared: InstaStories {
+        struct Static { static let instance: InstaStories = InstaStories() }
         return Static.instance
     }
 }

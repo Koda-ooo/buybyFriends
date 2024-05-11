@@ -12,7 +12,7 @@ import FirebaseStorage
 import FirebaseAuth
 
 final class UserInfoProvider: UserInfoProviderObject {
-    
+
     func fetchUserInfo(id: String) -> AnyPublisher<UserInfo, Error> {
         return Future<UserInfo, Error> { promise in
             Firestore.firestore().collection("UserInfos").document(id).getDocument { (document, err) in
@@ -27,7 +27,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func fetchUserInfoo(id: String) -> AnyPublisher<UserInfo?, Error> {
         return Future<UserInfo?, Error> { promise in
             Firestore.firestore().collection("UserInfos").document(id).getDocument { (document, err) in
@@ -42,7 +42,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func fetchUserInfos(userID: String) -> AnyPublisher<[UserInfo], Error> {
         var userInfo = [UserInfo]()
         let searchUserID = userID.trimmingCharacters(in: .whitespaces)
@@ -67,11 +67,11 @@ final class UserInfoProvider: UserInfoProviderObject {
                     userInfo.append(dic)
                 }
                 promise(.success(userInfo))
-                
+
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func observeUserInfos(query: Query) -> AnyPublisher<[UserInfo], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[UserInfo], ListError> in
@@ -89,7 +89,7 @@ final class UserInfoProvider: UserInfoProviderObject {
                 }
             }.eraseToAnyPublisher()
     }
-    
+
     func uploadProfileImage(image: Data) -> AnyPublisher<String, Error> {
         return Future<String, Error> { promise in
             if image.count == 0 {
@@ -98,8 +98,8 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
             let fileName = NSUUID().uuidString
             let storageRef = Storage.storage().reference().child("profile_image").child(fileName)
-            
-            storageRef.putData(image, metadata: nil) { (metadata, err) in
+
+            storageRef.putData(image, metadata: nil) { (_, err) in
                 if let err = err {
                     print("Firestorageへの保存に失敗しました。\(err)")
                     return
@@ -115,9 +115,9 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
-    func uploadUserInfo(userInfo: UserInfo, imageURL: String) -> AnyPublisher<Bool,Error> {
-        return Future<Bool,Error> { promise in
+
+    func uploadUserInfo(userInfo: UserInfo, imageURL: String) -> AnyPublisher<Bool, Error> {
+        return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let saveDocument = Firestore.firestore().collection("UserInfos").document(uid)
             let uploadList: [String: Any] = [
@@ -135,10 +135,10 @@ final class UserInfoProvider: UserInfoProviderObject {
                 "favoritePosts": [],
                 "bookmarkPosts": []
             ]
-            
+
             saveDocument.setData(
                 uploadList
-            ){ (err) in
+            ) { (err) in
                 if let err = err {
                     print("Firestoreへの保存に失敗しました。\(err)")
                     promise(.failure(err.self))
@@ -148,7 +148,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func updateBudget(mount: Int) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -156,7 +156,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "budget": FieldValue.increment(Int64(mount))
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
@@ -165,7 +165,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func updateInventory(inventory: [Inventory]) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -173,7 +173,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "inventoryList": inventory.filter { $0.selected }.map { $0.name }
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
@@ -182,7 +182,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func addBookmarkPosts(postID: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -190,7 +190,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "bookmarkPosts": FieldValue.arrayUnion([postID])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
@@ -199,7 +199,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func removeBookmarkPosts(postID: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -207,7 +207,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "bookmarkPosts": FieldValue.arrayRemove([postID])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
@@ -216,7 +216,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func addFavaritePosts(postID: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -224,7 +224,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "favaritePosts": FieldValue.arrayUnion([postID])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
@@ -233,7 +233,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func removeFavaritePosts(postID: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -241,7 +241,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "favaritePosts": FieldValue.arrayRemove([postID])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
@@ -250,7 +250,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func saveWishList(genre: InventoryGenre, text: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -258,7 +258,7 @@ final class UserInfoProvider: UserInfoProviderObject {
             let updateList: [String: Any] = [
                 "wishList": ["\(genre.rawValue)": text]
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))

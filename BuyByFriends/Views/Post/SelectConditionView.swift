@@ -11,7 +11,7 @@ struct SelectConditionView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm: PostViewModel
     let conditions = ["新品・未使用", "ほぼ未使用", "目立った傷や汚れなし", "やや傷や汚れあり", "傷や汚れあり"]
-    
+
     var body: some View {
         VStack {
             Button(action: {
@@ -25,9 +25,9 @@ struct SelectConditionView: View {
             listLayout()
         }
     }
-    
+
     private func listLayout() -> some View {
-        return List() {
+        return List {
             ForEach(conditions, id: \.self) { condition in
                 HStack {
                     Button {

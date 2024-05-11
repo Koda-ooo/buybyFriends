@@ -8,9 +8,9 @@
 import Foundation
 
 protocol MyPageProviderProtocol {
-    
+
 }
 
 final class MyPageProvider: MyPageProviderProtocol {
-    
+
 }

@@ -13,7 +13,7 @@ struct Inventory: Identifiable, Hashable {
     var selected: Bool
     var sequence: Int
     var genreID: Int
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.name = dic["name"] as? String ?? ""
@@ -24,11 +24,11 @@ struct Inventory: Identifiable, Hashable {
 }
 
 enum InventoryGenre: Int, CaseIterable, Comparable {
-    
+
     static func < (lhs: InventoryGenre, rhs: InventoryGenre) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
-    
+
     case outer = 1
     case tops = 2
     case bottoms = 3
@@ -37,7 +37,7 @@ enum InventoryGenre: Int, CaseIterable, Comparable {
     case accessory = 6
     case goods = 7
     case other = 100
-    
+
     var text: String {
         switch self {
         case .outer:
@@ -58,7 +58,7 @@ enum InventoryGenre: Int, CaseIterable, Comparable {
             return "その他"
         }
     }
-    
+
     var id: Int {
         switch self {
         case .outer:
@@ -79,7 +79,7 @@ enum InventoryGenre: Int, CaseIterable, Comparable {
             return 100
         }
     }
-    
+
     var sequence: Int {
         switch self {
         case .outer:
@@ -100,7 +100,7 @@ enum InventoryGenre: Int, CaseIterable, Comparable {
             return 100
         }
     }
-    
+
     static func names() -> [String] {
         return [
             InventoryGenre.outer.text,

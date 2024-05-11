@@ -11,12 +11,12 @@ struct EditWishListView: View {
     @EnvironmentObject var path: Path
     @StateObject private var vm: EditWishListViewModel
     @FocusState private var focusedField: Bool
-    
+
     init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre) {
         vm.binding.genre = genre
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     var body: some View {
         VStack {
             Spacer()
@@ -37,13 +37,13 @@ struct EditWishListView: View {
                 }
             }
             .padding()
-            
+
             Rectangle()
                 .frame(height: 0.5)
                 .foregroundColor(.gray)
 
             Spacer()
-            
+
             Button(action: {
                 vm.input.startToSaveWishList.send()
             }) {
@@ -54,9 +54,9 @@ struct EditWishListView: View {
             .accentColor(Color.black)
             .background(.white)
             .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black, lineWidth: 1))
-            
+
             Spacer()
-            
+
         }
         .navigationTitle(vm.binding.genre.text)
         .onChange(of: vm.output.isSuccess) { newValue in
