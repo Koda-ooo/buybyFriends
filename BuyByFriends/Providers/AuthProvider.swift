@@ -52,7 +52,7 @@ final class AuthProvider: AuthProviderObject {
                     promise(.failure(AuthError.invalidCredential))
                     return
                 }
-                if let _ = authResult, let uid = authResult?.user.uid {
+                if authResult != nil, let uid = authResult?.user.uid {
                     print("success")
                     promise(.success(uid))
                 } else {
