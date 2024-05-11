@@ -4,6 +4,7 @@ disabled_rules:
   - function_body_length
   - type_body_length
   - cyclomatic_complexity
+  - identifier_name
 
 
 # デフォルト無効で有効にするルール
