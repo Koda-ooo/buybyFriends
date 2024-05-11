@@ -13,7 +13,7 @@ class InstaStories: NSObject {
     private let urlScheme = URL(string: "instagram-stories://share")!
     private let urlSchemeWithFacebookAppID = URL(string: "instagram-stories://share?source_application={FacebookAppID記載}")
 
-    enum optionsKey: String {
+    enum OptionsKey: String {
         case stickerImage = "com.instagram.sharedSticker.stickerImage"
         case bgImage = "com.instagram.sharedSticker.backgroundImage"
         case bgVideo = "com.instagram.sharedSticker.backgroundVideo"
@@ -27,15 +27,15 @@ class InstaStories: NSObject {
         var items: [[String: Any]] = [[:]]
         // Background Image
         let bgData = bgImage.pngData()!
-        items[0].updateValue(bgData, forKey: optionsKey.bgImage.rawValue)
+        items[0].updateValue(bgData, forKey: OptionsKey.bgImage.rawValue)
         // Sticker Image
         if stickerImage != nil {
             let stickerData = stickerImage!.pngData()!
-            items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
+            items[0].updateValue(stickerData, forKey: OptionsKey.stickerImage.rawValue)
         }
         // Content URL
         if contentURL != nil {
-            items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
+            items[0].updateValue(contentURL as Any, forKey: OptionsKey.contentUrl.rawValue)
         }
         let isPosted = post(items)
         return isPosted
@@ -46,14 +46,14 @@ class InstaStories: NSObject {
         var items: [[String: Any]] = [[:]]
         // Background Image
         let bgData = bgImage.pngData()!
-        items[0].updateValue(bgData, forKey: optionsKey.bgImage.rawValue)
+        items[0].updateValue(bgData, forKey: OptionsKey.bgImage.rawValue)
         // Sticker Data
         if let stickerData = stickerData {
-            items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
+            items[0].updateValue(stickerData, forKey: OptionsKey.stickerImage.rawValue)
         }
         // Content URL
         if contentURL != nil {
-            items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
+            items[0].updateValue(contentURL as Any, forKey: OptionsKey.contentUrl.rawValue)
         }
         let isPosted = post(items)
         return isPosted
@@ -70,15 +70,15 @@ class InstaStories: NSObject {
             print("Cannot open \(bgVideoUrl)")
             return false
         }
-        items[0].updateValue(videoData as Any, forKey: optionsKey.bgVideo.rawValue)
+        items[0].updateValue(videoData as Any, forKey: OptionsKey.bgVideo.rawValue)
         // Sticker Image
         if stickerImage != nil {
             let stickerData = stickerImage!.pngData()!
-            items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
+            items[0].updateValue(stickerData, forKey: OptionsKey.stickerImage.rawValue)
         }
         // Content URL
         if contentURL != nil {
-            items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
+            items[0].updateValue(contentURL as Any, forKey: OptionsKey.contentUrl.rawValue)
         }
         let isPosted = post(items)
         return isPosted
@@ -89,13 +89,13 @@ class InstaStories: NSObject {
         var items: [[String: Any]] = [[:]]
         // Sticker Image
         let stickerData = stickerImage.pngData()!
-        items[0].updateValue(stickerData, forKey: optionsKey.stickerImage.rawValue)
+        items[0].updateValue(stickerData, forKey: OptionsKey.stickerImage.rawValue)
         // Background Color
-        items[0].updateValue(bgTop, forKey: optionsKey.bgTopColor.rawValue)
-        items[0].updateValue(bgBottom, forKey: optionsKey.bgBottomColor.rawValue)
+        items[0].updateValue(bgTop, forKey: OptionsKey.bgTopColor.rawValue)
+        items[0].updateValue(bgBottom, forKey: OptionsKey.bgBottomColor.rawValue)
         // Content URL
         if contentURL != nil {
-            items[0].updateValue(contentURL as Any, forKey: optionsKey.contentUrl.rawValue)
+            items[0].updateValue(contentURL as Any, forKey: OptionsKey.contentUrl.rawValue)
         }
         let isPosted = post(items)
         return isPosted

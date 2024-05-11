@@ -14,7 +14,7 @@ struct ListView: View {
     @StateObject var vm: ListViewModel
     @Namespace var namespace
 
-    enum modes: String, CaseIterable, Identifiable {
+    enum Modes: String, CaseIterable, Identifiable {
         case friends = "Friends"
         case foryou = "For You"
         var id: String { rawValue }
@@ -26,7 +26,7 @@ struct ListView: View {
         _vm = StateObject(wrappedValue: vm)
     }
 
-    @State private var selectedMode = modes.friends
+    @State private var selectedMode = Modes.friends
 
     var body: some View {
         ZStack {
@@ -34,7 +34,7 @@ struct ListView: View {
                 if !vm.binding.isShownPostDetail {
                     if selectedMode == .friends {
                         HStack(spacing: 20) {
-                            ForEach(modes.allCases, id: \.self) { mode in
+                            ForEach(Modes.allCases, id: \.self) { mode in
                                 Button(action: {
                                     selectedMode = mode
                                 }, label: {
@@ -54,7 +54,7 @@ struct ListView: View {
                     if selectedMode == .foryou {
                         ScrollView(showsIndicators: false) {
                             HStack(spacing: 20) {
-                                ForEach(modes.allCases, id: \.self) { mode in
+                                ForEach(Modes.allCases, id: \.self) { mode in
                                     Button(action: {
                                         selectedMode = mode
                                     }, label: {
