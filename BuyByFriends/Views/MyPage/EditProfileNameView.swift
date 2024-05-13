@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
-    @State var name = "山田太郎"
+    @State private var name = "山田太郎"
 
     var body: some View {
         VStack {
@@ -20,7 +20,7 @@ struct EditProfileNameView: View {
         .padding(.top, 30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("名前")
+        .navigationTitle(Destination.EditProfile.name.title)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {

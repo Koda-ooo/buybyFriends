@@ -9,14 +9,18 @@ import SwiftUI
 
 struct EditProfileInstagramView: View {
     @EnvironmentObject var path: Path
-    
+    @State private var instagram = "yamada_taro_insta"
+
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            UnderlinedTextField(placeholder: Destination.EditProfile.instagram.title, text: $instagram)
+            Spacer()
         }
+        .padding(.horizontal)
+        .padding(.top, 30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("インスタグラム")
+        .navigationTitle(Destination.EditProfile.instagram.title)
         .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
@@ -31,7 +35,7 @@ struct EditProfileInstagramView: View {
                     Button(action: {
                         path.path.removeLast()
                     }) {
-                        Text("保存")
+                        Text("完了")
                             .foregroundColor(.red)
                             .bold()
                     }
