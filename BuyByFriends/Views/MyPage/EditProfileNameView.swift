@@ -9,34 +9,38 @@ import SwiftUI
 
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
-    
+    @State var name = "山田太郎"
+
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            UnderlinedTextField(placeholder: Destination.EditProfile.name.title, text: $name)
+            Spacer()
         }
+        .padding(.horizontal)
+        .padding(.top, 30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationTitle("名前")
         .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        path.path.removeLast()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        path.path.removeLast()
-                    }) {
-                        Text("保存")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    path.path.removeLast()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
                 }
             }
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    path.path.removeLast()
+                }) {
+                    Text("完了")
+                        .foregroundColor(.red)
+                        .bold()
+                }
+            }
+        }
     }
 }
 

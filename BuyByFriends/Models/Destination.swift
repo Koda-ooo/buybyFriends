@@ -45,6 +45,15 @@ enum Destination {
         case username
         case selfIntroduction
         case instagram
+
+        var title: String {
+            switch self {
+            case .name: return "名前"
+            case .username: return "ユーザーネーム"
+            case .selfIntroduction: return "自己紹介"
+            case .instagram: return "Instagram"
+            }
+        }
     }
     
     enum Purchase {

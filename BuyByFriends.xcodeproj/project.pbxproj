@@ -189,6 +189,7 @@
 		DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3A2AD5B9E80029056C /* EditWishListView.swift */; };
 		DF367C3F2AD61CEE0029056C /* HalfWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */; };
 		DFBC1F672ADA469B00E99BC3 /* HalfWishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBC1F662ADA469B00E99BC3 /* HalfWishListViewModel.swift */; };
+		F3048C872BF191CF001AA3D9 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3048C862BF191CF001AA3D9 /* UnderlinedTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,6 +377,7 @@
 		DF367C3A2AD5B9E80029056C /* EditWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListView.swift; sourceTree = "<group>"; };
 		DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListView.swift; sourceTree = "<group>"; };
 		DFBC1F662ADA469B00E99BC3 /* HalfWishListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListViewModel.swift; sourceTree = "<group>"; };
+		F3048C862BF191CF001AA3D9 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +552,7 @@
 		5632E55529E10C370024C19C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F3048C842BF191B5001AA3D9 /* Common */,
 				564B426129ED1BE9003E6F6E /* InitialView.swift */,
 				565303262A19CE82003C12CE /* Welcome */,
 				56EDA28A29FF523C00052E9E /* UserInfo */,
@@ -828,6 +831,22 @@
 				5655FE012A07C61A002B2E0A /* FinishPostView.swift */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		F3048C842BF191B5001AA3D9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				F3048C852BF191BD001AA3D9 /* TextField */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		F3048C852BF191BD001AA3D9 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				F3048C862BF191CF001AA3D9 /* UnderlinedTextField.swift */,
+			);
+			path = TextField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1116,6 +1135,7 @@
 				568A1D6F29F797CC005DEA24 /* InventoryListViewModel.swift in Sources */,
 				5683E9B92A2099E800C833FD /* MessageSwiftUIVC.swift in Sources */,
 				56ED87D12A5175CF001045C1 /* MyPageHumbergerMenuView.swift in Sources */,
+				F3048C872BF191CF001AA3D9 /* UnderlinedTextField.swift in Sources */,
 				56ED87DF2A52C67D001045C1 /* LikedItemsView.swift in Sources */,
 				56ED87D32A52C549001045C1 /* WithdrawView.swift in Sources */,
 				5671B8AC2AA44B2F00C06C8F /* Request.swift in Sources */,
