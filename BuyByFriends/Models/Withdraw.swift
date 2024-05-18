@@ -16,7 +16,7 @@ struct Withdraw: Identifiable, Hashable {
     var firstName: String
     var lastName: String
     var amountOfMoney: Int
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? Int ?? 0
         self.bankName = dic["bankName"] as? String ?? ""

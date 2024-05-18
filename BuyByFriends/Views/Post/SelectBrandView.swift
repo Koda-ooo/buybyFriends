@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectBrandView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm: PostViewModel
-    
+
     var body: some View {
         VStack {
             Button(action: {

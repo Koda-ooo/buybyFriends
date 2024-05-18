@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 final class FriendProvider: FriendProviderObject {
-    
+
     func observeFriend(query: Query) -> AnyPublisher<[Friend], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[Friend], ListError> in
@@ -28,9 +28,9 @@ final class FriendProvider: FriendProviderObject {
                 }
             }.eraseToAnyPublisher()
     }
-    
+
     func uploadFriend() -> AnyPublisher<Void, Error> {
-        return Future<Void,Error> { promise in
+        return Future<Void, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let saveDocument = Firestore.firestore().collection("Friends").document(uid)
             let uploadList: [String: Any] = [
@@ -39,10 +39,10 @@ final class FriendProvider: FriendProviderObject {
                 "requestList": [],
                 "ngList": []
             ]
-            
+
             saveDocument.setData(
                 uploadList
-            ){ (err) in
+            ) { (err) in
                 if let err = err {
                     print("Firestoreへの保存に失敗しました。\(err)")
                     promise(.failure(err.self))
@@ -52,7 +52,7 @@ final class FriendProvider: FriendProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func fetchFriend(uid: String) -> AnyPublisher<Friend, Error> {
         return Future<Friend, Error> { promise in
             Firestore.firestore().collection("Friends").document(uid).getDocument { (document, err) in
@@ -65,7 +65,7 @@ final class FriendProvider: FriendProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func addPartnerRequestList(friend: Friend) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let myUid = Auth.auth().currentUser?.uid else { return }
@@ -76,17 +76,17 @@ final class FriendProvider: FriendProviderObject {
             let updateList: [String: Any] = [
                 "requestList": FieldValue.arrayUnion([myUid])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
                 }
                 promise(.success(()))
             }
-            
+
         }.eraseToAnyPublisher()
     }
-    
+
     func addMyFriendList(uid: String) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let myUid = Auth.auth().currentUser?.uid else { return }
@@ -94,17 +94,17 @@ final class FriendProvider: FriendProviderObject {
             let updateList: [String: Any] = [
                 "friendList": FieldValue.arrayUnion([uid])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
                 }
                 promise(.success(()))
             }
-            
+
         }.eraseToAnyPublisher()
     }
-    
+
     func addPartnerFriendList(uid: String) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let myUid = Auth.auth().currentUser?.uid else { return }
@@ -112,17 +112,17 @@ final class FriendProvider: FriendProviderObject {
             let updateList: [String: Any] = [
                 "friendList": FieldValue.arrayUnion([myUid])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
                 }
                 promise(.success(()))
             }
-            
+
         }.eraseToAnyPublisher()
     }
-    
+
     func removeMyRequestList(uid: String) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let myUid = Auth.auth().currentUser?.uid else { return }
@@ -130,17 +130,17 @@ final class FriendProvider: FriendProviderObject {
             let updateList: [String: Any] = [
                 "requestList": FieldValue.arrayRemove([uid])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
                 }
                 promise(.success(()))
             }
-            
+
         }.eraseToAnyPublisher()
     }
-    
+
     func removeMyFriendList(uid: String) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let myUid = Auth.auth().currentUser?.uid else { return }
@@ -148,17 +148,17 @@ final class FriendProvider: FriendProviderObject {
             let updateList: [String: Any] = [
                 "friendList": FieldValue.arrayRemove([uid])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
                 }
                 promise(.success(()))
             }
-            
+
         }.eraseToAnyPublisher()
     }
-    
+
     func removePartnerFriendList(uid: String) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let myUid = Auth.auth().currentUser?.uid else { return }
@@ -166,14 +166,14 @@ final class FriendProvider: FriendProviderObject {
             let updateList: [String: Any] = [
                 "friendList": FieldValue.arrayRemove([myUid])
             ]
-            
+
             document.updateData(updateList) { err in
                 if let err = err {
                     return promise(.failure(err.self))
                 }
                 promise(.success(()))
             }
-            
+
         }.eraseToAnyPublisher()
     }
 }

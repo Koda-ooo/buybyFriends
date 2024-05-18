@@ -10,7 +10,7 @@ import Foundation
 enum ListError: LocalizedError {
     case list(description: String)
     case `default`(description: String? = nil)
-    
+
     var errorDescription: String? {
         switch self {
         case let .list(description):

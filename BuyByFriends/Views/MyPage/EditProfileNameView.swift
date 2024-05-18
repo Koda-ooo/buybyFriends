@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
-    
+
     var body: some View {
         VStack {
             Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
@@ -26,7 +26,7 @@ struct EditProfileNameView: View {
                             .foregroundColor(.black)
                     }
                 }
-                
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         path.path.removeLast()

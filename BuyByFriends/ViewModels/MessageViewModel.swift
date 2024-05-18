@@ -14,7 +14,7 @@ import MessageKit
 import PhotosUI
 
 final class MessageViewModel: ViewModelObject {
-    
+
     final class Input: InputObject {
         let startToObserveMessages = PassthroughSubject<Void, Never>()
         let startToFetchPartnerUserInfo = PassthroughSubject<String, Never>()
@@ -23,33 +23,33 @@ final class MessageViewModel: ViewModelObject {
         let startToCreateImageMessage = PassthroughSubject<UIImage, Never>()
         let startToShowImageViewer = PassthroughSubject<UIImage, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var chatRoomID: String = ""
         @Published var text: String = ""
         @Published var sender: UserInfo = UserInfo(dic: [:])
         @Published var messages: [ChatMessage] = []
-        
+
         @Published var isShownPHPicker: Bool = false
         @Published var isShownImageViewer: Bool = false
     }
-    
+
     final class Output: OutputObject {
         @Published fileprivate(set) var partner: UserInfo = UserInfo(dic: [:])
         @Published fileprivate(set) var partnerImage: UIImage = UIImage()
         @Published fileprivate(set) var viewerImage: UIImage = UIImage()
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
     @Published private var isBusy: Bool = false
-    
+
     private var messageProvider: MessageProviderObject
     private var chatRoomProvider: ChatRoomProviderObject
     private var userInfoProvider: UserInfoProviderObject
-    
+
     init(
         messageProvider: MessageProviderObject = MessageProvider(),
         chatRoomProvider: ChatRoomProviderObject = ChatRoomProvider(),
@@ -58,11 +58,11 @@ final class MessageViewModel: ViewModelObject {
         self.messageProvider = messageProvider
         self.chatRoomProvider = chatRoomProvider
         self.userInfoProvider = userInfoProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
+
         input.startToObserveMessages
             .flatMap {
                 messageProvider.observeMessage(
@@ -101,7 +101,7 @@ final class MessageViewModel: ViewModelObject {
                 binding.messages = messages
             }
             .store(in: &cancellables)
-        
+
         input.startToFetchPartnerUserInfo
             .flatMap { id in
                 userInfoProvider.fetchUserInfo(id: id)
@@ -115,9 +115,9 @@ final class MessageViewModel: ViewModelObject {
                 }
             }) { userInfo in
                 output.partner = userInfo
-                
+
                 ImageLoader().loadImage(url: URL(string: userInfo.profileImage)!) { succeeded, image in
-                    if (succeeded) {
+                    if succeeded {
                         guard let image = image else { return }
                         DispatchQueue.main.async {
                             output.partnerImage = image
@@ -126,7 +126,7 @@ final class MessageViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
+
         input.startToCreateTextMessage
             .flatMap { text in
                 messageProvider.createTextMessage(chatRoomID: binding.chatRoomID, text: text)
@@ -145,7 +145,7 @@ final class MessageViewModel: ViewModelObject {
                 print("done")
             }
             .store(in: &cancellables)
-        
+
         input.startToCreateImageMessage
             .flatMap { image in
                 messageProvider.createImageURL(image: image.jpegData(compressionQuality: 0.1)!)
@@ -167,30 +167,29 @@ final class MessageViewModel: ViewModelObject {
                 print("done")
             }
             .store(in: &cancellables)
-        
+
         input.startToShowImageViewer
             .sink { image in
                 output.viewerImage = image
                 binding.isShownImageViewer = true
             }
             .store(in: &cancellables)
-        
+
         let isShownPHPicker = input.startToShowPHPicker
             .flatMap {
                 Just(true)
             }
-        
-        
+
         // 組み立てたストリームを反映
         cancellables.formUnion([
             isShownPHPicker.assign(to: \.isShownPHPicker, on: binding)
         ])
-        
+
         self.input = input
         self.binding = binding
         self.output = output
     }
-    
+
     func createUIImageFromPHPikcerResult(image: PHPickerResult) {
         let itemProvider = image.itemProvider
         if itemProvider.canLoadObject(ofClass: UIImage.self) {
@@ -207,4 +206,3 @@ final class MessageViewModel: ViewModelObject {
         }
     }
 }
-

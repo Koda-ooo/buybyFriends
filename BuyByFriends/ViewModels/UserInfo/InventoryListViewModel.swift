@@ -15,18 +15,18 @@ final class InventoryViewModel: ViewModelObject {
         let inventoryListTapped = PassthroughSubject<Inventory, Never>()
         let startButByFriends = PassthroughSubject<Void, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var selectedInventoryList: [String] = []
         @Published var userInfo: UserInfo = UserInfo(dic: [:])
         @Published var profileImageData: Data = Data()
     }
-    
+
     final class Output: OutputObject {
         @Published fileprivate(set) var inventoryByGenre: [InventoryGenre: [Inventory]] = [:]
         @Published fileprivate(set) var isFinishedUploadUserInfo = false
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
@@ -36,7 +36,7 @@ final class InventoryViewModel: ViewModelObject {
     private let inventoryListProvider: InventoryListProviderObject
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
-    
+
     init(
         userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
         inventoryListProvider: InventoryListProviderObject = InventoryListProvider(),
@@ -47,18 +47,18 @@ final class InventoryViewModel: ViewModelObject {
         self.inventoryListProvider = inventoryListProvider
         self.notificationProvider = notificationProvider
         self.friendProvider = friendProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
-        ///持ち物リスト取得の処理
+
+        /// 持ち物リスト取得の処理
         let inventryResponse = input.inventoryListViewDidLoad
             .flatMap {
                 inventoryListProvider.fetchInventoryList()
             }
             .share()
-        
+
         inventryResponse
             .sink(receiveCompletion: { completaion in
                 switch completaion {
@@ -74,16 +74,16 @@ final class InventoryViewModel: ViewModelObject {
                 }
             })
             .store(in: &cancellables)
-        
-        ///持ち物リストタップ時の処理
+
+        /// 持ち物リストタップ時の処理
         input.inventoryListTapped
             .sink(receiveCompletion: { completion in
                 print("receiveCompletion: \(completion)")
-            }, receiveValue: { inventory in
+            }, receiveValue: { _ in
                 // TODO: 実装
             })
             .store(in: &cancellables)
-        
+
         /// ユーザー情報作成（画像保存→ユーザー情報保存）
         input.startButByFriends
             .flatMap {
@@ -92,13 +92,13 @@ final class InventoryViewModel: ViewModelObject {
                         userInfoProvider.uploadUserInfo(userInfo: binding.userInfo, imageURL: imageURL)
                     }
             }
-            .sink (receiveCompletion: { completion in
+            .sink(receiveCompletion: { completion in
                 print("receiveCompletion: \(completion)")
             }, receiveValue: { result in
                 output.isFinishedUploadUserInfo = result
             })
             .store(in: &cancellables)
-        
+
         input.startButByFriends
             .flatMap {
                 notificationProvider.uploadNotification()
@@ -109,7 +109,7 @@ final class InventoryViewModel: ViewModelObject {
                 print("finish")
             }
             .store(in: &cancellables)
-        
+
         input.startButByFriends
             .flatMap {
                 friendProvider.uploadFriend()
@@ -120,12 +120,12 @@ final class InventoryViewModel: ViewModelObject {
                 print("finish")
             }
             .store(in: &cancellables)
-        
+
         self.input = input
         self.binding = binding
         self.output = output
     }
-    
+
     func convertUIImageToData(image: UIImage) {
         if image == UIImage(named: "noimage") { return }
         guard let imageData = image.jpegData(compressionQuality: 0.1) else { return }

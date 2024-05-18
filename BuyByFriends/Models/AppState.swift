@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-final class AppState: ObservableObject{
+final class AppState: ObservableObject {
     struct Session {
         var isLoggedIn = false
         var userInfo: UserInfo = UserInfo(dic: [:])
@@ -16,9 +16,9 @@ final class AppState: ObservableObject{
         var friend: Friend = Friend(dic: [:])
         var posts: [Post] = []
         var delivery: [Delivery] = []
-        
+
         var userImage = UIImage()
     }
-    
+
     @Published public var session = Session()
 }

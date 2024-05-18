@@ -14,7 +14,7 @@ struct MessageView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm = MessageViewModel()
     let chatRoom: ChatRoom
-    
+
     static var config: PHPickerConfiguration {
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -23,7 +23,7 @@ struct MessageView: View {
         config.preferredAssetRepresentationMode = .current
         return config
     }
-    
+
     var body: some View {
         ZStack {
             MessagesUIView(vm: self.vm)
@@ -62,7 +62,7 @@ struct MessageView: View {
                     }
                 }
             }
-            
+
             ToolbarItem(placement: .principal) {
                 VStack {
                     Text(vm.output.partner.name)
@@ -82,13 +82,13 @@ struct MessageView: View {
                 }
             }
         }
-        
+
     }
 }
 
 struct MessageView_Previews: PreviewProvider {
     static var chatRoom = ChatRoom(dic: [:])
-    
+
     static var previews: some View {
         MessageView(chatRoom: chatRoom)
     }

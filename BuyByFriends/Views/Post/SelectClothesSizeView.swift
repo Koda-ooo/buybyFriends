@@ -11,7 +11,7 @@ struct SelectClothesSizeView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm: PostViewModel
     let sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "FREE SIZE"]
-    
+
     var body: some View {
         VStack {
             Button(action: {
@@ -25,9 +25,9 @@ struct SelectClothesSizeView: View {
             listLayout()
         }
     }
-    
+
     private func listLayout() -> some View {
-        return List() {
+        return List {
             ForEach(sizes, id: \.self) { size in
                 HStack {
                     Button {

@@ -10,7 +10,7 @@ import UIKit
 
 class ImageLoader {
     func loadImage(url: URL, completion: @escaping (_ succeeded: Bool, _ image: UIImage?) -> Void) {
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { (data, _, _) in
             if let data = data {
                 completion(true, UIImage(data: data))
             }

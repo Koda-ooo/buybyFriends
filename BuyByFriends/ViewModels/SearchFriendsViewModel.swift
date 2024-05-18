@@ -11,34 +11,34 @@ import Combine
 import FirebaseAuth
 
 final class SearchFriendsViewModel: ViewModelObject {
-    
+
     final class Input: InputObject {
         let startToFetchUserInfoByUserID = PassthroughSubject<Void, Never>()
         let startToRequestToBeFriend = PassthroughSubject<Void, Never>()
         let startNotToBeFriend = PassthroughSubject<Void, Never>()
     }
-    
+
     final class Binding: BindingObject {
-        @Published var searchText:String = ""
+        @Published var searchText: String = ""
         @Published var selectedUserInfo: UserInfo = UserInfo(dic: [:])
         @Published var userInfos: [UserInfo] = []
     }
-    
+
     final class Output: OutputObject {
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
     @Published private var isBusy: Bool = false
-    
+
     private let userInfoProvider: UserInfoProviderObject
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
-    
+
     private let pushNotificationSender: PushNotificationSender
-    
+
     init(
         userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
         notificationProvider: NotificationProviderObject = NotificationProvider(),
@@ -49,11 +49,11 @@ final class SearchFriendsViewModel: ViewModelObject {
         self.notificationProvider = notificationProvider
         self.friendProvider = friendProvider
         self.pushNotificationSender = pushNotificationSender
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
+
         input.startToFetchUserInfoByUserID
             .flatMap {
                 userInfoProvider.fetchUserInfos(userID: binding.searchText)
@@ -69,8 +69,8 @@ final class SearchFriendsViewModel: ViewModelObject {
                 binding.userInfos = result
             }
             .store(in: &cancellables)
-        
-        //フレンドリクエストを飛ばす
+
+        // フレンドリクエストを飛ばす
         input.startToRequestToBeFriend
             .flatMap {
                 friendProvider.fetchFriend(uid: binding.selectedUserInfo.id)
@@ -96,11 +96,11 @@ final class SearchFriendsViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
+
         // 組み立てたストリームを反映
         cancellables.formUnion([
         ])
-        
+
         self.input = input
         self.binding = binding
         self.output = output

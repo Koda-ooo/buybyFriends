@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyPageHumbergerMenuView: View {
     @EnvironmentObject var path: Path
-    
+
     init() {
         if #available(iOS 14.0, *) {
             // iOS 14 doesn't have extra separators below the list by default.
@@ -21,7 +21,7 @@ struct MyPageHumbergerMenuView: View {
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
     }
-    
+
     var body: some View {
         NavigationStack(path: $path.path) {
             List {

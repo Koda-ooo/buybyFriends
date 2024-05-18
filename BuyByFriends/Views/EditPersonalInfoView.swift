@@ -10,14 +10,14 @@ import SwiftUI
 struct EditPersonalInfoView: View {
     @EnvironmentObject var path: Path
     @ObservedObject var vm: PurchaseViewModel
-    
+
     static let rowHeight = 80.0
-    
+
     var body: some View {
         VStack {
             Spacer()
                 .frame(height: 30)
-            
+
             List {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("お届け先住所").bold()
@@ -39,7 +39,7 @@ struct EditPersonalInfoView: View {
                         trailing: 0
                     )
                 )
-                
+
                 ForEach(PersonalInfo.allCases, id: \.self) { selected in
                     switch selected {
                     case .kanjiName:
@@ -75,10 +75,10 @@ struct EditPersonalInfoView: View {
             }
             .frame(height: 5*EditShippingAdressView.rowHeight + 50)
             .scrollDisabled(true)
-            
+
             Spacer()
                 .frame(height: 30)
-            
+
             Button(action: {
                 self.vm.input.startToSaveAdress.send()
                 path.path.removeLast(2)
@@ -94,7 +94,7 @@ struct EditPersonalInfoView: View {
             .bold()
             .cornerRadius(UIScreen.main.bounds.width*0.3/3)
             .disabled(!vm.output.isEnableRegisterButton)
-            
+
             Spacer()
         }
         .listStyle(.plain)
@@ -119,7 +119,6 @@ struct EditPersonalInfo_Previews: PreviewProvider {
         EditPersonalInfoView(vm: PurchaseViewModel())
     }
 }
-
 
 enum PersonalInfo: CaseIterable {
     case kanjiName

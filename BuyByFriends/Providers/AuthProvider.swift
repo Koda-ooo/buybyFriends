@@ -16,7 +16,7 @@ final class AuthProvider: AuthProviderObject {
     func observeAuthChange() -> AnyPublisher<User?, Never> {
         Publishers.AuthPublisher().eraseToAnyPublisher()
     }
-    
+
     func signUpByPhoneNumber(phoneNumber: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             if phoneNumber != "" {
@@ -27,7 +27,7 @@ final class AuthProvider: AuthProviderObject {
                             self.setErrorMessage(error)
                             return
                         }
-                        //ユーザーデフォルトにverificationIDをセット
+                        // ユーザーデフォルトにverificationIDをセット
                         if let verificationID = verificationID {
                             UserDefaults.standard.set(verificationID, forKey: "verificationID")
                             print("success")
@@ -40,19 +40,19 @@ final class AuthProvider: AuthProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
-    func signInByPhoneNumber(verificationCode: String) -> AnyPublisher<String,Error> {
+
+    func signInByPhoneNumber(verificationCode: String) -> AnyPublisher<String, Error> {
         return Future<String, Error> { promise in
             let verificationID = UserDefaults.standard.object(forKey: "verificationID") as? String
             let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID ?? "", verificationCode: verificationCode)
-            
+
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let error = error {
                     print(error.localizedDescription)
                     promise(.failure(AuthError.invalidCredential))
                     return
                 }
-                if let _ = authResult, let uid = authResult?.user.uid {
+                if authResult != nil, let uid = authResult?.user.uid {
                     print("success")
                     promise(.success(uid))
                 } else {
@@ -62,20 +62,19 @@ final class AuthProvider: AuthProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func signOut() -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             do {
                 try Auth.auth().signOut()
                 promise(.success(true))
-            }
-            catch let error as NSError {
+            } catch let error as NSError {
                 promise(.failure(error))
             }
         }.eraseToAnyPublisher()
     }
-    
-    func setErrorMessage(_ error:Error?){
+
+    func setErrorMessage(_ error: Error?) {
         if let error = error as NSError? {
             if let errorCode = AuthErrorCode.Code(rawValue: error.code) {
                 switch errorCode {
@@ -239,5 +238,5 @@ final class AuthProvider: AuthProviderObject {
             }
         }
     }
-    
+
 }

@@ -22,7 +22,7 @@ extension UIApplication {
 
 extension UITabBar {
     private static var originalY: Double?
-    
+
     static public func changeTabBarState(shouldHide: Bool) {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         windowScene?.windows.first(where: { $0.isKeyWindow })?.allSubviews().forEach({ view in
@@ -52,7 +52,7 @@ struct TabBarModifier {
             }
         })
     }
-    
+
     static func hideTabBar() {
         UIApplication.shared.key?.allSubviews().forEach({ subView in
             if let view = subView as? UITabBar {
@@ -78,7 +78,7 @@ struct HiddenTabBar: ViewModifier {
 }
 
 extension View {
-    
+
     func showTabBar() -> some View {
         return self.modifier(ShowTabBar())
     }

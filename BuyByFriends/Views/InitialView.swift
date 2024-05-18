@@ -12,7 +12,7 @@ struct InitialView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var tabBar: HideTabBar
     @StateObject var vm = InitialViewModel()
-    
+
     var body: some View {
         if appState.session.isLoggedIn {
             NavigationStack(path: $path.path) {
@@ -35,7 +35,7 @@ struct InitialView: View {
                 }
             }
             .accentColor(.black)
-            .sheet(isPresented: vm.$binding.isShownPostView){
+            .sheet(isPresented: vm.$binding.isShownPostView) {
                 PostView()
             }
             .onChange(of: vm.binding.selectedView) {
@@ -115,7 +115,7 @@ struct InitialView_Previews: PreviewProvider {
 struct TabBarView: View {
     @ObservedObject var vm: InitialViewModel
     let view: GeometryProxy
-    
+
     var body: some View {
         HStack(spacing: view.size.width*0.15) {
             tabBarItem(.first, icon: "house", selectedIcon: "house.fill")
@@ -125,7 +125,7 @@ struct TabBarView: View {
         .frame(height: view.size.height*0.05)
         .background(Color.white.edgesIgnoringSafeArea(.all))
     }
-    
+
     func tabBarItem(_ tab: Tab, icon: String, selectedIcon: String) -> some View {
         Image(systemName: (vm.binding.selectedView == tab ? selectedIcon : icon))
             .font(.system(size: 24))

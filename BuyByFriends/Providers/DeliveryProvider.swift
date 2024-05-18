@@ -25,7 +25,7 @@ struct DeliveryProvider: DeliveryProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func updateIsReceive(delivery: Delivery) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             let document = Firestore.firestore().collection("Deliveries").document(delivery.id)
@@ -40,7 +40,7 @@ struct DeliveryProvider: DeliveryProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func updateIsFinish(delivery: Delivery, post: Post) -> AnyPublisher<Int, Error> {
         return Future<Int, Error> { promise in
             let document = Firestore.firestore().collection("Deliveries").document(delivery.id)
@@ -55,14 +55,14 @@ struct DeliveryProvider: DeliveryProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func createDelivery(post: Post, adress: Adress) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let userIDs = [uid, post.userUID]
             let docID = UUID().uuidString
-            
-            let docData: [String:Any] = [
+
+            let docData: [String: Any] = [
                 "id": docID,
                 "adress": [
                     "postNumber": adress.postNumber,
@@ -84,7 +84,7 @@ struct DeliveryProvider: DeliveryProviderObject {
                 "isFinish": false,
                 "createdAt": Timestamp()
             ]
-            
+
             Firestore.firestore().collection("Deliveries").document(docID).setData(docData) { err in
                 if let err = err {
                     print("ChatRoom情報の保存に失敗しました。\(err)")
@@ -94,7 +94,7 @@ struct DeliveryProvider: DeliveryProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func observeDelivery(query: Query) -> AnyPublisher<[Delivery], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[Delivery], ListError> in
@@ -111,5 +111,5 @@ struct DeliveryProvider: DeliveryProviderObject {
                 }
             }.eraseToAnyPublisher()
     }
-    
+
 }

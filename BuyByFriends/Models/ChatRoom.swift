@@ -13,7 +13,7 @@ struct ChatRoom: Identifiable, Decodable, Hashable {
     var members: [String]
     var latestMessageID: String
     var createdAt: Timestamp
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.members = dic["members"] as? [String] ?? []

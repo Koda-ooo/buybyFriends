@@ -10,16 +10,16 @@ import SwiftUI
 struct WithdrawView: View {
     @EnvironmentObject var path: Path
     @StateObject var vm = WithdrawViewModel()
-    
+
     static let rowHeight: CGFloat = 68
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("口座情報")
                 .padding([.leading, .top])
                 .font(.system(size: 12, weight: .medium))
                 .foregroundColor(.gray)
-            
+
             List {
                 HStack {
                     Text("銀行")
@@ -31,7 +31,7 @@ struct WithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 HStack {
                     Text("口座種別")
                     Spacer()
@@ -42,7 +42,7 @@ struct WithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 HStack {
                     Text("支店コード")
                     Spacer()
@@ -54,7 +54,7 @@ struct WithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 HStack {
                     Text("口座番号")
                     Spacer()
@@ -66,7 +66,7 @@ struct WithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 HStack {
                     Text("口座名義（セイ）")
                     Spacer()
@@ -77,7 +77,7 @@ struct WithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 HStack {
                     Text("口座名義（メイ）")
                     Spacer()
@@ -91,9 +91,9 @@ struct WithdrawView: View {
             }
             .frame(height: 6*WithdrawView.rowHeight)
             .scrollDisabled(true)
-            
+
             Spacer()
-            
+
             NavigationLink(value: vm.binding.withdraw) {
                 Text("次へ")
                     .frame(maxWidth: .infinity, minHeight: 60)
@@ -110,9 +110,9 @@ struct WithdrawView: View {
             }
             .padding()
             .disabled(!vm.output.isEnabledNextButton)
-            
+
             Spacer()
-            
+
         }
         .listStyle(.plain)
         .navigationBarTitleDisplayMode(.inline)

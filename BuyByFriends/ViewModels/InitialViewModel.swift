@@ -17,20 +17,20 @@ final class InitialViewModel: ViewModelObject {
         let startToObserveFriend = PassthroughSubject<Void, Never>()
         let startToObserveDelivery = PassthroughSubject<Void, Never>()
         let startToObservePosts = PassthroughSubject<Void, Never>()
-        
+
         let startToLogOut = PassthroughSubject<Void, Never>()
-        
+
         let startToFetchUserInfo = PassthroughSubject<String, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var selectedView: Tab = Tab.first
         @Published var oldSelectedView: Tab = Tab.first
-        
-        //遷移系
+
+        // 遷移系
         @Published var isShownPostView = false
     }
-    
+
     final class Output: OutputObject {
         @Published fileprivate(set) var userInfo = UserInfo(dic: [:])
         @Published fileprivate(set) var notification: Notification = Notification(dic: [:])
@@ -38,23 +38,23 @@ final class InitialViewModel: ViewModelObject {
         @Published fileprivate(set) var delivery: [Delivery] = []
         @Published fileprivate(set) var posts: [Post] = []
         @Published fileprivate(set) var uid: String = ""
-        
+
         @Published fileprivate(set) var isSignIn: Bool = false
         @Published fileprivate(set) var isLoggedIn = false
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
-    
+
     private let authProvider: AuthProviderObject
     private let userInfoProvider: UserInfoProviderObject
     private let notificationProvider: NotificationProviderObject
     private let friendProvider: FriendProviderObject
     private let deliveryProvider: DeliveryProviderObject
     private let postProvider: PostProviderProtocol
-    
+
     init(authProvider: AuthProviderObject = AuthProvider(),
          userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
          notificationProvider: NotificationProviderObject = NotificationProvider(),
@@ -68,11 +68,11 @@ final class InitialViewModel: ViewModelObject {
         self.friendProvider = friendProvider
         self.deliveryProvider = deliveryProvider
         self.postProvider = postProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
+
         input.startToLogOut
             .flatMap {
                 authProvider.signOut()
@@ -87,7 +87,7 @@ final class InitialViewModel: ViewModelObject {
             }) { _ in
             }
             .store(in: &cancellables)
-        
+
         /// ユーザーのログイン情報を監視
         input.startToObserveAuthChange
             .flatMap {
@@ -114,8 +114,8 @@ final class InitialViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
-        ///通知情報取得
+
+        /// 通知情報取得
         input.startToObserveNotification
             .flatMap {
                 notificationProvider.observeNotification(
@@ -137,8 +137,8 @@ final class InitialViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
-        ///フレンド情報取得
+
+        /// フレンド情報取得
         input.startToObserveNotification
             .flatMap {
                 friendProvider.observeFriend(
@@ -160,7 +160,7 @@ final class InitialViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
+
         /// Delivery情報取得
         input.startToObserveDelivery
             .flatMap {
@@ -185,7 +185,7 @@ final class InitialViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
+
         ///　ユーザー情報を取得
         input.startToFetchUserInfo
             .flatMap { id in
@@ -203,10 +203,10 @@ final class InitialViewModel: ViewModelObject {
                 }
                 output.userInfo = result
                 output.isLoggedIn = true
-                
+
             }
             .store(in: &cancellables)
-        
+
         ///　投稿情報を取得
         input.startToObservePosts
             .flatMap {
@@ -229,7 +229,7 @@ final class InitialViewModel: ViewModelObject {
                 }
             }
             .store(in: &cancellables)
-        
+
         self.input = input
         self.binding = binding
         self.output = output

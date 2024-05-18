@@ -13,18 +13,18 @@ struct FinishPurchaseView: View {
     @ObservedObject var vm = FinishPurchaseViewModel()
     @Binding var isShownPostDetailView: Bool
     let post: Post
-    
+
     var body: some View {
-        VStack(spacing: 20){
+        VStack(spacing: 20) {
             Spacer()
             Text("購入が完了しました🎉")
                 .font(.system(size: 20, weight: .bold))
             Spacer()
-            
+
             ZStack {
                 Rectangle()
                     .foregroundColor(.white)
-                    .frame (
+                    .frame(
                         width: UIScreen.main.bounds.width-80,
                         height: UIScreen.main.bounds.width-40
                     )
@@ -37,7 +37,7 @@ struct FinishPurchaseView: View {
                             ProgressView()
                         }
                         .frame(width: UIScreen.main.bounds.width-100,
-                               height:UIScreen.main.bounds.width-100)
+                               height: UIScreen.main.bounds.width-100)
                     }
                     Text(post.userID)
                     Text("¥ \(post.price)")
@@ -66,20 +66,20 @@ struct FinishPurchaseView: View {
                     Asset.Sns.twitter.swiftUIImage
                 }
                 Button(action: {
-                    
+
                 }) {
                     Asset.Sns.link.swiftUIImage
                 }
                 Button(action: {
-                    
+
                 }) {
                     Asset.Sns.etc.swiftUIImage
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 70)
-            
+
             Spacer()
-            
+
             Button(action: {
                 isShownPostDetailView.toggle()
                 path.path.removeLast(path.path.count)
@@ -96,12 +96,12 @@ struct FinishPurchaseView: View {
         }
         .navigationBarBackButtonHidden(true)
     }
-    
+
 }
 
 struct FinishPurchaseView_Previews: PreviewProvider {
     @State static var isShownPostDetailView = true
-    
+
     static var previews: some View {
         FinishPurchaseView(isShownPostDetailView: $isShownPostDetailView, post: Post(dic: [:]))
     }

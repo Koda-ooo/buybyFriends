@@ -19,10 +19,10 @@ struct Delivery: Identifiable, Hashable, Decodable {
     var isReceived: Bool
     var isFinish: Bool
     var createdAt: Timestamp
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
-        self.adress = Adress(dic: dic["adress"] as? [String : Any] ?? [:])
+        self.adress = Adress(dic: dic["adress"] as? [String: Any] ?? [:])
         self.postID = dic["postID"] as? String ?? ""
         self.buyerID = dic["buyerID"] as? String ?? ""
         self.sellerID = dic["sellerID"] as? String ?? ""
@@ -44,7 +44,7 @@ struct Adress: Decodable, Hashable {
     var kanaName: String
     var phoneNumber: String
     var email: String
-    
+
     init(dic: [String: Any]) {
         self.postNumber = dic["postNumber"] as? String ?? ""
         self.prefecture = dic["prefecture"] as? String ?? ""

@@ -11,7 +11,7 @@ struct SearchFriendsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @StateObject var vm = SearchFriendsViewModel()
-    
+
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -28,11 +28,11 @@ struct SearchFriendsView: View {
         .padding()
         .background(Color(.systemGray6))
         .padding()
-        
+
         if vm.binding.userInfos.count == 0 {
             ShareViewInSearchFrindView()
         }
-        
+
         ScrollView {
             LazyVStack {
                 ForEach(0..<vm.binding.userInfos.count, id: \.self) { num in
@@ -52,7 +52,7 @@ struct SearchFriendsView: View {
                             width: UIScreen.main.bounds.width*0.15,
                             height: UIScreen.main.bounds.width*0.15
                         )
-                        
+
                         VStack(alignment: .leading, spacing: 5) {
                             Text(vm.binding.userInfos[num].name)
                                 .font(.system(size: 20, weight: .bold))
@@ -61,7 +61,7 @@ struct SearchFriendsView: View {
                                 .foregroundColor(.gray)
                         }
                         Spacer()
-                        
+
                         if appState.session.friend.friendList.contains(vm.binding.userInfos[num].id) {
                             // 友達取り消す
                             Button(action: {
@@ -89,8 +89,7 @@ struct SearchFriendsView: View {
                             .background(.black)
                             .cornerRadius(20)
                         }
-                        
-                        
+
                     }
                 }
                 .padding()
@@ -107,8 +106,7 @@ struct SearchFriendsView: View {
                         .foregroundColor(.black)
                 }
             }
-            
-            
+
         }
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
@@ -117,12 +115,12 @@ struct SearchFriendsView: View {
             vm.input.startToFetchUserInfoByUserID.send()
         }
     }
-    
+
 }
 
 struct ShareViewInSearchFrindView: View {
     @EnvironmentObject var appState: AppState
-    
+
     var body: some View {
         HStack(spacing: 20) {
             AsyncImage(url: URL(string: appState.session.userInfo.profileImage)) { image in
@@ -144,15 +142,15 @@ struct ShareViewInSearchFrindView: View {
                     .foregroundColor(.gray)
             }
             Spacer()
-            
+
             Button(action: {
-                
+
             }) {
                 Image(systemName: "square.and.arrow.up")
                     .foregroundColor(.black)
                     .font(.system(size: 25))
             }
-            
+
         }
         .padding()
         .background(Color(.systemGray6))

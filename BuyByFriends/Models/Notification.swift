@@ -11,7 +11,7 @@ struct Notification: Identifiable, Hashable, Decodable {
     var id: String
     var unreadRequest: Bool
     var unreadMessage: Bool
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.unreadRequest = dic["unreadRequest"] as? Bool ?? false

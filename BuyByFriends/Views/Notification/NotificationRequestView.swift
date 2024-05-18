@@ -10,7 +10,7 @@ import SwiftUI
 struct NotificationRequestView: View {
     @StateObject var vm: NotificationViewModel
     @State var friendRequestList: [String]
-    
+
     init(vm: NotificationViewModel = NotificationViewModel(), friendRequestList: [String]) {
         if !friendRequestList.isEmpty {
             vm.input.startToFetchUserInfos.send(friendRequestList)
@@ -18,7 +18,7 @@ struct NotificationRequestView: View {
         _vm = StateObject(wrappedValue: vm)
         self.friendRequestList = friendRequestList
     }
-    
+
     var body: some View {
         ScrollView {
             LazyVStack {
@@ -39,7 +39,7 @@ struct NotificationRequestView: View {
                             width: UIScreen.main.bounds.width*0.15,
                             height: UIScreen.main.bounds.width*0.15
                         )
-                        
+
                         VStack(alignment: .leading, spacing: 5) {
                             Text(vm.binding.userInfos.first(where: { $0.id == uid })?.name ?? "")
                                 .font(.system(size: 20, weight: .bold))
@@ -60,8 +60,7 @@ struct NotificationRequestView: View {
                         .padding()
                         .background(.black)
                         .cornerRadius(20)
-                        
-                        
+
                     }
                 }
                 .padding()

@@ -13,21 +13,21 @@ struct NotificationTodoView: View {
     @StateObject var vm: NotificationViewModel
     var deliveries: [Delivery]
     var uid: String
-    
+
     init(
         vm: NotificationViewModel,
         deliveries: [Delivery],
         uid: String
     ) {
         if !deliveries.isEmpty {
-            vm.input.startToFetchUserInfos.send(deliveries.flatMap{ [$0.buyerID, $0.sellerID]})
+            vm.input.startToFetchUserInfos.send(deliveries.flatMap { [$0.buyerID, $0.sellerID]})
             vm.input.startToFetchPosts.send(deliveries.map { $0.postID })
         }
         _vm = StateObject(wrappedValue: vm)
         self.deliveries = deliveries
         self.uid = uid
     }
-    
+
     var body: some View {
         ForEach(deliveries) { delivery in
             TodoView(vm: self.vm, delivery: delivery, uid: self.uid)
@@ -37,7 +37,7 @@ struct NotificationTodoView: View {
 
 struct NotificationTodoView_Previews: PreviewProvider {
     static var deliveries = [Delivery(dic: [:])]
-    
+
     static var previews: some View {
         NotificationTodoView(vm: NotificationViewModel(), deliveries: deliveries, uid: "")
     }
@@ -55,10 +55,10 @@ struct TodoView: View {
     @State var isShownSentAlert: Bool = false
     @State var isShownReceivedAlert: Bool = false
     @State var isShownFinishAlert: Bool = false
-    
+
     init(vm: NotificationViewModel, delivery: Delivery, uid: String) {
         _vm = StateObject(wrappedValue: vm)
-        
+
         self.delivery = delivery
         self.uid = uid
         self.post = vm.binding.posts.first(where: { $0.id == self.delivery.postID })
@@ -66,12 +66,12 @@ struct TodoView: View {
         self.buyer = vm.binding.userInfos.first(where: { $0.id == self.delivery.buyerID })
         self.isSeller = self.proveBuyerSeller()
     }
-    
+
     var body: some View {
         VStack {
             Text(self.configureTodoText())
                 .bold()
-            
+
             HStack(spacing: 20) {
                 if let imageURLString = self.post?.images.first {
                     KFImage.url(URL(string: imageURLString))
@@ -85,7 +85,7 @@ struct TodoView: View {
                         )
                         .cornerRadius(5)
                 }
-                
+
                 VStack(alignment: .leading) {
                     Text(self.post?.category ?? "")
                     Text(self.post?.explain ?? "")
@@ -95,8 +95,7 @@ struct TodoView: View {
                 }
                 Spacer()
             }
-            
-            
+
             if isShownAdressButton() {
                 Button(action: {
                     self.isShownAdressView.toggle()
@@ -107,13 +106,13 @@ struct TodoView: View {
                             Text(self.delivery.adress.postNumber)
                         }
                         Spacer()
-                        Image(systemName:  "chevron.right")
+                        Image(systemName: "chevron.right")
                             .foregroundColor(.black)
                     }
                 }
                 .frame(maxWidth: .infinity, minHeight: 70)
             }
-            
+
             if isShownTodoButton() {
                 Button(action: {
                     self.configureTodoButtonAction()
@@ -129,31 +128,31 @@ struct TodoView: View {
                 .bold()
                 .cornerRadius(5)
             }
-            
+
         }
         .alert("商品を発送しましたか？", isPresented: self.$isShownSentAlert) {
-            Button("戻る"){
+            Button("戻る") {
                 self.isShownSentAlert = false
             }
-            Button("はい"){
+            Button("はい") {
                 self.vm.input.startToUpdateIsSentFlag.send(delivery)
                 self.isShownSentAlert = false
             }
         }
         .alert("商品を受け取りましたか？", isPresented: self.$isShownReceivedAlert) {
-            Button("戻る"){
+            Button("戻る") {
                 self.isShownSentAlert = false
             }
-            Button("はい"){
+            Button("はい") {
                 self.vm.input.startToUpdateIsReceivedFlag.send(delivery)
                 self.isShownSentAlert = false
             }
         }
         .alert("売上金を受け取りますか？", isPresented: self.$isShownFinishAlert) {
-            Button("戻る"){
+            Button("戻る") {
                 self.isShownSentAlert = false
             }
-            Button("はい"){
+            Button("はい") {
                 self.isShownSentAlert = false
                 self.vm.input.startToUpdateIsFinishFlag.send((delivery: delivery, post: post ?? Post(dic: [:])))
             }
@@ -162,10 +161,10 @@ struct TodoView: View {
             VStack {
                 Spacer()
                     .frame(height: 30)
-                
+
                 Text("お届け先情報")
                     .bold()
-                
+
                 List {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("お届け先住所").bold()
@@ -208,11 +207,11 @@ struct TodoView: View {
             .presentationDetents([.large, .height(400), .fraction(0.5)])
         }
     }
-    
+
     private func configureTodoText() -> String {
         guard let isSeller = isSeller else { return "読み込み失敗" }
         var text = ""
-        
+
         switch delivery.isSent {
         case true:
             switch delivery.isReceived {
@@ -241,11 +240,11 @@ struct TodoView: View {
         }
         return text
     }
-    
+
     private func isShownAdressButton() -> Bool {
         return delivery.isSent == false && uid == seller?.id
     }
-    
+
     private func isShownTodoButton() -> Bool {
         switch delivery.isSent {
         case true:
@@ -259,7 +258,7 @@ struct TodoView: View {
             return uid == seller?.id
         }
     }
-    
+
     private func configureTodoButtonAction() {
         switch delivery.isSent {
         case true:
@@ -273,10 +272,10 @@ struct TodoView: View {
             self.isShownSentAlert = true
         }
     }
-    
+
     private func configureTodoButtonText() -> String {
         var text: String
-        
+
         switch delivery.isSent {
         case true:
             switch delivery.isReceived {
@@ -291,7 +290,6 @@ struct TodoView: View {
         return text
     }
 
-    
     /// Seller == true, Buyer == false
     private func proveBuyerSeller() -> Bool? {
         if self.uid == delivery.sellerID {

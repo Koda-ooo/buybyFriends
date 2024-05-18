@@ -16,7 +16,7 @@ struct PurchaseView: View {
     @EnvironmentObject var path: Path
     @StateObject var vm: PurchaseViewModel
     @Binding var isShownPostDetailView: Bool
-    
+
     init(vm: PurchaseViewModel = PurchaseViewModel(),
          post: Post,
          isShownPostDetailView: Binding<Bool>
@@ -26,7 +26,7 @@ struct PurchaseView: View {
         _vm = StateObject(wrappedValue: vm)
         _isShownPostDetailView = isShownPostDetailView
     }
-    
+
     var body: some View {
         VStack {
             HStack(spacing: 20) {
@@ -51,7 +51,7 @@ struct PurchaseView: View {
                 }
                 Spacer()
             }
-            
+
             Button(action: {
                 vm.binding.isMovedInsertAdressView.toggle()
             }) {
@@ -65,7 +65,7 @@ struct PurchaseView: View {
                         }
                     }
                     Spacer()
-                    Image(systemName:  "chevron.right")
+                    Image(systemName: "chevron.right")
                         .foregroundColor(.black)
                 }
             }
@@ -85,7 +85,7 @@ struct PurchaseView: View {
             .bold()
             .cornerRadius(5)
             .disabled(!vm.output.isEnablePurchaseButton)
-            
+
             Spacer()
         }
         .padding(.horizontal, 20)
@@ -97,11 +97,11 @@ struct PurchaseView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     self.path.path.removeLast()
-                })  {
-                    Image(systemName:  "chevron.left")
+                }) {
+                    Image(systemName: "chevron.left")
                         .accentColor(.black)
                 }
-                
+
             }
         }
         .navigationDestination(for: Destination.Purchase.self) { selected in
@@ -135,7 +135,7 @@ struct PurchaseView: View {
             }
         }
     }
-    
+
 }
 
 struct PurchaseView_Previews: PreviewProvider {

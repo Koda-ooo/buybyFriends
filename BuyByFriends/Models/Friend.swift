@@ -12,7 +12,7 @@ struct Friend: Identifiable, Hashable, Decodable {
     var friendList: [String]
     var requestList: [String]
     var ngList: [String]
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.friendList = dic["friendList"] as? [String] ?? []

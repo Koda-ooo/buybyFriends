@@ -14,7 +14,7 @@ struct ListFriendsView: View {
     @StateObject var vm: ListViewModel
     @GestureState private var dragOffset: CGFloat = 0
     var namespace: Namespace.ID
-    
+
     var body: some View {
         GeometryReader { bodyView in
             ZStack {
@@ -22,7 +22,7 @@ struct ListFriendsView: View {
                     ForEach(vm.binding.infinityArray.indices, id: \.self) { index in
                         let postViewID = UUID().uuidString
                         let post = vm.binding.infinityArray[index]
-                        
+
                         FriendsPostView(vm: self.vm,
                                         postViewID: postViewID,
                                         namespace: self.namespace,
@@ -46,7 +46,7 @@ struct ListFriendsView: View {
                         .updating($dragOffset, body: { (value, state, _) in
                             state = value.translation.width
                         })
-                        .onChanged({ value in
+                        .onChanged({ _ in
                             vm.onChangedDragGesture()
                         })
                         .onEnded({ value in
@@ -63,12 +63,12 @@ struct ListFriendsView: View {
 struct FriendsPostView: View {
     @EnvironmentObject var tabBar: HideTabBar
     @StateObject var vm: ListViewModel
-    let postViewID:String
+    let postViewID: String
     var namespace: Namespace.ID
     let post: Post
-    
+
     var body: some View {
-        GeometryReader { postView in
+        GeometryReader { _ in
             VStack {
                 HStack(spacing: 5) {
                     Text("\(post.userID)")
@@ -82,7 +82,7 @@ struct FriendsPostView: View {
             }
             .background(
                 KFImage.url(URL(string: post.images.first!))
-                    .placeholder{ ProgressView() }
+                    .placeholder { ProgressView() }
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             )
@@ -106,10 +106,8 @@ struct FriendsPostView: View {
 
 struct ListFriendsView_Previews: PreviewProvider {
     @Namespace static var namespace
-    
+
     static var previews: some View {
         ListFriendsView(vm: ListViewModel(), namespace: namespace)
     }
 }
-
-
