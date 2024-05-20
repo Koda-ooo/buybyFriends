@@ -10,7 +10,7 @@ import Foundation
 struct ProfileImage: Identifiable, Equatable {
     var id: String
     var profileImageURL: String
-    
+
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.profileImageURL = dic["profileImageURL"] as? String ?? ""

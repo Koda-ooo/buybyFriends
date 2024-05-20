@@ -17,9 +17,9 @@ protocol ShareProviderProtocol {
 
 final class ShareProvider: ShareProviderProtocol {
     let urlToBuyByFriends = "https://twitter.com" // アプリのURL
-    
+
     func shareToInstagramStory(imageData: Data) -> Future<Void, Error> {
-        return Future<Void, Error> { promise in
+        return Future<Void, Error> { _ in
             _ = InstaStories.Shared.post(
                 bgImage: UIImage(named: "noimage") ?? UIImage(),
                 stickerData: imageData,
@@ -27,31 +27,31 @@ final class ShareProvider: ShareProviderProtocol {
             )
         }
     }
-    
+
     func shareOnTwitter() -> Future<Void, Error> {
-        return Future<Void, Error> { promise in
-            let text = "" //ツイート本文
-            let hashTag = "#BuyByFriends" //ハッシュタグ
+        return Future<Void, Error> { _ in
+            let text = "" // ツイート本文
+            let hashTag = "#BuyByFriends" // ハッシュタグ
             let completedText = text + "\n" + hashTag + "\n" + "\n" + self.urlToBuyByFriends
-            
-            //作成したテキストをエンコード
+
+            // 作成したテキストをエンコード
             let encodedText = completedText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            
-            //エンコードしたテキストをURLに繋げ、URLを開いてツイート画面を表示させる
+
+            // エンコードしたテキストをURLに繋げ、URLを開いてツイート画面を表示させる
             if let encodedText = encodedText,
                let url = URL(string: "https://twitter.com/intent/tweet?text=\(encodedText)") {
                 UIApplication.shared.open(url)
             }
         }
     }
-    
+
     func shareOnLINE() -> Future<Void, Error> {
-        return Future<Void, Error> { promise in
+        return Future<Void, Error> { _ in
             let urlScheme: String = "https://line.me/R/share?text="
-            let text = "" //メッセージ本文
+            let text = "" // メッセージ本文
             let completedText = urlScheme + text + "\n" + self.urlToBuyByFriends
-            
-            //作成したテキストをエンコード
+
+            // 作成したテキストをエンコード
             let encodedURL = completedText.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
             let url = URL(string: encodedURL!)
             guard let openUrl = url else { return }

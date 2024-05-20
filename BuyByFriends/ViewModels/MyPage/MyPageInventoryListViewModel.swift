@@ -16,17 +16,17 @@ final class MyPageInventoryListViewModel: ViewModelObject {
         let startToUpdateMyInventories = PassthroughSubject<Void, Never>()
         let startToRequestInventory = PassthroughSubject<Void, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var isMyPage: Bool = false
         @Published var userInfo: UserInfo = UserInfo(dic: [:])
         @Published var userInventories: [Inventory] = []
     }
-    
+
     final class Output: OutputObject {
         @Published fileprivate(set) var inventories: [Inventory] = []
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
@@ -34,19 +34,18 @@ final class MyPageInventoryListViewModel: ViewModelObject {
     @Published private var isBusy: Bool = false
     private let userInfoProvider: UserInfoProviderObject
     private let inventoryListProvider: InventoryListProviderObject
-    
-    
+
     init(
         userInfoProvider: UserInfoProviderObject = UserInfoProvider(),
         inventoryListProvider: InventoryListProviderObject = InventoryListProvider()
     ) {
         self.userInfoProvider = userInfoProvider
         self.inventoryListProvider = inventoryListProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
+
         input.startToFetchInventory
             .flatMap {
                 inventoryListProvider.fetchInventoryList()
@@ -59,9 +58,9 @@ final class MyPageInventoryListViewModel: ViewModelObject {
                     print("finished")
                 }
             }) { result in
-                
+
                 var inventories = result
-                
+
                 for inventory in binding.userInfo.inventoryList {
                     for (index, var dict) in inventories.enumerated() {
                         if dict.name == inventory {
@@ -70,11 +69,11 @@ final class MyPageInventoryListViewModel: ViewModelObject {
                         }
                     }
                 }
-                
+
                 binding.userInventories = inventories
             }
             .store(in: &cancellables)
-        
+
         input.startToUpdateMyInventories
             .flatMap {
                 userInfoProvider.updateInventory(inventory: binding.userInventories)
@@ -88,7 +87,7 @@ final class MyPageInventoryListViewModel: ViewModelObject {
                 }
             }) {}
             .store(in: &cancellables)
-        
+
         self.input = input
         self.binding = binding
         self.output = output

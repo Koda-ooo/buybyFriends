@@ -16,7 +16,7 @@ class PaymentGatewayController: UIViewController {
             completion(status, intent, error)
         }
     }
-    
+
 }
 
 extension PaymentGatewayController: STPAuthenticationContext {

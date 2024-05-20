@@ -22,7 +22,7 @@ struct UserInfo: Identifiable, Equatable, Codable, Hashable {
     var fcmToken: String
     var favoritePosts: [String]
     var bookmarkPosts: [String]
-    var wishList: [Int:String]
+    var wishList: [Int: String]
 
     init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
@@ -38,6 +38,6 @@ struct UserInfo: Identifiable, Equatable, Codable, Hashable {
         self.fcmToken = dic["fcmToken"] as? String ?? ""
         self.favoritePosts = dic["favoritePosts"] as? [String] ?? []
         self.bookmarkPosts = dic["bookmarkPosts"] as? [String] ?? []
-        self.wishList = dic["wishList"] as? [Int:String] ?? [:]
+        self.wishList = dic["wishList"] as? [Int: String] ?? [:]
     }
 }

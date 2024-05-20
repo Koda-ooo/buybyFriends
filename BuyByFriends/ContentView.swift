@@ -11,8 +11,7 @@ import Combine
 struct ContentView: View {
    @Namespace var namespace
     @State var show = false
-    
-    
+
    var body: some View {
        ZStack {
            if !show {

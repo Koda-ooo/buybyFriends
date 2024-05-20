@@ -11,11 +11,11 @@ struct EditProfileView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = EditProfileViewModel()
-    
+
     var body: some View {
         VStack {
             Button(action: {
-                
+
             }) {
                 AsyncImage(url: URL(string: vm.binding.profileImageURL)) { image in
                     image.resizable()
@@ -29,10 +29,10 @@ struct EditProfileView: View {
             )
             .clipShape(Circle())
             .padding(.vertical, 16)
-            
+
             Text("About you")
                 .bold()
-            
+
             List {
                 ForEach(Destination.EditProfile.allCases, id: \.self) { selected in
                     NavigationLink(value: selected) {
@@ -85,7 +85,7 @@ struct EditProfileView: View {
                         .foregroundColor(.black)
                 }
             }
-            
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     path.path.removeLast()

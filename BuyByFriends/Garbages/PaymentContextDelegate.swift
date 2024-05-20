@@ -27,7 +27,7 @@ class PaymentContextDelegate: NSObject, STPPaymentContextDelegate, ObservableObj
             showAlert = true
             self.message = message
         case .error:
-            
+
             //   title = "Error"
             message = error?.localizedDescription ?? ""
             showAlert = true
@@ -43,8 +43,7 @@ class PaymentContextDelegate: NSObject, STPPaymentContextDelegate, ObservableObj
 
         paymentMethodButtonTitle = paymentContext.selectedPaymentOption?.label ?? "Select Payment Method"
 
-        //updating the selected shipping method
-
+        // updating the selected shipping method
 
         //            shippingMethodButtonTitle = paymentContext.selectedShippingMethod?.label ?? "Select Shipping Method"
         //

@@ -12,7 +12,7 @@ import FirebaseFirestore
 import FirebaseStorage
 
 final class MessageProvider: MessageProviderObject {
-    
+
     func observeMessage(query: Query) -> AnyPublisher<[Message], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[Message], ListError> in
@@ -29,12 +29,12 @@ final class MessageProvider: MessageProviderObject {
                 }
             }.eraseToAnyPublisher()
     }
-    
+
     func createTextMessage(chatRoomID: String, text: String) -> AnyPublisher<Message, Error> {
         return Future<Message, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let saveMessage = Firestore.firestore().collection("ChatRooms").document(chatRoomID).collection("Messages").document()
-            
+
             let messageData = [
                 "id": saveMessage.documentID,
                 "chatRoomID": chatRoomID,
@@ -44,7 +44,7 @@ final class MessageProvider: MessageProviderObject {
                 "unread": true,
                 "createdAt": Timestamp()
             ] as [String: Any]
-            
+
             saveMessage.setData(messageData) { err in
                 if let err = err {
                     print("メッセージ情報の保存に失敗しました。\(err)")
@@ -55,13 +55,13 @@ final class MessageProvider: MessageProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func createImageURL(image: Data) -> AnyPublisher<String, Error> {
         return Future<String, Error> { promise in
             let fileName = NSUUID().uuidString
             let storageRef = Storage.storage().reference().child("message_image").child(fileName)
-            
-            storageRef.putData(image, metadata: nil) { (metadata, err) in
+
+            storageRef.putData(image, metadata: nil) { (_, err) in
                 if let err = err {
                     print("Firestorageへの保存に失敗しました。\(err)")
                     return
@@ -77,12 +77,12 @@ final class MessageProvider: MessageProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func createImageMessage(chatRoomID: String, imageURL: String) -> AnyPublisher<Message, Error> {
         return Future<Message, Error> { promise in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let saveMessage = Firestore.firestore().collection("ChatRooms").document(chatRoomID).collection("Messages").document()
-            
+
             let messageData = [
                 "id": saveMessage.documentID,
                 "chatRoomID": chatRoomID,
@@ -92,7 +92,7 @@ final class MessageProvider: MessageProviderObject {
                 "unread": true,
                 "createdAt": Timestamp()
             ] as [String: Any]
-            
+
             saveMessage.setData(messageData) { err in
                 if let err = err {
                     print("メッセージ情報の保存に失敗しました。\(err)")
@@ -103,7 +103,7 @@ final class MessageProvider: MessageProviderObject {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func fetchMessage(chatRoomID: String, messageID: String) -> AnyPublisher<Message, Error> {
         return Future<Message, Error> { promise in
             Firestore.firestore()

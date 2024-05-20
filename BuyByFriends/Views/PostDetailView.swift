@@ -15,9 +15,9 @@ struct PostDetailView: View {
     @Binding var isShownPostDetailView: Bool
     let index: String
     var namespace: Namespace.ID
-    
+
     init(
-        vm:PostDetailViewModel = PostDetailViewModel(),
+        vm: PostDetailViewModel = PostDetailViewModel(),
         isShownPostDetailView: Binding<Bool>,
         post: Post,
         index: String,
@@ -29,13 +29,13 @@ struct PostDetailView: View {
         self.namespace = namespace
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             ScrollView(showsIndicators: false) {
                     cover
             }
-            
+
             HStack(spacing: 10) {
                 Button(action: {
                     print("tapped")
@@ -51,9 +51,9 @@ struct PostDetailView: View {
                 .frame(width: 30, height: 30)
                 Text(vm.binding.post.userID)
                     .foregroundColor(.white)
-                
+
                 Spacer()
-                
+
                 Button {
                     withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                         isShownPostDetailView.toggle()
@@ -73,12 +73,12 @@ struct PostDetailView: View {
                 .matchedGeometryEffect(id: "mask\(index)", in: namespace)
         }
     }
-    
+
     var cover: some View {
-        VStack(alignment: .leading,spacing: 10) {
+        VStack(alignment: .leading, spacing: 10) {
             PostImagesView(images: vm.binding.post.images, index: index, namespace: namespace)
                 .matchedGeometryEffect(id: index, in: namespace)
-            
+
             HStack(spacing: 20) {
                 CustomButton(
                     isFill: vm.$binding.favariteFlag,
@@ -86,37 +86,37 @@ struct PostDetailView: View {
                     onTappedForAdd: self.vm.input.startToAddFavaritePosts.send,
                     onTappedForRemove: self.vm.input.startToRemoveFavaritePosts.send
                 )
-                
+
                 Button(action: {
-                    
+
                 }) {
                     Image(systemName: "square.and.arrow.up")
                 }
-                
+
                 Spacer()
-                
+
                 CustomButton(
                     isFill: vm.$binding.bookmarkFlag,
                     imageName: "globe.europe.africa",
                     onTappedForAdd: self.vm.input.startToAddBookmarkPosts.send,
                     onTappedForRemove: self.vm.input.startToRemoveBookmarkPosts.send
                 )
-                
+
                 Button(action: {
-                    
-                }){
+
+                }) {
                     Image(systemName: "ellipsis")
                 }
             }
             .padding(.horizontal, 20)
             .font(.system(size: 23))
             .foregroundColor(.black)
-            
+
             Text(vm.binding.post.explain)
                 .padding(.horizontal, 10)
-            
+
             Divider()
-            
+
             ForEach(PostInformation.allCases, id: \.self) { info in
                 switch info {
                 case .category: PostDetailInformationView(title: info.rawValue, result: vm.binding.post.category)
@@ -128,9 +128,9 @@ struct PostDetailView: View {
             }
             .font(.system(size: 15))
             .padding(.horizontal, 10)
-            
+
             Divider()
-            
+
             Spacer()
         }
         .navigationBarHidden(true)
@@ -140,7 +140,7 @@ struct PostDetailView: View {
                     Text("¥ \(vm.binding.post.price)")
                     Spacer()
                     Button(action: {
-                        //購入手続きへの導線
+                        // 購入手続きへの導線
                         vm.binding.isMovedPurchaseView.toggle()
                     }) {
                         Text("購入する")
@@ -166,19 +166,19 @@ struct PostDetailView: View {
             path.path.append(Destination.PostDetail.purchase)
         }
     }
-    
+
 }
 
 struct PostImagesView: View {
     var images: [String]
     var index: String
     var namespace: Namespace.ID
-    
+
     var body: some View {
         TabView {
-            ForEach(self.images, id: \.self){ image in
+            ForEach(self.images, id: \.self) { image in
                 ZStack(alignment: .center) {
-                    ZStack{
+                    ZStack {
                         Rectangle()
                             .foregroundColor(Color.gray)
                         KFImage.url(URL(string: image))
@@ -189,7 +189,7 @@ struct PostImagesView: View {
                             .scaledToFit()
                     }
                 }
-                
+
             }
         }
         .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width/3*4)
@@ -201,7 +201,7 @@ struct PostImagesView: View {
 struct PostDetailInformationView: View {
     var title: String
     var result: String
-    
+
     var body: some View {
         HStack {
             Text(title)
@@ -214,12 +214,12 @@ struct PostDetailInformationView: View {
 }
 
 struct CustomButton: View {
-    
+
     @Binding var isFill: Bool
     private var imageName: String
     private var onTappedForAdd: (() -> Void)?
     private var onTappedForRemove: (() -> Void)?
-    
+
     init(
         isFill: Binding<Bool>,
         imageName: String,
@@ -231,11 +231,11 @@ struct CustomButton: View {
         self.onTappedForAdd = onTappedForAdd
         self.onTappedForRemove = onTappedForRemove
     }
-    
+
     var body: some View {
         configureLikeImage()
     }
-    
+
     private func configureLikeImage() -> AnyView {
         var _imageName = self.imageName
         if self._isFill.wrappedValue {
@@ -255,7 +255,6 @@ struct CustomButton: View {
         )
     }
 }
-
 
 struct PostDetailView_Previews: PreviewProvider {
     @Namespace static var namespace

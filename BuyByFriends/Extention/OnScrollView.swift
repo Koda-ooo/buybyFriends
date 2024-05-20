@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct OnScrollView: Gesture {
-    @FocusState var focus:Bool
-    
+    @FocusState var focus: Bool
+
     var gesture: some Gesture {
         DragGesture()
-            .onChanged{ value in
+            .onChanged { value in
                 if value.translation.height != 0 {
                     self.focus = false
                 }

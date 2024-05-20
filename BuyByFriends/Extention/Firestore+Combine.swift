@@ -26,7 +26,7 @@ extension Firestore {
                             try Self.Decoder().decode(T.self, from: $0.data(), in: $0.reference)
                         }
                         promise(.success(entities))
-                    } catch(let error) {
+                    } catch let error {
                         promise(.failure(error))
                     }
                 }
@@ -38,11 +38,11 @@ extension Firestore {
     func add<T: Codable>(ref: DocumentReference, data: T) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> { [weak self] promise in
             guard let `self` = self else { return }
-            
+
             do {
                 let encodeData = try self.encode(data: data)
                 ref.setData(encodeData) { error in
-                    
+
                     if let error = error {
                         promise(.failure(error))
                         return
@@ -69,7 +69,7 @@ extension Firestore {
         }
         .eraseToAnyPublisher()
     }
-    
+
     private func encode<T: Codable>(data: T) throws -> [String: Any] {
         do {
             return try Firestore.Encoder().encode(data)

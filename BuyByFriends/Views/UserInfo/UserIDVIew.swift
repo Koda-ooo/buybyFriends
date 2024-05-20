@@ -11,14 +11,14 @@ struct UserIDVIew: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = UserIDViewModel()
-    
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 30){
+        VStack(alignment: .leading, spacing: 30) {
             Text("ユーザー名を入力してください。")
                 .font(.system(size: 20, weight: .black))
                 .padding(.top, 30)
-            
-            HStack{
+
+            HStack {
                 Text("@")
                     .padding(.leading, 20)
                 TextField("Username", text: vm.$binding.userID)
@@ -29,7 +29,7 @@ struct UserIDVIew: View {
             .frame(maxWidth: UIScreen.main.bounds.width*0.85)
             .background(.white)
             .cornerRadius(5)
-            
+
             Button(action: {
                 UIApplication.shared.closeKeyboard()
                 appState.session.userInfo.userID = vm.binding.userID

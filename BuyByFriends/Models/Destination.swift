@@ -15,31 +15,31 @@ enum Destination {
         case logIn
         case finishLogIn
     }
-    
+
     enum UserInfo {
         case userID
         case birthDay
         case profileImage
         case inventoryList
     }
-    
+
     enum List {
         case friend
         case notification
         case message
     }
-    
+
     enum SearchFriends {
         case search
         case detail
     }
-    
+
     enum MyPage {
         case editProfile
         case inventoryList
         case wishList
     }
-    
+
     enum EditProfile: CaseIterable {
         case name
         case username
@@ -55,13 +55,13 @@ enum Destination {
             }
         }
     }
-    
+
     enum Purchase {
         case editAdress
         case editPersonalInfo
         case finishPurchase
     }
-    
+
     enum PostDetail {
         case purchase
     }

@@ -10,32 +10,32 @@ import SwiftUI
 struct MyPageInventoryListView: View {
     @EnvironmentObject var path: Path
     @StateObject var vm: MyPageInventoryListViewModel
-    
+
     init(vm: MyPageInventoryListViewModel = MyPageInventoryListViewModel(),
          userInfo: UserInfo,
          isMyPage: Bool) {
         vm.binding.isMyPage = isMyPage
         vm.binding.userInfo = userInfo
-        
+
         if isMyPage {
             vm.input.startToFetchInventory.send()
         } else {
-            vm.binding.userInventories = userInfo.inventoryList.enumerated().map { (index, name) in
+            vm.binding.userInventories = userInfo.inventoryList.enumerated().map { (_, name) in
                 var inventory = Inventory(dic: [:])
 //                inventory.id = index
                 inventory.name = name
                 return inventory
             }
         }
-        
+
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     var body: some View {
-        VStack(alignment: .leading ,spacing: 30) {
+        VStack(alignment: .leading, spacing: 30) {
             Spacer()
                 .frame(height: 20)
-            
+
             FlexibleView(
                 data: vm.binding.userInventories,
                 spacing: 10,
@@ -77,15 +77,15 @@ struct MyPageInventoryListView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
-            
+
             Spacer()
-            
+
             Button(action: {
                 if vm.binding.isMyPage {
                     vm.input.startToUpdateMyInventories.send()
                 } else {
                     // 通知を送る
-                    
+
                 }
                 path.path.removeLast()
             }) {
@@ -101,7 +101,7 @@ struct MyPageInventoryListView: View {
             .background(Color.black)
             .cornerRadius(.infinity)
             .padding(.trailing, 30)
-            
+
             if !vm.binding.isMyPage {
                 Text("\(vm.binding.userInfo.userID)さんに匿名のリクエストが届きます。")
                     .bold()

@@ -11,19 +11,19 @@ import Combine
 struct PhoneNumberView: View {
     @EnvironmentObject var path: Path
     @StateObject private var vm = PhoneNumberViewModel()
-    
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 20){
+        VStack(alignment: .leading, spacing: 20) {
             Text("電話番号を入力してください。")
                 .font(.system(size: 20, weight: .black))
                 .padding(.top, 30)
-            
+
             Text("電話番号は会員登録のみに利用され、\n外部に公表されることは一切ございません。")
                 .font(.system(size: 15, weight: .medium))
                 .padding(.bottom, 30)
-            
+
             VStack(spacing: 50) {
-                HStack(spacing: 15){
+                HStack(spacing: 15) {
                     Text("+81")
                         .font(.system(size: 20, weight: .light))
                         .padding(.leading, 20)
@@ -39,7 +39,7 @@ struct PhoneNumberView: View {
                 }
                 .background(.white)
                 .cornerRadius(5)
-                
+
                 Button(action: {
                     UIApplication.shared.closeKeyboard()
                     vm.input.startToSignUp.send()

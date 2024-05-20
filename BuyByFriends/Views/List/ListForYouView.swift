@@ -10,7 +10,7 @@ import SwiftUI
 struct ListForYouView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm: ListViewModel
-    
+
     var body: some View {
         LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 2)) {
             ForEach(vm.output.forYouPosts) { post in

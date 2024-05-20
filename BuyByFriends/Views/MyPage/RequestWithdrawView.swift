@@ -13,7 +13,7 @@ struct RequestWithdrawView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm = RequestWithdrawViewModel()
     var withdraw: Withdraw
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             List {
@@ -24,17 +24,17 @@ struct RequestWithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 ZStack {
                     HStack {
                         Text("振込申請金額")
                         Spacer()
-                        Image(systemName:"yensign")
+                        Image(systemName: "yensign")
                             .foregroundColor(.gray)
                         if let price = vm.output.requestMoney {
                             Text("\(price)")
                         }
-                        
+
                     }
                     TextField("", text: vm.$binding.requestMoney)
                         .foregroundColor(.clear)
@@ -51,18 +51,18 @@ struct RequestWithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
             }
             .frame(height: 2*WithdrawView.rowHeight)
             .scrollDisabled(true)
             .padding(.top, 20)
-            
+
             Text("お振込手数料として200円かかります。\nお振込が完了するまで5営業日程度をいただいております。")
                 .font(.system(size: 16, weight: .regular))
                 .foregroundColor(.gray)
                 .frame(height: WithdrawView.rowHeight)
                 .padding(.leading)
-            
+
             List {
                 HStack {
                     Text("振込手数料")
@@ -71,7 +71,7 @@ struct RequestWithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
                 HStack {
                     Text("振込金額")
                     Spacer()
@@ -81,11 +81,11 @@ struct RequestWithdrawView: View {
                 }
                 .frame(height: WithdrawView.rowHeight)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                
+
             }
             .frame(height: 2*WithdrawView.rowHeight)
             .scrollDisabled(true)
-            
+
             Button(action: {
                 UIApplication.shared.closeKeyboard()
                 path.path.removeLast(2)
@@ -105,9 +105,9 @@ struct RequestWithdrawView: View {
             }
             .padding()
             .disabled(!vm.output.isEnabledRequestWithdrawButton)
-            
+
             Spacer()
-            
+
         }
         .listStyle(.plain)
         .navigationBarTitleDisplayMode(.inline)

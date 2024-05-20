@@ -19,36 +19,36 @@ final class PurchaseViewModel: ViewModelObject {
         let startToSaveAdress = PassthroughSubject<Void, Never>()
         let showPaymentSheet = PassthroughSubject<Void, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var post: Post = Post(dic: [:])
         @Published var adress: Adress = Adress(dic: [:])
         @Published var paymentMethodParams: STPPaymentMethodParams?
         @Published var paymentSheet = PaymentSheet(paymentIntentClientSecret: "", configuration: PaymentSheet.Configuration())
-        
+
         // 遷移系
         @Published var isMovedInsertAdressView = false
         @Published var isMovedInsertPersonalInfo = false
         @Published var isMovedFinishPurchaseView = false
         @Published var isPresentedPaymentSheet = false
     }
-    
+
     final class Output: OutputObject {
         @Published fileprivate(set) var isEnableNextButton: Bool = false
         @Published fileprivate(set) var isEnableRegisterButton: Bool = false
         @Published fileprivate(set) var isEnablePurchaseButton: Bool = false
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
     @Published private var isBusy: Bool = false
-    
+
     private let purchaseProvider: PurchaseProviderProtocol
     private let deliveryProvider: DeliveryProviderObject
     private let userdefaultProvider: UserDefaultProviderObject
-    
+
     init(
         purchaseProvider: PurchaseProviderProtocol = PurchaseProvider(),
         deliveryProvider: DeliveryProviderObject = DeliveryProvider(),
@@ -57,12 +57,12 @@ final class PurchaseViewModel: ViewModelObject {
         self.purchaseProvider = purchaseProvider
         self.deliveryProvider = deliveryProvider
         self.userdefaultProvider = userdefaultProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
-        ///お届け先情報のバリデーション
+
+        /// お届け先情報のバリデーション
         let isValidAdress = binding.$adress
             .map {
                 $0.postNumber.count == 7 &&
@@ -70,7 +70,7 @@ final class PurchaseViewModel: ViewModelObject {
                 $0.city.count >= 1 &&
                 $0.number.count >= 1
             }
-        
+
         // 個人情報のバリデーション
         let isValidPersonalInfo = binding.$adress
             .map {
@@ -79,7 +79,7 @@ final class PurchaseViewModel: ViewModelObject {
                 $0.phoneNumber.count >= 10 &&
                 $0.email.count >= 5
             }
-        
+
         // 決済のバリデーション
         let isValidPurchase = binding.$adress
             .map {
@@ -92,15 +92,15 @@ final class PurchaseViewModel: ViewModelObject {
                 $0.phoneNumber.count >= 10 &&
                 $0.email.count >= 5
             }
-        
-        ///ボタン有効フラグ
+
+        /// ボタン有効フラグ
         let enableNextButton = isValidAdress.map {$0}
         let enableRegisterButton = isValidPersonalInfo.map {$0}
         let enablePurchaseButton = isValidPurchase.map {$0}
-        
+
         /// PaymentIntent作成
         input.startToCreatePaymentIntent
-            .flatMap { post in
+            .flatMap { _ in
                 purchaseProvider.createPaymentIntent(post: binding.post)
             }
             .sink { completion in
@@ -120,8 +120,8 @@ final class PurchaseViewModel: ViewModelObject {
                 binding.isPresentedPaymentSheet = true
             }
             .store(in: &cancellables)
-        
-        ///購入済みに更新
+
+        /// 購入済みに更新
         input.startToUpdatePost
             .flatMap {
                 purchaseProvider.updatePost(postID: binding.post.id)
@@ -137,10 +137,10 @@ final class PurchaseViewModel: ViewModelObject {
                 binding.isMovedFinishPurchaseView = result
             }
             .store(in: &cancellables)
-        
-        ///配送タスクの作成
+
+        /// 配送タスクの作成
         input.startToCreateDelivery
-            .flatMap { post in
+            .flatMap { _ in
                 deliveryProvider.createDelivery(post: binding.post, adress: binding.adress)
             }
             .sink { completion in
@@ -154,7 +154,7 @@ final class PurchaseViewModel: ViewModelObject {
                 print("FINISH")
             }
             .store(in: &cancellables)
-        
+
         /// 配送先をUserDefaultから取得
         input.startToGetAdress
             .flatMap {
@@ -171,7 +171,7 @@ final class PurchaseViewModel: ViewModelObject {
                 binding.adress = adress
             }
             .store(in: &cancellables)
-        
+
         /// 配送先をUserDefaultに保存
         input.startToSaveAdress
             .flatMap {
@@ -188,14 +188,14 @@ final class PurchaseViewModel: ViewModelObject {
                 print("FINISH")
             }
             .store(in: &cancellables)
-        
+
         // 組み立てたストリームをoutputに反映
         cancellables.formUnion([
             enableNextButton.assign(to: \.isEnableNextButton, on: output),
             enableRegisterButton.assign(to: \.isEnableRegisterButton, on: output),
             enablePurchaseButton.assign(to: \.isEnablePurchaseButton, on: output)
         ])
-        
+
         self.input = input
         self.binding = binding
         self.output = output

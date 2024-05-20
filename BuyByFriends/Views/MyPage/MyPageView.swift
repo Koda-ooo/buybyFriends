@@ -10,13 +10,13 @@ import SwiftUI
 struct MyPageView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm: MyPageViewModel = MyPageViewModel()
-    
+
     init(vm: MyPageViewModel = MyPageViewModel(), userUID uid: String) {
         vm.binding.uid = uid
         vm.input.startToFetchInfos.send()
         _vm = StateObject(wrappedValue: vm)
     }
-    
+
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
@@ -31,9 +31,9 @@ struct MyPageView: View {
                         height: UIScreen.main.bounds.height*0.11
                     )
                     .clipShape(Circle())
-                    
+
                     Spacer()
-                    
+
                     VStack(spacing: 20) {
                         HStack {
                             Spacer()
@@ -52,10 +52,10 @@ struct MyPageView: View {
                             }
                         }
                         .padding(.leading, 20)
-                        
+
                         HStack {
                             Spacer()
-                            
+
                             NavigationLink(value: Destination.MyPage.editProfile) {
                                 Text("プロフィールを編集")
                                     .font(.system(size: 15, weight: .medium))
@@ -69,21 +69,21 @@ struct MyPageView: View {
                     }
                     Spacer()
                 }
-                
+
                 HStack(spacing: 8) {
                     Button(action: {
-                        
+
                     }) {
                         Asset.Sns.monochromeInstagram.swiftUIImage
                     }
-                    
+
                     Text(vm.binding.isMyPage ? appState.session.userInfo.name : vm.output.userInfo.name)
                         .font(.system(size: 20, weight: .bold))
                 }
-                
+
                 Text("@\(vm.binding.isMyPage ? appState.session.userInfo.userID : vm.output.userInfo.userID)")
                     .font(.system(size: 17, weight: .regular))
-                
+
                 if vm.output.userInfo.selfIntroduction != "" {
                     Text("\(vm.binding.isMyPage ? appState.session.userInfo.selfIntroduction : vm.output.userInfo.selfIntroduction)")
                         .font(.system(size: 17, weight: .regular))
@@ -91,8 +91,7 @@ struct MyPageView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 12)
-            
-            
+
             HStack(spacing: 30) {
                 NavigationLink(value: Destination.MyPage.inventoryList) {
                     Text("持ち物リスト")
@@ -103,7 +102,7 @@ struct MyPageView: View {
                                 .stroke(Color.gray, lineWidth: 2)
                         )
                 }.foregroundColor(.gray)
-                
+
                 NavigationLink(value: Destination.MyPage.wishList) {
                     Text("ウィッシュリスト")
                         .frame(maxWidth: .infinity, minHeight: 56)
@@ -115,7 +114,7 @@ struct MyPageView: View {
                 }
             }
             .padding([.horizontal, .bottom])
-            
+
             LazyVGrid(
                 columns: Array(repeating: .init(.flexible(), spacing: 5), count: 3),
                 spacing: 5
@@ -151,7 +150,7 @@ struct MyPageView: View {
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: {
-                    
+
                 }) {
                     Image(systemName: "square.and.arrow.up")
                 }
@@ -162,7 +161,7 @@ struct MyPageView: View {
                 }
             }
         }
-        .sheet(isPresented: vm.$binding.isShownMyPageHumbergerMenu){
+        .sheet(isPresented: vm.$binding.isShownMyPageHumbergerMenu) {
             MyPageHumbergerMenuView()
         }
     }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct WelcomeView: View {
     @EnvironmentObject var path: Path
-    
+
     var body: some View {
         NavigationStack(path: $path.path) {
-            VStack(spacing: 20){
+            VStack(spacing: 20) {
                 Spacer()
                 Text("BuyByFriend")
                     .font(.system(size: 30, weight: .heavy))
@@ -26,7 +26,7 @@ struct WelcomeView: View {
                 .background(Asset.Colors.jetBlack.swiftUIColor)
                 .cornerRadius(.infinity)
                 .padding(.horizontal, 30)
-                
+
                 VStack {
                     Text("本アプリでは「Get started」を押した時点で")
                         .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
@@ -45,7 +45,7 @@ struct WelcomeView: View {
                 }
                 .font(.system(size: 12, weight: .medium))
                 .padding(.horizontal, 5)
-                
+
                 NavigationLink(value: Destination.Welcome.logIn) {
                     Text("ログイン")
                         .frame(maxWidth: .infinity, minHeight: 70)

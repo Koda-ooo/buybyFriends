@@ -860,6 +860,7 @@
 				5632E52329E10B6C0024C19C /* Frameworks */,
 				5632E52429E10B6C0024C19C /* Resources */,
 				6C3D6B202BDF84C30011AFEE /* ShellScript */,
+				6C4FC3612BEF5AD0009E772A /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -1027,6 +1028,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=/opt/homebrew/bin:$PATH\n\nif which mint >/dev/null; then\n    # SwiftGen\n    xcrun --sdk macosx mint run swiftgen\nelse \n    echo 'warning: mint not installed.'\nfi\n";
+		};
+		6C4FC3612BEF5AD0009E772A /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/opt/homebrew/bin:$PATH \n\nif which mint >/dev/null; then\n    xcrun --sdk macosx mint run swiftlint swiftlint --fix\n    xcrun --sdk macosx mint run swiftlint swiftlint\nelse\n    echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

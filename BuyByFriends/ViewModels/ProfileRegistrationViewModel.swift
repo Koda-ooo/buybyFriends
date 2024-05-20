@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 final class ProfileRegistrationViewModel: ViewModelObject {
-    
+
     final class Input: InputObject {
         let usernameTapped = PassthroughSubject<Void, Never>()
         let userIDTapped = PassthroughSubject<Void, Never>()
@@ -22,7 +22,7 @@ final class ProfileRegistrationViewModel: ViewModelObject {
         let inventoryListViewDidLoad = PassthroughSubject<Void, Never>()
         let inventoryListTapped = PassthroughSubject<Void, Never>()
     }
-    
+
     final class Binding: BindingObject {
         @Published var username = ""
         @Published var userID = ""
@@ -30,7 +30,7 @@ final class ProfileRegistrationViewModel: ViewModelObject {
         @Published var birthDay = Date()
         @Published var profileImage: UIImage?
         @Published var inventoryList = [Inventory]()
-        
+
         /// 各種ボタン押下完了後遷移フラグ
         @Published var isUsernameViewMoved = false
         @Published var isUserIDViewMoved = false
@@ -42,42 +42,42 @@ final class ProfileRegistrationViewModel: ViewModelObject {
         @Published var isInventoryListViewMoved = false
         @Published var isProfileRegistrationFinished = false
     }
-    
+
     final class Output: OutputObject {
         @Published fileprivate(set) var isUsernameButtonEnabled = false
         @Published fileprivate(set) var isUserIDButtonEnabled = false
         @Published fileprivate(set) var isPasswordButtonEnabled = false
     }
-    
+
     let input: Input
     @BindableObject private(set) var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
     private let authProvider: AuthProviderObject
-    
+
     init(authProvider: AuthProviderObject = AuthProvider()) {
         self.authProvider = authProvider
-        
+
         let input = Input()
         let binding = Binding()
         let output = Output()
-        
-        ///各種バリデーション（2文字以上10文字以下）
+
+        /// 各種バリデーション（2文字以上10文字以下）
         let isValidUsername = binding.$username
             .map {$0.count <= 10 && $0.count >= 2}
-        
+
         let isValidUserID = binding.$userID
             .map {$0.count <= 10 && $0.count >= 2}
-        
+
         let isValidPassword = binding.$password
             .map {$0.count <= 10 && $0.count >= 2}
-        
-        ///各種ボタン有効フラグ
+
+        /// 各種ボタン有効フラグ
         let isUsernameButtonEnabled = isValidUsername.map {$0}
         let isUserIDButtonEnabled = isValidUserID.map {$0}
         let isPasswordButtonEnabled = isValidPassword.map {$0}
-        
-        ///各種ボタン押下後の処理
+
+        /// 各種ボタン押下後の処理
         let isUsernameViewMoved = input.usernameTapped
             .flatMap {
                 Just(true)
@@ -106,8 +106,8 @@ final class ProfileRegistrationViewModel: ViewModelObject {
             .flatMap {
                 Just(true)
             }
-        
-        ///持ち物リスト取得の処理
+
+        /// 持ち物リスト取得の処理
         input.inventoryListViewDidLoad
             .flatMap {
                 authProvider.fetchInventoryList()
@@ -121,7 +121,7 @@ final class ProfileRegistrationViewModel: ViewModelObject {
                 print(binding.inventoryList)
             }
             .store(in: &cancellables)
-        
+
         // 組み立てたストリームをoutputに反映
         cancellables.formUnion([
             isUsernameViewMoved.assign(to: \.isUsernameViewMoved, on: binding),
@@ -135,7 +135,7 @@ final class ProfileRegistrationViewModel: ViewModelObject {
             isUserIDButtonEnabled.assign(to: \.isUserIDButtonEnabled, on: output),
             isPasswordButtonEnabled.assign(to: \.isPasswordButtonEnabled, on: output)
         ])
-        
+
         self.input = input
         self.binding = binding
         self.output = output

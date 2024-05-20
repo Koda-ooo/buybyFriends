@@ -42,7 +42,7 @@ struct EditProfileSelfIntroductionView: View {
                             .foregroundColor(.black)
                     }
                 }
-                
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         path.path.removeLast()

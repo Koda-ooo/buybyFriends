@@ -30,7 +30,7 @@ struct EditProfileInstagramView: View {
                             .foregroundColor(.black)
                     }
                 }
-                
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         path.path.removeLast()

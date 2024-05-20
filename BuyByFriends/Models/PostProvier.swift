@@ -14,12 +14,12 @@ import FirebaseStorage
 
 final class PostProvider: PostProviderProtocol {
     private let db = Firestore.firestore()
-    
+
     func fetchSelectedImages(images: [PHPickerResult]) -> Future<[UIImage], Error> {
         return Future<[UIImage], Error> { promise in
             var results: [UIImage] = []
             var count: Int = 0
-            
+
             for image in images {
                 let itemProvider = image.itemProvider
                 if itemProvider.canLoadObject(ofClass: UIImage.self) {
@@ -41,18 +41,18 @@ final class PostProvider: PostProviderProtocol {
             }
         }
     }
-    
+
     func createImageURL(post: Post, images: [UIImage]) -> Future<Post, Error> {
         return Future<Post, Error> { promise in
             var imagesURL = [String]()
             var newpost = post
-            
+
             for image in images {
                 guard let uploadImage = image.jpegData(compressionQuality: 0.1) else { return }
                 let fileName = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("post_image").child(fileName)
-                
-                storageRef.putData(uploadImage, metadata: nil) { (metadata, err) in
+
+                storageRef.putData(uploadImage, metadata: nil) { (_, err) in
                     if let err = err {
                         print("Firestorageへの保存に失敗しました。\(err)")
                         promise(.failure(err.self))
@@ -62,10 +62,10 @@ final class PostProvider: PostProviderProtocol {
                             print("Firestorageからのダウンロードに失敗しました。\(err)")
                             promise(.failure(err.self))
                         }
-                        
+
                         guard let urlString = url?.absoluteString else { return }
                         imagesURL.append(urlString)
-                        
+
                         if images.count == imagesURL.count {
                             newpost.images = imagesURL
                             promise(.success(newpost))
@@ -75,8 +75,8 @@ final class PostProvider: PostProviderProtocol {
             }
         }
     }
-    
-    func savePostToFirestore(post: Post) -> AnyPublisher<Bool, Error>{
+
+    func savePostToFirestore(post: Post) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             do {
                 _ = try self.db.collection("Posts").document(post.id).setData(from: post)
@@ -86,7 +86,7 @@ final class PostProvider: PostProviderProtocol {
             }
         }.eraseToAnyPublisher()
     }
-    
+
     func observePosts(query: Query) -> AnyPublisher<[Post], ListError> {
         return Publishers.QuerySnapshotPublisher(query: query)
             .flatMap { snapshot -> AnyPublisher<[Post], ListError> in
@@ -104,4 +104,3 @@ final class PostProvider: PostProviderProtocol {
             }.eraseToAnyPublisher()
     }
 }
-

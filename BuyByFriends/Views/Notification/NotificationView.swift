@@ -11,13 +11,13 @@ struct NotificationView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appState: AppState
     @StateObject var vm = NotificationViewModel()
-    @State private var selectedMode = modes.request
-    
+    @State private var selectedMode = Modes.request
+
     init(vm: NotificationViewModel = NotificationViewModel()) {
         _vm = StateObject(wrappedValue: vm)
     }
-    
-    enum modes: String, CaseIterable, Identifiable {
+
+    enum Modes: String, CaseIterable, Identifiable {
         case request = "Request"
         case todo = "To Do"
         var id: String { rawValue }
@@ -26,7 +26,7 @@ struct NotificationView: View {
     var body: some View {
         VStack {
             HStack(spacing: 60) {
-                ForEach(modes.allCases, id: \.self) { mode in
+                ForEach(Modes.allCases, id: \.self) { mode in
                     Button(action: {
                         selectedMode = mode
                     }, label: {
@@ -38,8 +38,8 @@ struct NotificationView: View {
                 }
             }
             .padding()
-            
-            switch selectedMode{
+
+            switch selectedMode {
             case .request: NotificationRequestView(vm: self.vm,
                                                    friendRequestList: self.appState.session.friend.requestList)
             case .todo: NotificationTodoView(vm: self.vm,

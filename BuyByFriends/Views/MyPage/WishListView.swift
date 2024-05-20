@@ -14,7 +14,7 @@ struct WishListView: View {
                 .font(.system(size: 18, weight: .bold))
                 .padding(.all, 12)
                 .padding(.top, 8)
-            
+
             List {
                 ForEach(InventoryGenre.allCases, id: \.self) { genre in
                     NavigationLink(value: genre) {

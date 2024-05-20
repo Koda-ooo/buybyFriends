@@ -17,8 +17,8 @@ struct Message: Decodable {
     let messageType: String
     let unread: Bool
     let createdAt: Timestamp
-    
-    init(dic: [String:Any]) {
+
+    init(dic: [String: Any]) {
         self.id = dic["id"] as? String ?? ""
         self.chatRoomID = dic["chatRoomID"] as? String ?? ""
         self.senderID = dic["senderID"] as? String ?? ""

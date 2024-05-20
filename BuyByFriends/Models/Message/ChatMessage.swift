@@ -14,7 +14,7 @@ struct ChatMessage: MessageType {
     var messageId: String
     var sentDate: Date
     var kindType: MessageKindType
-    
+
     var kind: MessageKind {
         switch kindType {
         case .text(message: let message):
@@ -28,7 +28,7 @@ struct ChatMessage: MessageType {
             return .photo(mediaItem)
         }
     }
-    
+
     /// テキストメッセージの生成
     static func new(sender: SenderType, messageId: String, sentDate: Date, message: String) -> ChatMessage {
         return ChatMessage(
@@ -38,7 +38,7 @@ struct ChatMessage: MessageType {
             kindType: .text(message: message)
         )
     }
-    
+
     /// 画像メッセージの生成（URLから）
     static func new(sender: SenderType, messageId: String, sentDate: Date, url: String) -> ChatMessage {
         return ChatMessage(
@@ -48,7 +48,7 @@ struct ChatMessage: MessageType {
             kindType: .image(mediaItem: ChatMedia.new(url: URL(string: url)))
         )
     }
-    
+
     /// 画像メッセージの生成（UIImageから）
     static func new(sender: SenderType, messageId: String, sentDate: Date, image: UIImage) -> ChatMessage {
         return ChatMessage(

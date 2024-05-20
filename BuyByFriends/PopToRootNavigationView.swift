@@ -20,7 +20,7 @@ class NavigationPath: ObservableObject {
 
 struct TestView: View {
     @StateObject private var navigationPath = NavigationPath()
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -40,7 +40,7 @@ struct TestView: View {
         }
         .environmentObject(navigationPath)
     }
-    
+
     var navigationBarTrailingItems: some View {
         Group {
             if navigationPath.currentPath.last != nil {
@@ -56,7 +56,7 @@ struct TestView: View {
 
 struct HomeView: View {
     @EnvironmentObject var navigationPath: NavigationPath
-    
+
     var body: some View {
         VStack {
             Text("Home View")
@@ -72,7 +72,7 @@ struct HomeView: View {
 
 struct ProfileView: View {
     @EnvironmentObject var navigationPath: NavigationPath
-    
+
     var body: some View {
         VStack {
             Text("Profile View")
@@ -100,7 +100,6 @@ struct SettingsView: View {
         }
     }
 }
-
 
 struct TestView_Previews: PreviewProvider {
     static var previews: some View {
