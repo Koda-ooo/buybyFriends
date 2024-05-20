@@ -9,21 +9,21 @@ import SwiftUI
 
 struct EditProfileSelfIntroductionView: View {
     @EnvironmentObject var path: Path
-    @State private var selfIntroductionText = "よろしくお願いいたします。"
+    @Binding var text: String
     private let maxLength = 150
 
     var body: some View {
         VStack {
             TextEditor(text: Binding<String>(
-                get: { selfIntroductionText },
-                set: { selfIntroductionText = String($0.prefix(maxLength)) }
+                get: { text },
+                set: { text = String($0.prefix(maxLength)) }
             ))
             .frame(height: 150)
             Divider()
                 .padding(.horizontal, -20)
             HStack {
                 Spacer()
-                Text("\(selfIntroductionText.count) / \(maxLength.description)")
+                Text("\(text.count) / \(maxLength.description)")
                     .foregroundStyle(Color.gray)
             }
             Spacer()
@@ -58,6 +58,6 @@ struct EditProfileSelfIntroductionView: View {
 
 struct EditProfileSelfIntroductionView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileSelfIntroductionView()
+        EditProfileSelfIntroductionView(text: .constant("よろしく"))
     }
 }

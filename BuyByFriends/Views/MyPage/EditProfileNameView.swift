@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
-    @State private var name = "山田太郎"
+    @Binding var name: String
 
     var body: some View {
         VStack {
@@ -46,6 +46,6 @@ struct EditProfileNameView: View {
 
 struct EditProfileNameView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileNameView()
+        EditProfileNameView(name: .constant("山田太郎"))
     }
 }

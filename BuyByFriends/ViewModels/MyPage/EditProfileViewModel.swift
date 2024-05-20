@@ -20,6 +20,7 @@ final class EditProfileViewModel: ViewModelObject {
         @Published var username: String = ""
         @Published var selfIntroduction: String = ""
         @Published var instagramID: String = ""
+        @Published var isInitial = true
     }
     
     final class Output: OutputObject {

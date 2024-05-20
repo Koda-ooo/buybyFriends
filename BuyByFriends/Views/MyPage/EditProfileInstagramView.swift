@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditProfileInstagramView: View {
     @EnvironmentObject var path: Path
-    @State private var instagram = "yamada_taro_insta"
+    @Binding var instagram: String
 
     var body: some View {
         VStack {
@@ -46,6 +46,6 @@ struct EditProfileInstagramView: View {
 
 struct EditProfileInstagramView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileInstagramView()
+        EditProfileInstagramView(instagram: .constant("yamada_insta"))
     }
 }
