@@ -39,19 +39,19 @@ struct EditProfileView: View {
                         HStack {
                             switch selected {
                             case .name:
-                                Text("名前")
+                                Text(Destination.EditProfile.name.title)
                                 Spacer()
                                 Text(vm.binding.name)
                             case .username:
-                                Text("ユーザーネーム")
+                                Text(Destination.EditProfile.username.title)
                                 Spacer()
                                 Text(vm.binding.username)
                             case .selfIntroduction:
-                                Text("自己紹介")
+                                Text(Destination.EditProfile.selfIntroduction.title)
                                 Spacer()
                                 Text(vm.binding.selfIntroduction)
                             case .instagram:
-                                Text("Instagram")
+                                Text(Destination.EditProfile.instagram.title)
                                 Spacer()
                                 Text(vm.binding.instagramID)
                             }
