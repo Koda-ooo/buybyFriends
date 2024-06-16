@@ -25,6 +25,7 @@ final class EditProfileViewModel: ViewModelObject {
 
     final class Output: OutputObject {
         @Published fileprivate(set) var profileImageData: Data = Data()
+        @Published fileprivate(set) var userInfo = UserInfo(dic: [:])
     }
 
     let input: Input
@@ -42,6 +43,37 @@ final class EditProfileViewModel: ViewModelObject {
         let input = Input()
         let binding = Binding()
         let output = Output()
+
+        input.startToSaveProfile
+            .flatMap {
+                userInfoProvider.uploadUserInfo(
+                    userInfo: UserInfo(dic: [
+                        "name": binding.name,
+                        "userID": binding.username,
+                        "selfIntroduction": binding.selfIntroduction,
+                        "instagramID": binding.instagramID
+                    ]),
+                    imageURL: ""
+                )
+            }
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            } receiveValue: { isSuccess in
+                if isSuccess {
+                    output.userInfo = UserInfo(dic: [
+                        "name": binding.name,
+                        "userID": binding.username,
+                        "selfIntroduction": binding.selfIntroduction,
+                        "instagramID": binding.instagramID
+                    ])
+                }
+            }
+            .store(in: &cancellables)
 
         /// 組み立てたストリームを反映
         cancellables.formUnion([

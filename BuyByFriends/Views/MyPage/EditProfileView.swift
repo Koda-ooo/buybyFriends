@@ -88,6 +88,7 @@ struct EditProfileView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    vm.input.startToSaveProfile.send()
                     path.path.removeLast()
                 }) {
                     Text("保存")
@@ -105,6 +106,12 @@ struct EditProfileView: View {
                 vm.binding.instagramID = appState.session.userInfo.instagramID
             }
             vm.binding.isInitial = false
+        }
+        .onChange(of: vm.output.userInfo) { userInfo in
+            appState.session.userInfo.name = userInfo.name
+            appState.session.userInfo.userID = userInfo.userID
+            appState.session.userInfo.selfIntroduction = userInfo.selfIntroduction
+            appState.session.userInfo.instagramID = userInfo.instagramID
         }
     }
 }
