@@ -9,14 +9,18 @@ import SwiftUI
 
 struct EditProfileUsername: View {
     @EnvironmentObject var path: Path
+    @Binding var username: String
 
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            UnderlinedTextField(placeholder: Destination.EditProfile.username.title, text: $username)
+            Spacer()
         }
+        .padding(.horizontal)
+        .padding(.top, 30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("ユーザーネーム")
+        .navigationTitle(Destination.EditProfile.username.title)
         .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
@@ -31,7 +35,7 @@ struct EditProfileUsername: View {
                     Button(action: {
                         path.path.removeLast()
                     }) {
-                        Text("保存")
+                        Text("完了")
                             .foregroundColor(.red)
                             .bold()
                     }
@@ -42,6 +46,6 @@ struct EditProfileUsername: View {
 
 struct EditProfileUsername_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileUsername()
+        EditProfileUsername(username: .constant("yamada_taro"))
     }
 }
