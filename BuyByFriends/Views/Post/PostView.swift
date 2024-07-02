@@ -43,7 +43,7 @@ struct PostView: View {
                 HStack(alignment: .center) {
                     if vm.$binding.images.isEmpty {
                         Button(action: {
-                            vm.input.isSelectImagesButtonTapped.send()
+                            vm.input.isCameraButtonTapped.send()
                         }) {
                             Image(systemName: "camera")
                                 .padding()
@@ -51,11 +51,26 @@ struct PostView: View {
                                 .frame(width: 65, height: 65)
                                 .overlay(RoundedRectangle(cornerRadius: 2)
                                     .stroke(style: StrokeStyle(dash: [8, 7])))
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
                                 .background(Color.white)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        ForEach(1..<5) { _ in
+
+                        Button(action: {
+                            vm.input.isSelectImagesButtonTapped.send()
+                        }) {
+                            Image(systemName: "photo")
+                                .padding()
+                                .font(.system(size: 20))
+                                .frame(width: 65, height: 65)
+                                .overlay(RoundedRectangle(cornerRadius: 2)
+                                    .stroke(style: StrokeStyle(dash: [8, 7])))
+                                .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                .background(Color.white)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+
+                        ForEach(2..<5) { _ in
                             Text("")
                                 .padding()
                                 .font(.system(size: 20))
@@ -86,20 +101,35 @@ struct PostView: View {
                         }
                         if vm.$binding.images.count < 5 {
                             Button(action: {
-                                vm.input.isSelectImagesButtonTapped.send()
+                                vm.input.isCameraButtonTapped.send()
                             }) {
                                 Image(systemName: "camera")
                                     .padding()
-                                    .font(.system(size: 15))
+                                    .font(.system(size: 20))
                                     .frame(width: 65, height: 65)
                                     .overlay(RoundedRectangle(cornerRadius: 2)
                                         .stroke(style: StrokeStyle(dash: [8, 7])))
-                                    .foregroundColor(Color.gray)
+                                    .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
                                     .background(Color.white)
                             }
                             .buttonStyle(PlainButtonStyle())
 
-                            ForEach(vm.$binding.images.count..<4, id: \.self) { _ in
+                            Button(action: {
+                                vm.input.isSelectImagesButtonTapped.send()
+                            }) {
+                                Image(systemName: "photo")
+                                    .padding()
+                                    .font(.system(size: 20))
+                                    .frame(width: 65, height: 65)
+                                    .overlay(RoundedRectangle(cornerRadius: 2)
+                                        .stroke(style: StrokeStyle(dash: [8, 7])))
+                                    .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                    .background(Color.white)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+
+                            // FIXME: MAXの枚数次第でcountの制御を変える
+                            ForEach(vm.$binding.images.count..<3, id: \.self) { _ in
                                 Text("")
                                     .padding()
                                     .font(.system(size: 20))
@@ -281,6 +311,9 @@ struct PostView: View {
             SwiftUIPHPicker(configuration: PostView.config) { results in
                 vm.input.isImagesSelected.send(results)
             }
+        }
+        .sheet(isPresented: vm.$binding.isCameraShown) {
+            ImagePicker(sourceType: .camera, selectedImage: vm.$binding.takePicture)
         }
         .sheet(isPresented: vm.$binding.isInsertBrandViewShown) {
             SelectBrandView(vm: self.vm).presentationDetents([.medium])
