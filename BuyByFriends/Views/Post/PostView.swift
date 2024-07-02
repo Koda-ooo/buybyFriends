@@ -40,66 +40,9 @@ struct PostView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                HStack(alignment: .center) {
-                    if vm.$binding.images.isEmpty {
-                        Button(action: {
-                            vm.input.isCameraButtonTapped.send()
-                        }) {
-                            Image(systemName: "camera")
-                                .padding()
-                                .font(.system(size: 20))
-                                .frame(width: 65, height: 65)
-                                .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8, 7])))
-                                .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
-                                .background(Color.white)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-
-                        Button(action: {
-                            vm.input.isSelectImagesButtonTapped.send()
-                        }) {
-                            Image(systemName: "photo")
-                                .padding()
-                                .font(.system(size: 20))
-                                .frame(width: 65, height: 65)
-                                .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8, 7])))
-                                .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
-                                .background(Color.white)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-
-                        ForEach(2..<5) { _ in
-                            Text("")
-                                .padding()
-                                .font(.system(size: 20))
-                                .frame(width: 65, height: 65)
-                                .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8, 7])))
-                                .foregroundColor(Color.gray)
-                                .background(Color.white)
-                        }
-                    } else {
-                        ForEach(0..<vm.$binding.images.count, id: \.self) { i in
-                            ZStack(alignment: .topTrailing) {
-                                Image(uiImage: vm.binding.images[i])
-                                    .resizable()
-                                    .frame(width: 65, height: 65)
-                                ZStack {
-                                    Circle()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.white)
-                                    Button(action: { vm.binding.images.remove(at: i) }) {
-                                        Image(systemName: "minus.circle.fill")
-                                            .foregroundColor(.red)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                                .offset(x: 5, y: -5)
-                            }
-                        }
-                        if vm.$binding.images.count < 5 {
+                ScrollView(.horizontal) {
+                    HStack(alignment: .center) {
+                        if vm.$binding.images.isEmpty {
                             Button(action: {
                                 vm.input.isCameraButtonTapped.send()
                             }) {
@@ -128,8 +71,7 @@ struct PostView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
 
-                            // FIXME: MAXの枚数次第でcountの制御を変える
-                            ForEach(vm.$binding.images.count..<3, id: \.self) { _ in
+                            ForEach(2..<5) { _ in
                                 Text("")
                                     .padding()
                                     .font(.system(size: 20))
@@ -139,11 +81,71 @@ struct PostView: View {
                                     .foregroundColor(Color.gray)
                                     .background(Color.white)
                             }
+                        } else {
+                            ForEach(0..<vm.$binding.images.count, id: \.self) { i in
+                                ZStack(alignment: .topTrailing) {
+                                    Image(uiImage: vm.binding.images[i])
+                                        .resizable()
+                                        .frame(width: 65, height: 65)
+                                    ZStack {
+                                        Circle()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.white)
+                                        Button(action: { vm.binding.images.remove(at: i) }) {
+                                            Image(systemName: "minus.circle.fill")
+                                                .foregroundColor(.red)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                    .offset(x: 5, y: -5)
+                                }
+                            }
+                            if vm.$binding.images.count < 5 {
+                                Button(action: {
+                                    vm.input.isCameraButtonTapped.send()
+                                }) {
+                                    Image(systemName: "camera")
+                                        .padding()
+                                        .font(.system(size: 20))
+                                        .frame(width: 65, height: 65)
+                                        .overlay(RoundedRectangle(cornerRadius: 2)
+                                            .stroke(style: StrokeStyle(dash: [8, 7])))
+                                        .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                        .background(Color.white)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+
+                                Button(action: {
+                                    vm.input.isSelectImagesButtonTapped.send()
+                                }) {
+                                    Image(systemName: "photo")
+                                        .padding()
+                                        .font(.system(size: 20))
+                                        .frame(width: 65, height: 65)
+                                        .overlay(RoundedRectangle(cornerRadius: 2)
+                                            .stroke(style: StrokeStyle(dash: [8, 7])))
+                                        .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                        .background(Color.white)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+
+                                // FIXME: MAXの枚数次第でcountの制御を変える
+                                ForEach(vm.$binding.images.count..<3, id: \.self) { _ in
+                                    Text("")
+                                        .padding()
+                                        .font(.system(size: 20))
+                                        .frame(width: 65, height: 65)
+                                        .overlay(RoundedRectangle(cornerRadius: 2)
+                                            .stroke(style: StrokeStyle(dash: [8, 7])))
+                                        .foregroundColor(Color.gray)
+                                        .background(Color.white)
+                                }
+                            }
                         }
                     }
+                    .listRowSeparator(.hidden)
+                    .frame(maxWidth: UIScreen.main.bounds.width)
                 }
-                .listRowSeparator(.hidden)
-                .frame(maxWidth: UIScreen.main.bounds.width)
                 Text("商品の説明")
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
