@@ -20,7 +20,7 @@ struct PostView: View {
     static var config: PHPickerConfiguration {
         var config = PHPickerConfiguration()
         config.filter = .images
-        config.selectionLimit = 5
+        config.selectionLimit = 10
         config.selection = .ordered
         config.preferredAssetRepresentationMode = .current
         return config
@@ -40,7 +40,7 @@ struct PostView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                ScrollView(.horizontal) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .center) {
                         if vm.$binding.images.isEmpty {
                             Button(action: {
@@ -71,7 +71,7 @@ struct PostView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
 
-                            ForEach(2..<5) { _ in
+                            ForEach(2..<10) { _ in
                                 Text("")
                                     .padding()
                                     .font(.system(size: 20))
@@ -100,7 +100,7 @@ struct PostView: View {
                                     .offset(x: 5, y: -5)
                                 }
                             }
-                            if vm.$binding.images.count < 5 {
+                            if vm.$binding.images.count < 10 {
                                 Button(action: {
                                     vm.input.isCameraButtonTapped.send()
                                 }) {
@@ -129,22 +129,22 @@ struct PostView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
 
-                                // FIXME: MAXの枚数次第でcountの制御を変える
-                                ForEach(vm.$binding.images.count..<3, id: \.self) { _ in
-                                    Text("")
-                                        .padding()
-                                        .font(.system(size: 20))
-                                        .frame(width: 65, height: 65)
-                                        .overlay(RoundedRectangle(cornerRadius: 2)
-                                            .stroke(style: StrokeStyle(dash: [8, 7])))
-                                        .foregroundColor(Color.gray)
-                                        .background(Color.white)
+                                if vm.$binding.images.count < 9 {
+                                    ForEach(vm.$binding.images.count..<8, id: \.self) { _ in
+                                        Text("")
+                                            .padding()
+                                            .font(.system(size: 20))
+                                            .frame(width: 65, height: 65)
+                                            .overlay(RoundedRectangle(cornerRadius: 2)
+                                                .stroke(style: StrokeStyle(dash: [8, 7])))
+                                            .foregroundColor(Color.gray)
+                                            .background(Color.white)
+                                    }
                                 }
                             }
                         }
                     }
                     .listRowSeparator(.hidden)
-                    .frame(maxWidth: UIScreen.main.bounds.width)
                 }
                 Text("商品の説明")
                     .listRowSeparator(.hidden)
