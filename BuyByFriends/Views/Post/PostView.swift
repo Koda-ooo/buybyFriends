@@ -46,9 +46,8 @@ struct PostView: View {
                             Button(action: {
                                 vm.input.isCameraButtonTapped.send()
                             }) {
-                                Image(systemName: "camera")
+                                Asset.Icons.camera.swiftUIImage
                                     .padding()
-                                    .font(.system(size: 20))
                                     .frame(width: 65, height: 65)
                                     .overlay(RoundedRectangle(cornerRadius: 2)
                                         .stroke(style: StrokeStyle(dash: [8, 7])))
@@ -60,9 +59,8 @@ struct PostView: View {
                             Button(action: {
                                 vm.input.isSelectImagesButtonTapped.send()
                             }) {
-                                Image(systemName: "photo")
+                                Asset.Icons.gallery.swiftUIImage
                                     .padding()
-                                    .font(.system(size: 20))
                                     .frame(width: 65, height: 65)
                                     .overlay(RoundedRectangle(cornerRadius: 2)
                                         .stroke(style: StrokeStyle(dash: [8, 7])))
@@ -104,9 +102,8 @@ struct PostView: View {
                                 Button(action: {
                                     vm.input.isCameraButtonTapped.send()
                                 }) {
-                                    Image(systemName: "camera")
+                                    Asset.Icons.camera.swiftUIImage
                                         .padding()
-                                        .font(.system(size: 20))
                                         .frame(width: 65, height: 65)
                                         .overlay(RoundedRectangle(cornerRadius: 2)
                                             .stroke(style: StrokeStyle(dash: [8, 7])))
@@ -118,9 +115,8 @@ struct PostView: View {
                                 Button(action: {
                                     vm.input.isSelectImagesButtonTapped.send()
                                 }) {
-                                    Image(systemName: "photo")
+                                    Asset.Icons.gallery.swiftUIImage
                                         .padding()
-                                        .font(.system(size: 20))
                                         .frame(width: 65, height: 65)
                                         .overlay(RoundedRectangle(cornerRadius: 2)
                                             .stroke(style: StrokeStyle(dash: [8, 7])))
