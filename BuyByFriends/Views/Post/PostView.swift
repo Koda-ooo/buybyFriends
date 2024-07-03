@@ -175,12 +175,11 @@ struct PostView: View {
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ForEach(PostInformation.allCases, id: \.self) { info in
                     if info == PostInformation.category {
-                        NavigationLink(value: info.rawValue) {
-                            HStack {
-                                Text(info.rawValue)
-                                Spacer()
-                                Text(vm.binding.category)
-                            }
+                        // >の色を変更するために上から色を変えた>を被せる
+                        ZStack {
+                            NavigationLink(value: info.rawValue) { EmptyView() }
+                                .opacity(0)
+                            PostInformationView(title: info.rawValue, result: vm.binding.category)
                         }
                     } else {
                         HStack {
