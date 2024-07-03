@@ -157,8 +157,8 @@ struct PostView: View {
                         .frame(minHeight: 200)
                     if vm.binding.explain.isEmpty {
                         Text("色、素材、重さ、定価、注意点など\n\n例）去年、原宿の古着屋さんで買ったTシャツ！\nスター・トレックの事は知らなかったけど、ビジュが良くて一目惚れした❤️\nTシャツなんてなんぼあってもいいですからね〜\n\nたぶん、10,000円ぐらいで買ってサイズはL\nTシャツは一年中着れるしこれはガチでおすすめ\nピンホールあるけどそれも古着の醍醐味でしょ😥")
-                            .foregroundColor(Color(uiColor: .placeholderText))
-                            .font(.system(size: 13))
+                            .font(.system(size: 14))
+                            .foregroundColor(Asset.Colors.secondText.swiftUIColor)
                             .kerning(1)
                             .lineSpacing(3)
                             .padding(.vertical, 8)
@@ -199,7 +199,7 @@ struct PostView: View {
                                             Text("価格")
                                             Spacer()
                                             Image(systemName: "yensign")
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                                             if let price = vm.output.intPrice {
                                                 Text("\(price)")
                                             }
@@ -222,7 +222,7 @@ struct PostView: View {
                         }
                     }
                 }
-                .accentColor(.black)
+                .accentColor(Asset.Colors.jetBlack.swiftUIColor)
                 .font(.system(size: 15))
                 .frame(height: 37)
                 .listRowSeparator(.visible)
@@ -242,12 +242,12 @@ struct PostView: View {
                                 Text(other)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                             }
                         }
                     }
-                    .accentColor(.black)
-                    .font(.system(size: 15))
+                    .accentColor(Asset.Colors.jetBlack.swiftUIColor)
+                    .font(.system(size: 14))
                 }
                 .frame(height: 37)
                 .listRowSeparator(.visible)
@@ -259,7 +259,7 @@ struct PostView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("×")
-                            .accentColor(.black)
+                            .accentColor(Asset.Colors.jetBlack.swiftUIColor)
                             .font(.system(size: 40))
                     })
 
@@ -345,10 +345,14 @@ struct PostInformationView: View {
     var body: some View {
         HStack {
             Text(title)
+                .font(.system(size: 14))
+                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
             Spacer()
             Text(result)
+                .font(.system(size: 14))
+                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
             Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
+                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
         }
     }
 }
