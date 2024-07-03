@@ -84,7 +84,9 @@ struct PostView: View {
                                 ZStack(alignment: .topTrailing) {
                                     Image(uiImage: vm.binding.images[i])
                                         .resizable()
+                                        .scaledToFill()
                                         .frame(width: 65, height: 65)
+                                        .clipped()
                                     ZStack {
                                         Circle()
                                             .frame(width: 20, height: 20)
