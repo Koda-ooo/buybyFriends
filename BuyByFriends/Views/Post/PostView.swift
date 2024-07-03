@@ -148,7 +148,8 @@ struct PostView: View {
                 Text("商品の説明")
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
-                    .bold()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: vm.$binding.explain)
                         .focused($focusedField)
@@ -170,7 +171,8 @@ struct PostView: View {
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
                     .padding(.bottom, -5)
-                    .bold()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ForEach(PostInformation.allCases, id: \.self) { info in
                     if info == PostInformation.category {
                         NavigationLink(value: info.rawValue) {
@@ -229,7 +231,8 @@ struct PostView: View {
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
                     .padding(.bottom, -5)
-                    .bold()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ForEach(others, id: \.self) { other in
                     HStack {
                         Button(action: {
