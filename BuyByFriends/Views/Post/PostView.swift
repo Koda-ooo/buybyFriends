@@ -265,20 +265,26 @@ struct PostView: View {
                 }
 
                 ToolbarItem(placement: .bottomBar) {
-                    HStack(spacing: 20) {
+                    let spacing: CGFloat = 14
+                    HStack(spacing: spacing) {
+                        let padding: CGFloat = 20
+                        let buttonWidth: CGFloat = (UIScreen.main.bounds.width - (padding * 2) - spacing) / 2
+
+                        Spacer(minLength: padding)
+
                         Button(action: {
                             // 下書き保存への導線
                         }) {
-                            Text("下書きに保存する　　")
-                                .frame(maxWidth: .infinity)
+                            Text("下書きに保存する")
                                 .font(.system(size: 14, weight: .bold))
                         }
                         .accentColor(Asset.Colors.jetBlack.swiftUIColor)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(vm.output.isCreatDraftButtonEnabled ? Asset.Colors.silver.swiftUIColor : Asset.Colors.jetBlack.swiftUIColor, lineWidth: 2)
-                                .frame(height: 40)
+                                .frame(width: buttonWidth, height: 40)
                         )
+                        .frame(width: buttonWidth, height: 40)
                         .disabled(vm.output.isCreatDraftButtonEnabled)
 
                         Button(action: {
@@ -295,17 +301,18 @@ struct PostView: View {
                             vm.binding.post.id = UUID().uuidString
                             vm.input.isCreatPostButtonTapped.send()
                         }) {
-                            Text("出品する　　　　　　")
-                                .frame(maxWidth: .infinity)
+                            Text("出品する")
                                 .font(.system(size: 14, weight: .bold))
                         }
-                        .frame(height: 40)
+                        .frame(width: buttonWidth, height: 40)
                         .foregroundColor(vm.output.isCreatPostButtonEnabled ? Asset.Colors.white.swiftUIColor : Asset.Colors.jetBlack.swiftUIColor)
                         .background(
                             vm.output.isCreatPostButtonEnabled ? Asset.Colors.silver.swiftUIColor : Asset.Colors.chromeYellow.swiftUIColor
                         )
                         .cornerRadius(20)
                         .disabled(vm.output.isCreatPostButtonEnabled)
+
+                        Spacer(minLength: padding)
                     }
                     .padding(.top, 10)
                 }
