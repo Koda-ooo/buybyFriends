@@ -270,11 +270,15 @@ struct PostView: View {
                             // 下書き保存への導線
                         }) {
                             Text("下書きに保存する　　")
-                                .frame(maxWidth: .infinity, minHeight: 40)
-                                .font(.system(size: 15, weight: .medium))
+                                .frame(maxWidth: .infinity)
+                                .font(.system(size: 14, weight: .bold))
                         }
-                        .accentColor(Color.black)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth: 1))
+                        .accentColor(Asset.Colors.jetBlack.swiftUIColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(vm.output.isCreatDraftButtonEnabled ? Asset.Colors.silver.swiftUIColor : Asset.Colors.jetBlack.swiftUIColor, lineWidth: 2)
+                                .frame(height: 40)
+                        )
                         .disabled(vm.output.isCreatDraftButtonEnabled)
 
                         Button(action: {
@@ -292,14 +296,16 @@ struct PostView: View {
                             vm.input.isCreatPostButtonTapped.send()
                         }) {
                             Text("出品する　　　　　　")
-                                .frame(maxWidth: .infinity, minHeight: 40)
-                                .font(.system(size: 15, weight: .medium))
+                                .frame(maxWidth: .infinity)
+                                .font(.system(size: 14, weight: .bold))
                         }
-                        .foregroundColor(.white)
-                        .background(vm.output.isCreatPostButtonEnabled ? Color.gray:Color.black)
-                        .cornerRadius(10)
+                        .frame(height: 40)
+                        .foregroundColor(vm.output.isCreatPostButtonEnabled ? Asset.Colors.white.swiftUIColor : Asset.Colors.jetBlack.swiftUIColor)
+                        .background(
+                            vm.output.isCreatPostButtonEnabled ? Asset.Colors.silver.swiftUIColor : Asset.Colors.chromeYellow.swiftUIColor
+                        )
+                        .cornerRadius(20)
                         .disabled(vm.output.isCreatPostButtonEnabled)
-
                     }
                     .padding(.top, 10)
                 }
