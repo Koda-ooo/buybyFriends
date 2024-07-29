@@ -20,7 +20,7 @@ struct PostView: View {
     static var config: PHPickerConfiguration {
         var config = PHPickerConfiguration()
         config.filter = .images
-        config.selectionLimit = 5
+        config.selectionLimit = 10
         config.selection = .ordered
         config.preferredAssetRepresentationMode = .current
         return config
@@ -40,66 +40,36 @@ struct PostView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                HStack(alignment: .center) {
-                    if vm.$binding.images.isEmpty {
-                        Button(action: {
-                            vm.input.isSelectImagesButtonTapped.send()
-                        }) {
-                            Image(systemName: "camera")
-                                .padding()
-                                .font(.system(size: 20))
-                                .frame(width: 65, height: 65)
-                                .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8, 7])))
-                                .foregroundColor(Color.gray)
-                                .background(Color.white)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        ForEach(1..<5) { _ in
-                            Text("")
-                                .padding()
-                                .font(.system(size: 20))
-                                .frame(width: 65, height: 65)
-                                .overlay(RoundedRectangle(cornerRadius: 2)
-                                    .stroke(style: StrokeStyle(dash: [8, 7])))
-                                .foregroundColor(Color.gray)
-                                .background(Color.white)
-                        }
-                    } else {
-                        ForEach(0..<vm.$binding.images.count, id: \.self) { i in
-                            ZStack(alignment: .topTrailing) {
-                                Image(uiImage: vm.binding.images[i])
-                                    .resizable()
-                                    .frame(width: 65, height: 65)
-                                ZStack {
-                                    Circle()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.white)
-                                    Button(action: { vm.binding.images.remove(at: i) }) {
-                                        Image(systemName: "minus.circle.fill")
-                                            .foregroundColor(.red)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                                .offset(x: 5, y: -5)
-                            }
-                        }
-                        if vm.$binding.images.count < 5 {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .center) {
+                        if vm.$binding.images.isEmpty {
                             Button(action: {
-                                vm.input.isSelectImagesButtonTapped.send()
+                                vm.input.isCameraButtonTapped.send()
                             }) {
-                                Image(systemName: "camera")
+                                Asset.Icons.camera.swiftUIImage
                                     .padding()
-                                    .font(.system(size: 15))
                                     .frame(width: 65, height: 65)
                                     .overlay(RoundedRectangle(cornerRadius: 2)
                                         .stroke(style: StrokeStyle(dash: [8, 7])))
-                                    .foregroundColor(Color.gray)
+                                    .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
                                     .background(Color.white)
                             }
                             .buttonStyle(PlainButtonStyle())
 
-                            ForEach(vm.$binding.images.count..<4, id: \.self) { _ in
+                            Button(action: {
+                                vm.input.isSelectImagesButtonTapped.send()
+                            }) {
+                                Asset.Icons.gallery.swiftUIImage
+                                    .padding()
+                                    .frame(width: 65, height: 65)
+                                    .overlay(RoundedRectangle(cornerRadius: 2)
+                                        .stroke(style: StrokeStyle(dash: [8, 7])))
+                                    .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                    .background(Color.white)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+
+                            ForEach(2..<10) { _ in
                                 Text("")
                                     .padding()
                                     .font(.system(size: 20))
@@ -109,15 +79,77 @@ struct PostView: View {
                                     .foregroundColor(Color.gray)
                                     .background(Color.white)
                             }
+                        } else {
+                            ForEach(0..<vm.$binding.images.count, id: \.self) { i in
+                                ZStack(alignment: .topTrailing) {
+                                    Image(uiImage: vm.binding.images[i])
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 65, height: 65)
+                                        .clipped()
+                                    ZStack {
+                                        Circle()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.white)
+                                        Button(action: { vm.binding.images.remove(at: i) }) {
+                                            Image(systemName: "minus.circle.fill")
+                                                .foregroundColor(.red)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                    .offset(x: 5, y: -5)
+                                }
+                            }
+                            if vm.$binding.images.count < 10 {
+                                Button(action: {
+                                    vm.input.isCameraButtonTapped.send()
+                                }) {
+                                    Asset.Icons.camera.swiftUIImage
+                                        .padding()
+                                        .frame(width: 65, height: 65)
+                                        .overlay(RoundedRectangle(cornerRadius: 2)
+                                            .stroke(style: StrokeStyle(dash: [8, 7])))
+                                        .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                        .background(Color.white)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+
+                                Button(action: {
+                                    vm.input.isSelectImagesButtonTapped.send()
+                                }) {
+                                    Asset.Icons.gallery.swiftUIImage
+                                        .padding()
+                                        .frame(width: 65, height: 65)
+                                        .overlay(RoundedRectangle(cornerRadius: 2)
+                                            .stroke(style: StrokeStyle(dash: [8, 7])))
+                                        .foregroundColor(Asset.Colors.stormGreen.swiftUIColor)
+                                        .background(Color.white)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+
+                                if vm.$binding.images.count < 9 {
+                                    ForEach(vm.$binding.images.count..<8, id: \.self) { _ in
+                                        Text("")
+                                            .padding()
+                                            .font(.system(size: 20))
+                                            .frame(width: 65, height: 65)
+                                            .overlay(RoundedRectangle(cornerRadius: 2)
+                                                .stroke(style: StrokeStyle(dash: [8, 7])))
+                                            .foregroundColor(Color.gray)
+                                            .background(Color.white)
+                                    }
+                                }
+                            }
                         }
                     }
+                    .padding(.init(top: 5, leading: 1, bottom: 5, trailing: 1))
+                    .listRowSeparator(.hidden)
                 }
-                .listRowSeparator(.hidden)
-                .frame(maxWidth: UIScreen.main.bounds.width)
                 Text("商品の説明")
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
-                    .bold()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: vm.$binding.explain)
                         .focused($focusedField)
@@ -125,8 +157,8 @@ struct PostView: View {
                         .frame(minHeight: 200)
                     if vm.binding.explain.isEmpty {
                         Text("色、素材、重さ、定価、注意点など\n\n例）去年、原宿の古着屋さんで買ったTシャツ！\nスター・トレックの事は知らなかったけど、ビジュが良くて一目惚れした❤️\nTシャツなんてなんぼあってもいいですからね〜\n\nたぶん、10,000円ぐらいで買ってサイズはL\nTシャツは一年中着れるしこれはガチでおすすめ\nピンホールあるけどそれも古着の醍醐味でしょ😥")
-                            .foregroundColor(Color(uiColor: .placeholderText))
-                            .font(.system(size: 13))
+                            .font(.system(size: 14))
+                            .foregroundColor(Asset.Colors.secondText.swiftUIColor)
                             .kerning(1)
                             .lineSpacing(3)
                             .padding(.vertical, 8)
@@ -139,15 +171,15 @@ struct PostView: View {
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
                     .padding(.bottom, -5)
-                    .bold()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ForEach(PostInformation.allCases, id: \.self) { info in
                     if info == PostInformation.category {
-                        NavigationLink(value: info.rawValue) {
-                            HStack {
-                                Text(info.rawValue)
-                                Spacer()
-                                Text(vm.binding.category)
-                            }
+                        // >の色を変更するために上から色を変えた>を被せる
+                        ZStack {
+                            NavigationLink(value: info.rawValue) { EmptyView() }
+                                .opacity(0)
+                            PostInformationView(title: info.rawValue, result: vm.binding.category)
                         }
                     } else {
                         HStack {
@@ -166,7 +198,7 @@ struct PostView: View {
                                             Text("価格")
                                             Spacer()
                                             Image(systemName: "yensign")
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                                             if let price = vm.output.intPrice {
                                                 Text("\(price)")
                                             }
@@ -189,7 +221,7 @@ struct PostView: View {
                         }
                     }
                 }
-                .accentColor(.black)
+                .accentColor(Asset.Colors.jetBlack.swiftUIColor)
                 .font(.system(size: 15))
                 .frame(height: 37)
                 .listRowSeparator(.visible)
@@ -198,7 +230,8 @@ struct PostView: View {
                     .listRowSeparator(.hidden)
                     .padding(.top, 20)
                     .padding(.bottom, -5)
-                    .bold()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                 ForEach(others, id: \.self) { other in
                     HStack {
                         Button(action: {
@@ -208,12 +241,12 @@ struct PostView: View {
                                 Text(other)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                             }
                         }
                     }
-                    .accentColor(.black)
-                    .font(.system(size: 15))
+                    .accentColor(Asset.Colors.jetBlack.swiftUIColor)
+                    .font(.system(size: 14))
                 }
                 .frame(height: 37)
                 .listRowSeparator(.visible)
@@ -225,23 +258,33 @@ struct PostView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("×")
-                            .accentColor(.black)
+                            .accentColor(Asset.Colors.jetBlack.swiftUIColor)
                             .font(.system(size: 40))
                     })
 
                 }
 
                 ToolbarItem(placement: .bottomBar) {
-                    HStack(spacing: 20) {
+                    let spacing: CGFloat = 14
+                    HStack(spacing: spacing) {
+                        let padding: CGFloat = 20
+                        let buttonWidth: CGFloat = (UIScreen.main.bounds.width - (padding * 2) - spacing) / 2
+
+                        Spacer(minLength: padding)
+
                         Button(action: {
                             // 下書き保存への導線
                         }) {
-                            Text("下書きに保存する　　")
-                                .frame(maxWidth: .infinity, minHeight: 40)
-                                .font(.system(size: 15, weight: .medium))
+                            Text("下書きに保存する")
+                                .font(.system(size: 14, weight: .bold))
                         }
-                        .accentColor(Color.black)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth: 1))
+                        .accentColor(Asset.Colors.jetBlack.swiftUIColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(vm.output.isCreatDraftButtonEnabled ? Asset.Colors.silver.swiftUIColor : Asset.Colors.jetBlack.swiftUIColor, lineWidth: 2)
+                                .frame(width: buttonWidth, height: 40)
+                        )
+                        .frame(width: buttonWidth, height: 40)
                         .disabled(vm.output.isCreatDraftButtonEnabled)
 
                         Button(action: {
@@ -258,15 +301,18 @@ struct PostView: View {
                             vm.binding.post.id = UUID().uuidString
                             vm.input.isCreatPostButtonTapped.send()
                         }) {
-                            Text("出品する　　　　　　")
-                                .frame(maxWidth: .infinity, minHeight: 40)
-                                .font(.system(size: 15, weight: .medium))
+                            Text("出品する")
+                                .font(.system(size: 14, weight: .bold))
                         }
-                        .foregroundColor(.white)
-                        .background(vm.output.isCreatPostButtonEnabled ? Color.gray:Color.black)
-                        .cornerRadius(10)
+                        .frame(width: buttonWidth, height: 40)
+                        .foregroundColor(vm.output.isCreatPostButtonEnabled ? Asset.Colors.white.swiftUIColor : Asset.Colors.jetBlack.swiftUIColor)
+                        .background(
+                            vm.output.isCreatPostButtonEnabled ? Asset.Colors.silver.swiftUIColor : Asset.Colors.chromeYellow.swiftUIColor
+                        )
+                        .cornerRadius(20)
                         .disabled(vm.output.isCreatPostButtonEnabled)
 
+                        Spacer(minLength: padding)
                     }
                     .padding(.top, 10)
                 }
@@ -281,6 +327,9 @@ struct PostView: View {
             SwiftUIPHPicker(configuration: PostView.config) { results in
                 vm.input.isImagesSelected.send(results)
             }
+        }
+        .sheet(isPresented: vm.$binding.isCameraShown) {
+            ImagePicker(sourceType: .camera, selectedImage: vm.$binding.takePicture)
         }
         .sheet(isPresented: vm.$binding.isInsertBrandViewShown) {
             SelectBrandView(vm: self.vm).presentationDetents([.medium])
@@ -308,10 +357,14 @@ struct PostInformationView: View {
     var body: some View {
         HStack {
             Text(title)
+                .font(.system(size: 14))
+                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
             Spacer()
             Text(result)
+                .font(.system(size: 14))
+                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
             Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
+                .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
         }
     }
 }

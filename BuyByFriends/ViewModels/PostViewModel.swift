@@ -13,6 +13,7 @@ import PhotosUI
 final class PostViewModel: ViewModelObject {
 
     final class Input: InputObject {
+        let isCameraButtonTapped = PassthroughSubject<Void, Never>()
         let isSelectImagesButtonTapped = PassthroughSubject<Void, Never>()
         let isImagesSelected = PassthroughSubject<[PHPickerResult], Never>()
         let isInsertInformationButtonTapped = PassthroughSubject<PostInformation, Never>()
@@ -22,6 +23,7 @@ final class PostViewModel: ViewModelObject {
 
     final class Binding: BindingObject {
         @Published var images: [UIImage] = []
+        @Published var takePicture: UIImage?
         @Published var explain = ""
         @Published var category = ""
         @Published var brand = ""
@@ -31,6 +33,7 @@ final class PostViewModel: ViewModelObject {
         @Published var post = Post(dic: [:])
 
         @Published var isPHPickerShown: Bool = false
+        @Published var isCameraShown: Bool = false
         @Published var isInsertBrandViewShown: Bool = false
         @Published var isInsertClothesSizeViewShown: Bool = false
         @Published var isInsertShoesSizeViewShown: Bool = false
@@ -62,8 +65,20 @@ final class PostViewModel: ViewModelObject {
                 Just(true)
             }
 
+        let isCameraShown = input.isCameraButtonTapped
+            .flatMap {
+                Just(true)
+            }
+
         let convertStrToInt = binding.$price.map { Int($0) }
         let stream = convertStrToInt.map {$0}
+
+        // カメラで撮影した画像の格納処理
+        binding.$takePicture.sink { image in
+            guard let image else { return }
+            binding.images.append(image)
+        }
+        .store(in: &cancellables)
 
         /// ユーザーが選択した画像の格納処理
         input.isImagesSelected
@@ -167,6 +182,7 @@ final class PostViewModel: ViewModelObject {
         // 組み立てたストリームをbindingに反映
         cancellables.formUnion([
             isPHPickerShown.assign(to: \.isPHPickerShown, on: binding),
+            isCameraShown.assign(to: \.isCameraShown, on: binding),
             stream.assign(to: \.intPrice, on: output),
             isCreatDraftButtonEnabled.assign(to: \.isCreatDraftButtonEnabled, on: output),
             isCreatPostButtonEnabledMain.assign(to: \.isCreatPostButtonEnabled, on: output)
