@@ -9,14 +9,30 @@ import SwiftUI
 
 struct EditProfileSelfIntroductionView: View {
     @EnvironmentObject var path: Path
+    @Binding var text: String
+    private let maxLength = 150
 
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            TextEditor(text: Binding<String>(
+                get: { text },
+                set: { text = String($0.prefix(maxLength)) }
+            ))
+            .frame(height: 150)
+            Divider()
+                .padding(.horizontal, -20)
+            HStack {
+                Spacer()
+                Text("\(text.count) / \(maxLength.description)")
+                    .foregroundStyle(Color.gray)
+            }
+            Spacer()
         }
+        .padding(.horizontal)
+        .padding(.top, 30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("自己紹介")
+        .navigationTitle(Destination.EditProfile.selfIntroduction.title)
         .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
@@ -31,7 +47,7 @@ struct EditProfileSelfIntroductionView: View {
                     Button(action: {
                         path.path.removeLast()
                     }) {
-                        Text("保存")
+                        Text("完了")
                             .foregroundColor(.red)
                             .bold()
                     }
@@ -42,6 +58,6 @@ struct EditProfileSelfIntroductionView: View {
 
 struct EditProfileSelfIntroductionView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileSelfIntroductionView()
+        EditProfileSelfIntroductionView(text: .constant("よろしく"))
     }
 }

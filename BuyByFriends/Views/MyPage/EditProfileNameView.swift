@@ -9,39 +9,43 @@ import SwiftUI
 
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
+    @Binding var name: String
 
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            UnderlinedTextField(placeholder: Destination.EditProfile.name.title, text: $name)
+            Spacer()
         }
+        .padding(.horizontal)
+        .padding(.top, 30)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("名前")
+        .navigationTitle(Destination.EditProfile.name.title)
         .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        path.path.removeLast()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
-                    }
-                }
-
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        path.path.removeLast()
-                    }) {
-                        Text("保存")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    path.path.removeLast()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
                 }
             }
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    path.path.removeLast()
+                }) {
+                    Text("完了")
+                        .foregroundColor(.red)
+                        .bold()
+                }
+            }
+        }
     }
 }
 
 struct EditProfileNameView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileNameView()
+        EditProfileNameView(name: .constant("山田太郎"))
     }
 }

@@ -39,19 +39,19 @@ struct EditProfileView: View {
                         HStack {
                             switch selected {
                             case .name:
-                                Text("名前")
+                                Text(Destination.EditProfile.name.title)
                                 Spacer()
                                 Text(vm.binding.name)
                             case .username:
-                                Text("ユーザーネーム")
+                                Text(Destination.EditProfile.username.title)
                                 Spacer()
                                 Text(vm.binding.username)
                             case .selfIntroduction:
-                                Text("自己紹介")
+                                Text(Destination.EditProfile.selfIntroduction.title)
                                 Spacer()
                                 Text(vm.binding.selfIntroduction)
                             case .instagram:
-                                Text("Instagram")
+                                Text(Destination.EditProfile.instagram.title)
                                 Spacer()
                                 Text(vm.binding.instagramID)
                             }
@@ -67,13 +67,13 @@ struct EditProfileView: View {
         .navigationDestination(for: Destination.EditProfile.self) { selected in
             switch selected {
             case .name:
-                EditProfileNameView()
+                EditProfileNameView(name: vm.$binding.name)
             case .username:
-                EditProfileUsername()
+                EditProfileUsername(username: vm.$binding.username)
             case .selfIntroduction:
-                EditProfileSelfIntroductionView()
+                EditProfileSelfIntroductionView(text: vm.$binding.selfIntroduction)
             case .instagram:
-                EditProfileInstagramView()
+                EditProfileInstagramView(instagram: vm.$binding.instagramID)
             }
         }
         .toolbar {
@@ -88,6 +88,7 @@ struct EditProfileView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
+                    vm.input.startToSaveProfile.send()
                     path.path.removeLast()
                 }) {
                     Text("保存")
@@ -97,11 +98,20 @@ struct EditProfileView: View {
             }
         }
         .onAppear {
-            vm.binding.profileImageURL = appState.session.userInfo.profileImage
-            vm.binding.name = appState.session.userInfo.name
-            vm.binding.username = appState.session.userInfo.userID
-            vm.binding.selfIntroduction = appState.session.userInfo.selfIntroduction
-            vm.binding.instagramID = appState.session.userInfo.instagramID
+            if vm.binding.isInitial {
+                vm.binding.profileImageURL = appState.session.userInfo.profileImage
+                vm.binding.name = appState.session.userInfo.name
+                vm.binding.username = appState.session.userInfo.userID
+                vm.binding.selfIntroduction = appState.session.userInfo.selfIntroduction
+                vm.binding.instagramID = appState.session.userInfo.instagramID
+            }
+            vm.binding.isInitial = false
+        }
+        .onChange(of: vm.output.userInfo) { userInfo in
+            appState.session.userInfo.name = userInfo.name
+            appState.session.userInfo.userID = userInfo.userID
+            appState.session.userInfo.selfIntroduction = userInfo.selfIntroduction
+            appState.session.userInfo.instagramID = userInfo.instagramID
         }
     }
 }
