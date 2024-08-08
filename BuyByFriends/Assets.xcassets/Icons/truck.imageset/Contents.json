@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Truck_Speed.png",
+      "filename" : "Truck.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Truck_Speed 1.png",
+      "filename" : "Truck 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Truck_Speed 2.png",
+      "filename" : "Truck 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
