@@ -174,7 +174,7 @@ struct MyPageView: View {
             ).presentationDetents([.height(300)])
         }
         .navigationDestination(isPresented: vm.$binding.isShownWishListView) {
-            MyPageWishListView()
+            WishListView()
         }
     }
 }
