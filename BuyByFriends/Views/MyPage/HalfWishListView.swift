@@ -32,12 +32,12 @@ struct HalfWishListView: View {
                     .foregroundColor(Asset.Colors.silver.swiftUIColor)
                 Button(action: {
                     // TODO: 登録画面出す
-                }) {
+                }, label: {
                     Text("ウィッシュリストを登録する")
                         .font(.system(size: 14, weight: .bold))
                         .frame(maxWidth: .infinity, minHeight: 44)
                         .lineSpacing(3)
-                }
+                })
                 .frame(height: 44)
                 .foregroundColor(Asset.Colors.white.swiftUIColor)
                 .background(Asset.Colors.jetBlack.swiftUIColor)
