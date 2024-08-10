@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WishListView: View {
+    @State var isShow: Bool = false
+    @State var selectGenre: InventoryGenre?
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("カテゴリーを選択する")
@@ -15,20 +18,23 @@ struct WishListView: View {
                 .padding(.top, 24)
                 .padding(.leading, 16)
 
-            List {
-                ForEach(InventoryGenre.allCases, id: \.self) { genre in
-                    NavigationLink(value: genre) {
-                        Text(genre.text)
-                            .font(.system(size: 16, weight: .bold))
-                            .frame(height: 32)
-                    }
-                }
+            List(InventoryGenre.allCases, id: \.id) { genre in
+                Button(action: {
+                    selectGenre = genre
+                    isShow = true
+                }, label: {
+                    Text(genre.text)
+                        .font(.system(size: 16, weight: .bold))
+                        .frame(height: 32)
+                })
             }
             .listStyle(.plain)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("ウィッシュリスト")
-            .navigationDestination(for: InventoryGenre.self) { genre in
-                EditWishListView(genre: genre)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("ウィッシュリスト")
+        .navigationDestination(isPresented: $isShow) {
+            if let selectGenre {
+                EditWishListView(genre: selectGenre)
             }
         }
     }
