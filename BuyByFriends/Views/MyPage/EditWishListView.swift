@@ -66,6 +66,9 @@ struct EditWishListView: View {
                 path.path.removeLast(path.path.count)
             }
         }
+        .onAppear {
+            focusedField = true
+        }
     }
 }
 
