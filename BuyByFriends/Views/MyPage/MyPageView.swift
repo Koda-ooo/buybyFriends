@@ -103,7 +103,9 @@ struct MyPageView: View {
                         )
                 }.foregroundColor(.gray)
 
-                NavigationLink(value: Destination.MyPage.wishList) {
+                Button(action: {
+                    vm.binding.isShownHalfWishListView = true
+                }, label: {
                     Text("ウィッシュリスト")
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .font(.system(size: 15, weight: .medium))
@@ -111,7 +113,7 @@ struct MyPageView: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(Color.gray, lineWidth: 2)
                         )
-                }
+                })
             }
             .padding([.horizontal, .bottom])
 
@@ -144,7 +146,6 @@ struct MyPageView: View {
             switch destination {
             case .editProfile: EditProfileView()
             case .inventoryList: MyPageInventoryListView(userInfo: vm.output.userInfo, isMyPage: vm.binding.isMyPage)
-            case .wishList: MyPageWishListView()
             }
         }
         .toolbar {
@@ -163,6 +164,17 @@ struct MyPageView: View {
         }
         .sheet(isPresented: vm.$binding.isShownMyPageHumbergerMenu) {
             MyPageHumbergerMenuView()
+        }
+        .sheet(isPresented: vm.$binding.isShownHalfWishListView) {
+            HalfWishListView(
+                userInfo: vm.output.userInfo,
+                onTap: {
+                    vm.binding.isShownWishListView = true
+                }
+            ).presentationDetents([.height(300)])
+        }
+        .navigationDestination(isPresented: vm.$binding.isShownWishListView) {
+            MyPageWishListView()
         }
     }
 }

@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct HalfWishListView: View {
+    @Environment(\.presentationMode) var presentationMode
 
     @StateObject private var vm: HalfWishListViewModel
     @FocusState private var focusedField: Bool
+    private var onTap: (() -> Void)?
 
-    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo) {
+    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo, onTap: (() -> Void)? = nil) {
         vm.binding.userInfo = userInfo
         _vm = StateObject(wrappedValue: vm)
+        self.onTap = onTap
     }
 
     var body: some View {
@@ -31,7 +34,8 @@ struct HalfWishListView: View {
                     .frame(height: 1)
                     .foregroundColor(Asset.Colors.silver.swiftUIColor)
                 Button(action: {
-                    // TODO: 登録画面出す
+                    presentationMode.wrappedValue.dismiss()
+                    onTap?()
                 }, label: {
                     Text("ウィッシュリストを登録する")
                         .font(.system(size: 14, weight: .bold))
