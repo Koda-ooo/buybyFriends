@@ -12,14 +12,15 @@ struct WishListView: View {
         VStack(alignment: .leading) {
             Text("カテゴリーを選択する")
                 .font(.system(size: 18, weight: .bold))
-                .padding(.all, 12)
-                .padding(.top, 8)
+                .padding(.top, 24)
+                .padding(.leading, 16)
 
             List {
                 ForEach(InventoryGenre.allCases, id: \.self) { genre in
                     NavigationLink(value: genre) {
                         Text(genre.text)
                             .font(.system(size: 16, weight: .bold))
+                            .frame(height: 32)
                     }
                 }
             }
