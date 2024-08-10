@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WishListView: View {
+    @Environment(\.presentationMode) var presentationMode
     @State var isShow: Bool = false
     @State var selectGenre: InventoryGenre?
 
@@ -32,6 +33,14 @@ struct WishListView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("ウィッシュリスト")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    Image(systemName: "chevron.backward")
+                }
+            }
+        }
         .navigationDestination(isPresented: $isShow) {
             if let selectGenre {
                 EditWishListView(genre: selectGenre)

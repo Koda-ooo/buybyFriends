@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditWishListView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var path: Path
     @StateObject private var vm: EditWishListViewModel
     @FocusState private var focusedField: Bool
@@ -61,6 +62,14 @@ struct EditWishListView: View {
 
         }
         .navigationTitle(vm.binding.genre.text)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    Image(systemName: "chevron.backward")
+                }
+            }
+        }
         .onChange(of: vm.output.isSuccess) { newValue in
             if newValue {
                 path.path.removeLast(path.path.count)
