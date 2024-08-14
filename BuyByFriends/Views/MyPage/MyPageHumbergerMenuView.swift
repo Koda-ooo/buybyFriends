@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MyPageHumbergerMenuView: View {
     @EnvironmentObject var path: Path
-    //    @Environment(\.openURL) private var openURL
 
     init() {
         if #available(iOS 14.0, *) {
@@ -28,9 +27,9 @@ struct MyPageHumbergerMenuView: View {
             VStack {
                 List {
                     Section(header: Text("商品管理").foregroundColor(Asset.Colors.secondText.swiftUIColor)) {
-                        ForEach(MyPageHumbergerMenus.allCases.prefix(5), id: \.self) { menu in
+                        ForEach(ProductManagementMenus.allCases, id: \.self) { menu in
                             NavigationLink(value: menu) {
-                                HStack {
+                                HStack(spacing: 8) {
                                     switch menu {
                                     case .withdrawal:
                                         Asset.Icons.yen.swiftUIImage
@@ -57,8 +56,6 @@ struct MyPageHumbergerMenuView: View {
                                             .resizable()
                                             .frame(width: 32, height: 32)
                                         Text("お届け先情報")
-                                    default:
-                                        EmptyView()
                                     }
                                 }
                                 .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
@@ -68,9 +65,9 @@ struct MyPageHumbergerMenuView: View {
                         .listRowSeparator(.hidden)
                     }
                     Section(header: Text("基本情報").foregroundColor(Asset.Colors.secondText.swiftUIColor)) {
-                        ForEach(MyPageHumbergerMenus.allCases.dropFirst(5).prefix(4), id: \.self) { menu in
+                        ForEach(BasicInfoMenus.allCases, id: \.self) { menu in
                             NavigationLink(value: menu) {
-                                HStack {
+                                HStack(spacing: 8) {
                                     switch menu {
 
                                     case .rateApp:
@@ -93,8 +90,6 @@ struct MyPageHumbergerMenuView: View {
                                             .resizable()
                                             .frame(width: 32, height: 32)
                                         Text("特定商取引に基づく表記")
-                                    default:
-                                        EmptyView()
                                     }
                                 }
                                 .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
@@ -104,9 +99,9 @@ struct MyPageHumbergerMenuView: View {
                         .listRowSeparator(.hidden)
                     }
                     Section(header: Text("ヘルプ").foregroundColor(Asset.Colors.secondText.swiftUIColor)) {
-                        ForEach(MyPageHumbergerMenus.allCases.dropFirst(9).prefix(3), id: \.self) { menu in
+                        ForEach(HelpMenus.allCases, id: \.self) { menu in
                             NavigationLink(value: menu) {
-                                HStack {
+                                HStack(spacing: 8) {
                                     switch menu {
 
                                     case .contact:
@@ -124,9 +119,6 @@ struct MyPageHumbergerMenuView: View {
                                             .resizable()
                                             .frame(width: 32, height: 32)
                                         Text("よくある質問")
-
-                                    default:
-                                        EmptyView()
                                     }
                                 }
                                 .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
@@ -136,9 +128,9 @@ struct MyPageHumbergerMenuView: View {
                         .listRowSeparator(.hidden)
                     }
                     Section(header: Text("SNS").foregroundColor(Asset.Colors.secondText.swiftUIColor)) {
-                        ForEach(MyPageHumbergerMenus.allCases.dropFirst(12).prefix(3), id: \.self) { menu in
+                        ForEach(SNSMenus.allCases, id: \.self) { menu in
                             NavigationLink(value: menu) {
-                                HStack {
+                                HStack(spacing: 8) {
                                     switch menu {
                                     case .tiktok:
                                         Asset.Icons.tiktok.swiftUIImage
@@ -156,8 +148,6 @@ struct MyPageHumbergerMenuView: View {
                                             .frame(width: 32, height: 32)
                                         Text("X")
 
-                                    default:
-                                        EmptyView()
                                     }
                                 }
                                 .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
@@ -167,9 +157,9 @@ struct MyPageHumbergerMenuView: View {
                         .listRowSeparator(.hidden)
                     }
                     Section(header: Text("その他").foregroundColor(Asset.Colors.secondText.swiftUIColor)) {
-                        ForEach(MyPageHumbergerMenus.allCases.dropFirst(15), id: \.self) { menu in
+                        ForEach(OtherMenus.allCases, id: \.self) { menu in
                             NavigationLink(value: menu) {
-                                HStack {
+                                HStack(spacing: 8) {
                                     switch menu {
                                     case .signout:
                                         Asset.Icons.signoutAlert.swiftUIImage
@@ -181,8 +171,6 @@ struct MyPageHumbergerMenuView: View {
                                             .resizable()
                                             .frame(width: 32, height: 32)
                                         Text("アカウントの削除")
-                                    default:
-                                        EmptyView()
                                     }
                                 }
                                 .foregroundColor(Asset.Colors.alert.swiftUIColor)
@@ -214,7 +202,7 @@ struct MyPageHumbergerMenuView: View {
             .background(Asset.Colors.lightGray.swiftUIColor)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("設定")
-            .navigationDestination(for: MyPageHumbergerMenus.self) { menu in
+            .navigationDestination(for: ProductManagementMenus.self) { menu in
                 switch menu {
                 case .withdrawal:
                     WithdrawView()
@@ -226,6 +214,11 @@ struct MyPageHumbergerMenuView: View {
                     BookmarkedItemsView()
                 case .shippingAdress:
                     ShippingAdressView()
+                }
+            }
+
+            .navigationDestination(for: BasicInfoMenus.self) { menu in
+                switch menu {
                 case .rateApp:
                     EmptyView()
                 case .termsOfService:
@@ -234,18 +227,33 @@ struct MyPageHumbergerMenuView: View {
                     EmptyView()
                 case .notation:
                     EmptyView()
+                }
+            }
+
+            .navigationDestination(for: HelpMenus.self) { menu in
+                switch menu {
                 case .contact:
                     ContactView()
                 case .reportBug:
                     EmptyView()
                 case .faq:
                     EmptyView()
+                }
+            }
+
+            .navigationDestination(for: SNSMenus.self) { menu in
+                switch menu {
                 case .tiktok:
                     EmptyView()
                 case .instagram:
                     EmptyView()
                 case .twitter:
                     EmptyView()
+                }
+            }
+
+            .navigationDestination(for: OtherMenus.self) { menu in
+                switch menu {
                 case .signout:
                     EmptyView()
                 case .deleteAccount:
@@ -259,22 +267,34 @@ struct MyPageHumbergerMenuView: View {
         }
     }
 }
-enum MyPageHumbergerMenus: CaseIterable {
+enum ProductManagementMenus: CaseIterable {
     case withdrawal
     case purchasedItems
     case likedItems
     case bookmarkedItems
     case shippingAdress
+}
+
+enum BasicInfoMenus: CaseIterable {
     case rateApp
     case termsOfService
     case privacyPolicy
     case notation
+}
+
+enum HelpMenus: CaseIterable {
     case contact
     case reportBug
     case faq
+}
+
+enum SNSMenus: CaseIterable {
     case tiktok
     case instagram
     case twitter
+}
+
+enum OtherMenus: CaseIterable {
     case signout
     case deleteAccount
 }
