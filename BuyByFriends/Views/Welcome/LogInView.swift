@@ -28,10 +28,10 @@ struct LogInView: View {
                     .padding(.bottom, 24)
 
                 VStack(spacing: 50) {
-                    HStack(spacing: 15) {
+                    HStack {
                         Text("+81")
                             .font(.system(size: 18, weight: .medium))
-                            .padding(.leading, 20)
+                            .padding(.leading, 24)
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                         Text("|")
                             .font(.system(size: 50, weight: .thin))
@@ -52,7 +52,7 @@ struct LogInView: View {
                         Text("認証コードを送信")
                             .foregroundColor(!vm.output.isEnabledLogInButton ? Asset.Colors.white.swiftUIColor:Asset.Colors.jetBlack.swiftUIColor)
                             .frame(maxWidth: .infinity, minHeight: 60)
-                            .font(.system(size: 20, weight: .medium))
+                            .font(.system(size: 16, weight: .medium))
                     }
                     .accentColor(Color.white)
                     .background(!vm.output.isEnabledLogInButton ? Asset.Colors.silver.swiftUIColor:Asset.Colors.chromeYellow.swiftUIColor)
