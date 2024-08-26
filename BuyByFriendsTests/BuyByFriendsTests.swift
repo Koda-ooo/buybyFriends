@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import BuyByFriends
+//@testable import BuyByFriends
 
 final class BuyByFriendsTests: XCTestCase {
 
