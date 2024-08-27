@@ -18,7 +18,7 @@ struct LogInView: View {
                 .font(.system(size: 20, weight: .black))
                 .padding(.top, 30)
 
-            Text("電話番号は会員登録のみに利用され、\n外部に公表されることは一切ございません。")
+            Text("BuyByFriends で快適に友達との売り買いを楽しむために電話番号入力をして本人確認をしましょう。")
                 .font(.system(size: 15, weight: .medium))
                 .padding(.bottom, 30)
 
