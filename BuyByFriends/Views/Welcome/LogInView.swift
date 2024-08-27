@@ -51,11 +51,12 @@ struct LogInView: View {
                         vm.input.startToLogIn.send()
                     }) {
                         Text("認証コードを送信")
+                            .foregroundColor(!vm.output.isEnabledLogInButton ? Asset.Colors.white.swiftUIColor:Asset.Colors.jetBlack.swiftUIColor)
+
                             .frame(maxWidth: 310, minHeight: 60)
                             .font(.system(size: 16, weight: .medium))
                     }
-                    .accentColor(Color.white)
-                    .background(!vm.output.isEnabledLogInButton ? Color.gray:Color.black)
+                    .background(!vm.output.isEnabledLogInButton ? Asset.Colors.silver.swiftUIColor:Asset.Colors.chromeYellow.swiftUIColor)
                     .cornerRadius(.infinity)
                     .disabled(!vm.output.isEnabledLogInButton)
                 }
