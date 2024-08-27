@@ -17,16 +17,16 @@ struct LogInView: View {
             Asset.Colors.white.swiftUIColor
                 .edgesIgnoringSafeArea(.all)
             
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 16) {
                 Text("電話番号を入力してください。")
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .font(.system(size: 20, weight: .black))
-                    .padding(.top, 30)
+                    .padding(.top, 68)
 
                 Text("BuyByFriends で快適に友達との売り買いを楽しむために電話番号入力をして本人確認をしましょう。")
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .font(.system(size: 15, weight: .medium))
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 24)
 
                 VStack(spacing: 50) {
                     HStack(spacing: 15) {
