@@ -167,7 +167,7 @@ struct MyPageHumbergerMenuView: View {
                                             .frame(width: 32, height: 32)
                                         Text("ログアウト")
                                     case .deleteAccount:
-                                        Asset.Icons.circleCrossAlert.swiftUIImage
+                                        Asset.Icons.circleCross.swiftUIImage
                                             .resizable()
                                             .frame(width: 32, height: 32)
                                         Text("アカウントの削除")
