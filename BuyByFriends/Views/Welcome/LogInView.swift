@@ -19,27 +19,31 @@ struct LogInView: View {
             
             VStack(alignment: .leading, spacing: 20) {
                 Text("電話番号を入力してください。")
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .font(.system(size: 20, weight: .black))
                     .padding(.top, 30)
 
                 Text("BuyByFriends で快適に友達との売り買いを楽しむために電話番号入力をして本人確認をしましょう。")
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .font(.system(size: 15, weight: .medium))
                     .padding(.bottom, 30)
 
                 VStack(spacing: 50) {
                     HStack(spacing: 15) {
                         Text("+81")
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                             .font(.system(size: 20, weight: .light))
                             .padding(.leading, 20)
                             .foregroundColor(.black)
                         Text("|")
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                             .font(.system(size: 50, weight: .thin))
                             .padding(.bottom, 5)
                             .foregroundColor(.gray)
                         TextField("000 0000 0000", text: vm.$binding.phoneNumber)
                             .font(.system(size: 27, weight: .medium))
                             .keyboardType(.phonePad)
-                            .foregroundColor(.black)
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
                     .background(.white)
                     .cornerRadius(5)
@@ -73,7 +77,7 @@ struct LogInView: View {
                         path.path.removeLast()
                     }) {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
                 }
         }
