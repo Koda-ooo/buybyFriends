@@ -45,8 +45,8 @@ struct LogInView: View {
                             .keyboardType(.phonePad)
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
-                    .background(.white)
-                    .cornerRadius(5)
+                    .background(Asset.Colors.lightGray.swiftUIColor)
+                    .cornerRadius(12)
 
                     Button(action: {
                         UIApplication.shared.closeKeyboard()
