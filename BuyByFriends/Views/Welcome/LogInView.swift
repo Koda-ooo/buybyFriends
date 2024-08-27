@@ -25,21 +25,21 @@ struct LogInView: View {
 
                 Text("BuyByFriends で快適に友達との売り買いを楽しむために電話番号入力をして本人確認をしましょう。")
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
-                    .font(.system(size: 15, weight: .medium))
+                    .font(.system(size: 14, weight: .medium))
                     .padding(.bottom, 24)
 
                 VStack(spacing: 50) {
                     HStack(spacing: 15) {
                         Text("+81")
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
-                            .font(.system(size: 20, weight: .light))
+                            .font(.system(size: 18, weight: .medium))
                             .padding(.leading, 20)
                         Text("|")
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                             .font(.system(size: 50, weight: .thin))
                             .padding(.bottom, 5)
                         TextField("000 0000 0000", text: vm.$binding.phoneNumber)
-                            .font(.system(size: 27, weight: .medium))
+                            .font(.system(size: 24, weight: .medium))
                             .keyboardType(.phonePad)
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
