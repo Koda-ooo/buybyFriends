@@ -51,8 +51,8 @@ struct LogInView: View {
                         vm.input.startToLogIn.send()
                     }) {
                         Text("認証コードを送信")
-                            .frame(maxWidth: .infinity, minHeight: 70)
-                            .font(.system(size: 20, weight: .medium))
+                            .frame(maxWidth: 310, minHeight: 60)
+                            .font(.system(size: 16, weight: .medium))
                     }
                     .accentColor(Color.white)
                     .background(!vm.output.isEnabledLogInButton ? Color.gray:Color.black)
