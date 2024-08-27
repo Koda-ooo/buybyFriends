@@ -61,7 +61,7 @@ struct LogInView: View {
                 }
                 Spacer()
             }
-            .frame(maxWidth: UIScreen.main.bounds.width*0.85)
+            .padding(.horizontal, 20)
             .onChange(of: vm.output.isMovedVerificationCodeView) { _ in
                 path.path.append(Destination.Welcome.finishLogIn)
             }
