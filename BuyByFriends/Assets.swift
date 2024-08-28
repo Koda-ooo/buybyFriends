@@ -40,16 +40,26 @@ internal enum Asset {
     internal static let white = ColorAsset(name: "Colors/white")
   }
   internal enum Icons {
+    internal static let circleCross = ImageAsset(name: "Icons/CircleCross")
     internal static let bookmark = ImageAsset(name: "Icons/bookmark")
+    internal static let bug = ImageAsset(name: "Icons/bug")
     internal static let camera = ImageAsset(name: "Icons/camera")
-    internal static let circleCross = ImageAsset(name: "Icons/circleCross")
+    internal static let circleCrossAlert = ImageAsset(name: "Icons/circleCrossAlert")
     internal static let envelope = ImageAsset(name: "Icons/envelope")
     internal static let gallery = ImageAsset(name: "Icons/gallery")
     internal static let heart = ImageAsset(name: "Icons/heart")
+    internal static let instagram = ImageAsset(name: "Icons/instagram")
+    internal static let logo = ImageAsset(name: "Icons/logo")
+    internal static let mail = ImageAsset(name: "Icons/mail")
     internal static let note = ImageAsset(name: "Icons/note")
+    internal static let question = ImageAsset(name: "Icons/question")
     internal static let shoppingBag = ImageAsset(name: "Icons/shoppingBag")
     internal static let signout = ImageAsset(name: "Icons/signout")
+    internal static let signoutAlert = ImageAsset(name: "Icons/signoutAlert")
+    internal static let star = ImageAsset(name: "Icons/star")
+    internal static let tiktok = ImageAsset(name: "Icons/tiktok")
     internal static let truck = ImageAsset(name: "Icons/truck")
+    internal static let twitter = ImageAsset(name: "Icons/twitter")
     internal static let yen = ImageAsset(name: "Icons/yen")
   }
   internal enum Sns {
