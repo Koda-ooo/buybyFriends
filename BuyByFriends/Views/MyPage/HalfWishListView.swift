@@ -21,9 +21,6 @@ struct HalfWishListView: View {
     }
 
     var body: some View {
-//        if let key = vm.binding.userInfo.wishList.keys.first {
-//            Text("\(key)")
-//        }
         VStack(spacing: 24) {
             if vm.binding.userInfo.wishList.isEmpty {
                 Text("ウィッシュリストを登録しよう")
@@ -49,9 +46,46 @@ struct HalfWishListView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
             } else {
-                // TODO: 登録されてる場合のUI作る
+                Spacer(minLength: 0)
+                Text(vm.binding.userInfo.inventoryGenre()?.text ?? "")
+                    .font(.system(size: 20, weight: .bold))
+                Text(vm.binding.userInfo.wishListText())
+                    .font(.system(size: 16, weight: .semibold))
+                    .frame(minHeight: 64)
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(Asset.Colors.silver.swiftUIColor)
+                VStack(spacing: 16) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                        // TODO: 編集する
+                    }, label: {
+                        Text("ウィッシュリストを編集する")
+                            .font(.system(size: 14, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                            .lineSpacing(3)
+                    })
+                    .frame(height: 44)
+                    .foregroundColor(Asset.Colors.white.swiftUIColor)
+                    .background(Asset.Colors.jetBlack.swiftUIColor)
+                    .cornerRadius(22)
+                    .padding(.horizontal, 20)
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                        // TODO: 削除する
+                    }, label: {
+                        Text("ウィッシュリストを削除する")
+                            .font(.system(size: 14, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                            .lineSpacing(3)
+                    })
+                    .frame(height: 44)
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
+                }
+                Spacer(minLength: 0)
             }
         }
+        .padding(.vertical, 12)
     }
 }
 
