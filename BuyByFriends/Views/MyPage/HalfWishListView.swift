@@ -56,6 +56,7 @@ struct HalfWishListView: View {
                 Text(vm.binding.userInfo.wishListText())
                     .font(.system(size: 16, weight: .semibold))
                     .frame(minHeight: 74)
+                    .padding(.horizontal, 20)
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(Asset.Colors.silver.swiftUIColor)
