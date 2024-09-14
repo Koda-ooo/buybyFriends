@@ -171,7 +171,7 @@ struct MyPageView: View {
                 onTap: {
                     vm.binding.isShownWishListView = true
                 }
-            ).presentationDetents([.height(300)])
+            ).presentationDetents([.height(320)])
         }
         .navigationDestination(isPresented: vm.$binding.isShownWishListView) {
             WishListView()
