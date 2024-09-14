@@ -13,6 +13,8 @@ struct EditWishListView: View {
     @StateObject private var vm: EditWishListViewModel
     @FocusState private var focusedField: Bool
 
+    private let maximumCharacters = 62
+
     init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre, text: String = "") {
         vm.binding.genre = genre
         vm.binding.text = text
@@ -28,6 +30,11 @@ struct EditWishListView: View {
                     .focused($focusedField)
                     .padding(.horizontal, -4)
                     .frame(height: 116)
+                    .onChange(of: vm.binding.text) { inputText in
+                        if inputText.count > maximumCharacters {
+                            vm.binding.text = String(inputText.prefix(maximumCharacters))
+                        }
+                    }
                 if vm.binding.text.isEmpty {
                     Text("今、欲しいアクセサリーの入力をしてください。\n\n例. ラッパーみたいなゴツゴツしてる金のチェーンが欲しい！！")
                         .foregroundColor(Asset.Colors.silver.swiftUIColor)
