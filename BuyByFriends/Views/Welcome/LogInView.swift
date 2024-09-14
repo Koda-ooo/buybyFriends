@@ -28,7 +28,7 @@ struct LogInView: View {
                     .font(.system(size: 14, weight: .medium))
                     .padding(.bottom, 24)
 
-                VStack(spacing: 50) {
+                VStack(spacing: 128) {
                     HStack(spacing: 15) {
                         Text("+81")
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
