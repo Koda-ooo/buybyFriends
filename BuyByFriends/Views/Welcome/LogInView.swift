@@ -16,12 +16,12 @@ struct LogInView: View {
         ZStack {
             Asset.Colors.white.swiftUIColor
                 .edgesIgnoringSafeArea(.all)
-            
+
             VStack(alignment: .leading, spacing: 16) {
                 Text("電話番号を入力してください。")
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .font(.system(size: 20, weight: .black))
-                    .padding(.top, 68)
+                    .padding(.top, 32)
 
                 Text("BuyByFriends で快適に友達との売り買いを楽しむために電話番号入力をして本人確認をしましょう。")
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
@@ -62,6 +62,7 @@ struct LogInView: View {
                 }
                 Spacer()
             }
+//            .padding(.top, 52)
             .padding(.horizontal, 20)
             .onChange(of: vm.output.isMovedVerificationCodeView) { _ in
                 path.path.append(Destination.Welcome.finishLogIn)
