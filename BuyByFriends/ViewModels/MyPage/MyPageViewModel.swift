@@ -14,7 +14,7 @@ final class MyPageViewModel: ViewModelObject {
     final class Input: InputObject {
         let startToFetchInfos = PassthroughSubject<Void, Never>()
         let removeWishList = PassthroughSubject<Void, Never>()
-        let reloadWishList = PassthroughSubject<(InventoryGenre, String), Never>()
+        let updateWishList = PassthroughSubject<(InventoryGenre, String), Never>()
     }
 
     final class Binding: BindingObject {
@@ -147,7 +147,7 @@ final class MyPageViewModel: ViewModelObject {
             }
             .store(in: &cancellables)
 
-        input.reloadWishList
+        input.updateWishList
             .sink(receiveValue: { genre, text in
                 output.userInfo.wishList = [genre.id: text]
             })

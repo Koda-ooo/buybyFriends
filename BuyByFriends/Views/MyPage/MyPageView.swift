@@ -182,7 +182,7 @@ struct MyPageView: View {
         }
         .navigationDestination(isPresented: vm.$binding.isShownWishListView) {
             WishListView(onTapRegister: { genre, text in
-                vm.input.reloadWishList.send((genre, text))
+                vm.input.updateWishList.send((genre, text))
             })
         }
         .navigationDestination(isPresented: vm.$binding.isShownEditWishListView) {
@@ -191,7 +191,7 @@ struct MyPageView: View {
                     genre: genre,
                     text: vm.output.userInfo.wishListText(),
                     onTapRegister: { genre, text in
-                        vm.input.reloadWishList.send((genre, text))
+                        vm.input.updateWishList.send((genre, text))
                     }
                 )
             }
