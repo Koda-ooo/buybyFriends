@@ -187,7 +187,13 @@ struct MyPageView: View {
         }
         .navigationDestination(isPresented: vm.$binding.isShownEditWishListView) {
             if let genre = vm.output.userInfo.inventoryGenre() {
-                EditWishListView(genre: genre, text: vm.output.userInfo.wishListText())
+                EditWishListView(
+                    genre: genre,
+                    text: vm.output.userInfo.wishListText(),
+                    onTapRegister: { genre, text in
+                        vm.input.reloadWishList.send((genre, text))
+                    }
+                )
             }
         }
     }
