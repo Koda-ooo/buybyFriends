@@ -20,7 +20,7 @@ struct EditWishListView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Spacer()
                 .frame(height: 32)
             ZStack(alignment: .topLeading) {
@@ -44,6 +44,15 @@ struct EditWishListView: View {
                 .frame(height: 1)
                 .foregroundColor(Asset.Colors.silver.swiftUIColor)
                 .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+
+            HStack {
+                Spacer()
+                Text("\(vm.binding.text.count)/62")
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(Asset.Colors.secondText.swiftUIColor)
+            }
+            .padding(.horizontal, 20)
 
             Spacer()
 
@@ -63,6 +72,7 @@ struct EditWishListView: View {
             Spacer()
 
         }
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(vm.binding.genre.text)
         .navigationBarBackButtonHidden(true)
         .toolbar {
