@@ -18,7 +18,7 @@ struct LogInView: View {
                 .edgesIgnoringSafeArea(.all)
 
             VStack(alignment: .leading, spacing: 16) {
-                Text("電話番号を入力してください。")
+                Text("電話番号を入力してください")
                     .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .font(.system(size: 20, weight: .black))
                     .padding(.top, 32)
