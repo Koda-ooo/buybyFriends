@@ -13,8 +13,9 @@ struct EditWishListView: View {
     @StateObject private var vm: EditWishListViewModel
     @FocusState private var focusedField: Bool
 
-    init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre) {
+    init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre, text: String = "") {
         vm.binding.genre = genre
+        vm.binding.text = text
         _vm = StateObject(wrappedValue: vm)
     }
 
@@ -26,7 +27,7 @@ struct EditWishListView: View {
                 TextEditor(text: vm.$binding.text)
                     .focused($focusedField)
                     .padding(.horizontal, -4)
-                    .frame(height: 200)
+                    .frame(height: 116)
                 if vm.binding.text.isEmpty {
                     Text("今、欲しいアクセサリーの入力をしてください。\n\n例. ラッパーみたいなゴツゴツしてる金のチェーンが欲しい！！")
                         .foregroundColor(Asset.Colors.silver.swiftUIColor)
@@ -48,6 +49,7 @@ struct EditWishListView: View {
 
             Button(action: {
                 vm.input.startToSaveWishList.send()
+                presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("登録する")
                     .font(.system(size: 15, weight: .medium))

@@ -22,6 +22,7 @@ final class MyPageViewModel: ViewModelObject {
         @Published var isShownMyPageHumbergerMenu: Bool = false
         @Published var isShownWishListView: Bool = false
         @Published var isShownHalfWishListView: Bool = false
+        @Published var isShownEditWishListView: Bool = false
     }
 
     final class Output: OutputObject {

@@ -13,11 +13,13 @@ struct HalfWishListView: View {
     @StateObject private var vm: HalfWishListViewModel
     @FocusState private var focusedField: Bool
     private var onTap: (() -> Void)?
+    private var onTapEdit: (() -> Void)?
 
-    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo, onTap: (() -> Void)? = nil) {
+    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo, onTap: (() -> Void)? = nil, onTapEdit: (() -> Void)? = nil) {
         vm.binding.userInfo = userInfo
         _vm = StateObject(wrappedValue: vm)
         self.onTap = onTap
+        self.onTapEdit = onTapEdit
     }
 
     var body: some View {
@@ -60,7 +62,7 @@ struct HalfWishListView: View {
                 VStack(spacing: 16) {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
-                        // TODO: 編集する
+                        onTapEdit?()
                     }, label: {
                         Text("ウィッシュリストを編集する")
                             .font(.system(size: 14, weight: .bold))

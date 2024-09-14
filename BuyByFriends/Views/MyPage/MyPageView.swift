@@ -170,11 +170,19 @@ struct MyPageView: View {
                 userInfo: vm.output.userInfo,
                 onTap: {
                     vm.binding.isShownWishListView = true
+                },
+                onTapEdit: {
+                    vm.binding.isShownEditWishListView = true
                 }
             ).presentationDetents([.height(320)])
         }
         .navigationDestination(isPresented: vm.$binding.isShownWishListView) {
             WishListView()
+        }
+        .navigationDestination(isPresented: vm.$binding.isShownEditWishListView) {
+            if let genre = vm.output.userInfo.inventoryGenre() {
+                EditWishListView(genre: genre, text: vm.output.userInfo.wishListText())
+            }
         }
     }
 }
