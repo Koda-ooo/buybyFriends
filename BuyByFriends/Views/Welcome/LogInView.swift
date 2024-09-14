@@ -36,7 +36,7 @@ struct LogInView: View {
                             .padding(.leading, 20)
                         Text("|")
                             .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
-                            .font(.system(size: 50, weight: .thin))
+                            .font(.system(size: 50, weight: .ultraLight))
                             .padding(.bottom, 5)
                         TextField("000 0000 0000", text: vm.$binding.phoneNumber)
                             .font(.system(size: 24, weight: .medium))
