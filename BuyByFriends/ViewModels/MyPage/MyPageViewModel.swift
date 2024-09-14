@@ -13,6 +13,8 @@ import FirebaseFirestore
 final class MyPageViewModel: ViewModelObject {
     final class Input: InputObject {
         let startToFetchInfos = PassthroughSubject<Void, Never>()
+        let removeWishList = PassthroughSubject<Void, Never>()
+        let reloadWishList = PassthroughSubject<(InventoryGenre, String), Never>()
     }
 
     final class Binding: BindingObject {
@@ -125,6 +127,30 @@ final class MyPageViewModel: ViewModelObject {
                     output.friend = friend
                 }
             }
+            .store(in: &cancellables)
+
+        input.removeWishList
+            .flatMap {
+                userInfoProvider.removeWishList()
+            }
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let err):
+                    print(err.localizedDescription)
+                case .finished:
+                    print("finished")
+                }
+            }) { isComplete in
+                if isComplete {
+                    output.userInfo.wishList.removeAll()
+                }
+            }
+            .store(in: &cancellables)
+
+        input.reloadWishList
+            .sink(receiveValue: { genre, text in
+                output.userInfo.wishList = [genre.id: text]
+            })
             .store(in: &cancellables)
 
         /// 組み立てたストリームを反映

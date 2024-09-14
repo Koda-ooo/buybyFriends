@@ -11,6 +11,7 @@ struct WishListView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var isShow: Bool = false
     @State var selectGenre: InventoryGenre?
+    var onTapRegister: ((InventoryGenre, String) -> Void)?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -43,7 +44,7 @@ struct WishListView: View {
         }
         .navigationDestination(isPresented: $isShow) {
             if let selectGenre {
-                EditWishListView(genre: selectGenre)
+                EditWishListView(genre: selectGenre, onTapRegister: onTapRegister)
             }
         }
     }

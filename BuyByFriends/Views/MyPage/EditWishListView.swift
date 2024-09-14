@@ -12,13 +12,15 @@ struct EditWishListView: View {
     @EnvironmentObject var path: Path
     @StateObject private var vm: EditWishListViewModel
     @FocusState private var focusedField: Bool
+    private var onTapRegister: ((InventoryGenre, String) -> Void)?
 
     private let maximumCharacters = 62
 
-    init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre, text: String = "") {
+    init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre, text: String = "", onTapRegister: ((InventoryGenre, String) -> Void)? = nil) {
         vm.binding.genre = genre
         vm.binding.text = text
         _vm = StateObject(wrappedValue: vm)
+        self.onTapRegister = onTapRegister
     }
 
     var body: some View {
@@ -65,6 +67,7 @@ struct EditWishListView: View {
 
             Button(action: {
                 vm.input.startToSaveWishList.send()
+                onTapRegister?(vm.binding.genre, vm.binding.text)
                 presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("登録する")

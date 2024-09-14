@@ -173,11 +173,17 @@ struct MyPageView: View {
                 },
                 onTapEdit: {
                     vm.binding.isShownEditWishListView = true
+                },
+                onTapRemove: {
+                    vm.input.removeWishList.send()
                 }
-            ).presentationDetents([.height(320)])
+            )
+            .presentationDetents([.height(320)])
         }
         .navigationDestination(isPresented: vm.$binding.isShownWishListView) {
-            WishListView()
+            WishListView(onTapRegister: { genre, text in
+                vm.input.reloadWishList.send((genre, text))
+            })
         }
         .navigationDestination(isPresented: vm.$binding.isShownEditWishListView) {
             if let genre = vm.output.userInfo.inventoryGenre() {

@@ -14,12 +14,14 @@ struct HalfWishListView: View {
     @FocusState private var focusedField: Bool
     private var onTap: (() -> Void)?
     private var onTapEdit: (() -> Void)?
+    private var onTapRemove: (() -> Void)?
 
-    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo, onTap: (() -> Void)? = nil, onTapEdit: (() -> Void)? = nil) {
+    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo, onTap: (() -> Void)? = nil, onTapEdit: (() -> Void)? = nil, onTapRemove: (() -> Void)? = nil) {
         vm.binding.userInfo = userInfo
         _vm = StateObject(wrappedValue: vm)
         self.onTap = onTap
         self.onTapEdit = onTapEdit
+        self.onTapRemove = onTapRemove
     }
 
     var body: some View {
@@ -77,7 +79,7 @@ struct HalfWishListView: View {
                     .padding(.horizontal, 20)
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
-                        // TODO: 削除する
+                        onTapRemove?()
                     }, label: {
                         Text("ウィッシュリストを削除する")
                             .font(.system(size: 14, weight: .bold))
