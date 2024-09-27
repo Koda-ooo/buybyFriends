@@ -9,10 +9,17 @@ import SwiftUI
 
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
+    @EnvironmentObject var viewModel: EditProfileViewModel
+    @State private var name: String = ""
 
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            TextField("名前を入力してください", text: $name)
+                        .padding()
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onAppear {
+                            name = viewModel.binding.name
+                        }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -29,6 +36,7 @@ struct EditProfileNameView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        viewModel.binding.name = name
                         path.path.removeLast()
                     }) {
                         Text("保存")
@@ -43,5 +51,6 @@ struct EditProfileNameView: View {
 struct EditProfileNameView_Previews: PreviewProvider {
     static var previews: some View {
         EditProfileNameView()
+            .environmentObject(EditProfileViewModel())
     }
 }

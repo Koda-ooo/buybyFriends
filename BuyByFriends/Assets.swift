@@ -44,7 +44,6 @@ internal enum Asset {
     internal static let bookmark = ImageAsset(name: "Icons/bookmark")
     internal static let bug = ImageAsset(name: "Icons/bug")
     internal static let camera = ImageAsset(name: "Icons/camera")
-    internal static let circleCrossAlert = ImageAsset(name: "Icons/circleCrossAlert")
     internal static let envelope = ImageAsset(name: "Icons/envelope")
     internal static let gallery = ImageAsset(name: "Icons/gallery")
     internal static let heart = ImageAsset(name: "Icons/heart")

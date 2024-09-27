@@ -68,12 +68,17 @@ struct EditProfileView: View {
             switch selected {
             case .name:
                 EditProfileNameView()
+                    .environmentObject(vm)
             case .username:
                 EditProfileUsername()
+                    .environmentObject(vm)
             case .selfIntroduction:
                 EditProfileSelfIntroductionView()
+                    .environmentObject(vm)
             case .instagram:
                 EditProfileInstagramView()
+                    .environmentObject(vm)
+
             }
         }
         .toolbar {
