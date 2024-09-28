@@ -54,7 +54,7 @@ struct EditProfileNameView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        viewModel.binding.name = name
+                        viewModel.input.updateName.send(name)
                         path.path.removeLast()
                     }) {
                         Text("完了")

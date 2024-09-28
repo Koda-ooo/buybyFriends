@@ -98,6 +98,12 @@ struct EditProfileView: View {
             vm.binding.selfIntroduction = appState.session.userInfo.selfIntroduction
             vm.binding.instagramID = appState.session.userInfo.instagramID
         }
+        // プロフィールが更新されたときの処理を追加
+        .onChange(of: vm.output.isProfileUpdated) { isUpdated in
+            if isUpdated {
+                appState.session.userInfo.name = vm.binding.name
+            }
+        }
     }
 }
 

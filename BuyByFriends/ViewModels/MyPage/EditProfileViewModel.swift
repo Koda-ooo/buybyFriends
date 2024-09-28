@@ -12,6 +12,7 @@ import FirebaseFirestore
 final class EditProfileViewModel: ViewModelObject {
     final class Input: InputObject {
         let startToSaveProfile = PassthroughSubject<Void, Never>()
+        let updateName = PassthroughSubject<String, Never>()
     }
 
     final class Binding: BindingObject {
@@ -24,6 +25,7 @@ final class EditProfileViewModel: ViewModelObject {
 
     final class Output: OutputObject {
         @Published fileprivate(set) var profileImageData: Data = Data()
+        @Published fileprivate(set) var isProfileUpdated: Bool = false
     }
 
     let input: Input
@@ -44,6 +46,13 @@ final class EditProfileViewModel: ViewModelObject {
 
         /// 組み立てたストリームを反映
         cancellables.formUnion([
+
+            input.updateName
+                .sink { newName in
+                    binding.name = newName
+                    output.isProfileUpdated = true
+
+                }
         ])
 
         self.input = input
