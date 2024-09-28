@@ -90,16 +90,6 @@ struct EditProfileView: View {
                         .foregroundColor(.black)
                 }
             }
-
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    path.path.removeLast()
-                }) {
-                    Text("保存")
-                        .foregroundColor(.red)
-                        .bold()
-                }
-            }
         }
         .onAppear {
             vm.binding.profileImageURL = appState.session.userInfo.profileImage
