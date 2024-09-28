@@ -16,6 +16,7 @@ struct EditProfileNameView: View {
         VStack {
             HStack {
                 TextField("名前を入力してください", text: $name)
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     .frame(height: 32)
                     .font(.system(size: 16))
                     .textFieldStyle(.plain)
@@ -47,7 +48,7 @@ struct EditProfileNameView: View {
                         path.path.removeLast()
                     }) {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
                 }
 
@@ -57,9 +58,10 @@ struct EditProfileNameView: View {
                         path.path.removeLast()
                     }) {
                         Text("完了")
-                            .foregroundColor(.red)
+                            .foregroundColor(name.isEmpty ? Asset.Colors.thirdText.swiftUIColor : Asset.Colors.orange.swiftUIColor)
                             .bold()
                     }
+                    .disabled(name.isEmpty)
                 }
             }
     }
