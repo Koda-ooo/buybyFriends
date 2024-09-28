@@ -14,12 +14,29 @@ struct EditProfileNameView: View {
 
     var body: some View {
         VStack {
-            TextField("名前を入力してください", text: $name)
-                        .padding()
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .onAppear {
-                            name = viewModel.binding.name
-                        }
+            HStack {
+                TextField("名前を入力してください", text: $name)
+                    .frame(height: 32)
+                    .font(.system(size: 16))
+                    .textFieldStyle(.plain)
+
+                if !name.isEmpty {
+                    Button(action: {
+                        name = ""
+                    }) {
+                        Asset.Icons.clearButton.swiftUIImage
+                    }
+                }
+            }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 32)
+                    .onAppear {
+                        name = viewModel.binding.name
+                    }
+                    Divider()
+
+                    Spacer()
+
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -39,7 +56,7 @@ struct EditProfileNameView: View {
                         viewModel.binding.name = name
                         path.path.removeLast()
                     }) {
-                        Text("保存")
+                        Text("完了")
                             .foregroundColor(.red)
                             .bold()
                     }
