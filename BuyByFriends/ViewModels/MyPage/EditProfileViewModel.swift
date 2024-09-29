@@ -13,6 +13,8 @@ final class EditProfileViewModel: ViewModelObject {
     final class Input: InputObject {
         let startToSaveProfile = PassthroughSubject<Void, Never>()
         let updateName = PassthroughSubject<String, Never>()
+        let updateUsername = PassthroughSubject<String, Never>()
+
     }
 
     final class Binding: BindingObject {
