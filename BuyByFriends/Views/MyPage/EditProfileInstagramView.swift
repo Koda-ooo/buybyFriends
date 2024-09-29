@@ -9,10 +9,40 @@ import SwiftUI
 
 struct EditProfileInstagramView: View {
     @EnvironmentObject var path: Path
+    @EnvironmentObject var viewModel: EditProfileViewModel
+    @State private var instagramID: String = ""
 
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            HStack {
+                if !instagramID.isEmpty {
+                    Text("@")
+                        .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
+                        .font(.system(size: 16))
+                }
+                TextField("インスタグラムIDを入力してください", text: $instagramID)
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
+                    .frame(height: 32)
+                    .font(.system(size: 16))
+                    .textFieldStyle(.plain)
+                    .textInputAutocapitalization(.never)
+
+                if !instagramID.isEmpty {
+                    Button(action: {
+                        instagramID = ""
+                    }) {
+                        Asset.Icons.clearButton.swiftUIImage
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 32)
+            .onAppear {
+                instagramID = viewModel.binding.instagramID
+            }
+            Divider()
+
+            Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -23,16 +53,17 @@ struct EditProfileInstagramView: View {
                         path.path.removeLast()
                     }) {
                         Image(systemName: "chevron.left")
-                            .foregroundColor(.black)
+                            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
                     }
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        viewModel.input.updateInstagramID.send(instagramID)
                         path.path.removeLast()
                     }) {
-                        Text("保存")
-                            .foregroundColor(.red)
+                        Text("完了")
+                            .foregroundColor(instagramID.isEmpty ? Asset.Colors.thirdText.swiftUIColor : Asset.Colors.orange.swiftUIColor)
                             .bold()
                     }
                 }
@@ -43,5 +74,6 @@ struct EditProfileInstagramView: View {
 struct EditProfileInstagramView_Previews: PreviewProvider {
     static var previews: some View {
         EditProfileInstagramView()
+            .environmentObject(EditProfileViewModel())
     }
 }
