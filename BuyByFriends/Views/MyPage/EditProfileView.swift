@@ -102,6 +102,9 @@ struct EditProfileView: View {
         .onChange(of: vm.output.isProfileUpdated) { isUpdated in
             if isUpdated {
                 appState.session.userInfo.name = vm.binding.name
+                appState.session.userInfo.userID = vm.binding.username
+                appState.session.userInfo.instagramID = vm.binding.instagramID
+
             }
         }
     }
