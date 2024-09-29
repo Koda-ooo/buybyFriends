@@ -8,26 +8,43 @@
 import SwiftUI
 
 struct WishListView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @State var isShow: Bool = false
+    @State var selectGenre: InventoryGenre?
+    var onTapRegister: ((InventoryGenre, String) -> Void)?
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("カテゴリーを選択する")
                 .font(.system(size: 18, weight: .bold))
-                .padding(.all, 12)
-                .padding(.top, 8)
+                .padding(.top, 24)
+                .padding(.leading, 16)
 
-            List {
-                ForEach(InventoryGenre.allCases, id: \.self) { genre in
-                    NavigationLink(value: genre) {
-                        Text(genre.text)
-                            .font(.system(size: 16, weight: .bold))
-                    }
-                }
+            List(InventoryGenre.allCases, id: \.id) { genre in
+                Button(action: {
+                    selectGenre = genre
+                    isShow = true
+                }, label: {
+                    Text(genre.text)
+                        .font(.system(size: 16, weight: .bold))
+                        .frame(height: 32)
+                })
             }
             .listStyle(.plain)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("ウィッシュリスト")
-            .navigationDestination(for: InventoryGenre.self) { genre in
-                EditWishListView(genre: genre)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("ウィッシュリスト")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    Image(systemName: "chevron.backward")
+                }
+            }
+        }
+        .navigationDestination(isPresented: $isShow) {
+            if let selectGenre {
+                EditWishListView(genre: selectGenre, onTapRegister: onTapRegister)
             }
         }
     }

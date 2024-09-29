@@ -40,4 +40,13 @@ struct UserInfo: Identifiable, Equatable, Codable, Hashable {
         self.bookmarkPosts = dic["bookmarkPosts"] as? [String] ?? []
         self.wishList = dic["wishList"] as? [Int: String] ?? [:]
     }
+
+    func inventoryGenre() -> InventoryGenre? {
+        guard let key = wishList.first?.key else { return nil }
+        return InventoryGenre.allCases.first(where: { $0.id == key })
+    }
+
+    func wishListText() -> String {
+        wishList.first?.value ?? ""
+    }
 }

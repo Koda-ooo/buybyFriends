@@ -267,4 +267,21 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
+
+    func removeWishList() -> AnyPublisher<Bool, Error> {
+        return Future<Bool, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let document = Firestore.firestore().collection("UserInfos").document(uid)
+            let updateList: [String: Any] = [
+                "wishList": FieldValue.delete()
+            ]
+
+            document.updateData(updateList) { err in
+                if let err {
+                    return promise(.failure(err.self))
+                }
+                promise(.success((true)))
+            }
+        }.eraseToAnyPublisher()
+    }
 }

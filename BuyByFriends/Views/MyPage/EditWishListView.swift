@@ -8,61 +8,96 @@
 import SwiftUI
 
 struct EditWishListView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var path: Path
     @StateObject private var vm: EditWishListViewModel
     @FocusState private var focusedField: Bool
+    private var onTapRegister: ((InventoryGenre, String) -> Void)?
 
-    init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre) {
+    private let maximumCharacters = 62
+
+    init(vm: EditWishListViewModel = EditWishListViewModel(), genre: InventoryGenre, text: String = "", onTapRegister: ((InventoryGenre, String) -> Void)? = nil) {
         vm.binding.genre = genre
+        vm.binding.text = text
         _vm = StateObject(wrappedValue: vm)
+        self.onTapRegister = onTapRegister
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Spacer()
                 .frame(height: 32)
             ZStack(alignment: .topLeading) {
                 TextEditor(text: vm.$binding.text)
                     .focused($focusedField)
                     .padding(.horizontal, -4)
-                    .frame(height: 200)
+                    .frame(height: 116)
+                    .onChange(of: vm.binding.text) { inputText in
+                        if inputText.count > maximumCharacters {
+                            vm.binding.text = String(inputText.prefix(maximumCharacters))
+                        }
+                    }
                 if vm.binding.text.isEmpty {
-                    Text("色、素材、重さ、定価、注意点など\n\n例）去年、原宿の古着屋さんで買ったTシャツ！\nスター・トレックの事は知らなかったけど、ビジュが良くて一目惚れした❤️\nTシャツなんてなんぼあってもいいですからね〜\n\nたぶん、10,000円ぐらいで買ってサイズはL\nTシャツは一年中着れるしこれはガチでおすすめ\nピンホールあるけどそれも古着の醍醐味でしょ😥")
-                        .foregroundColor(Color(uiColor: .placeholderText))
-                        .font(.system(size: 13))
+                    Text("今、欲しいアクセサリーの入力をしてください。\n\n例. ラッパーみたいなゴツゴツしてる金のチェーンが欲しい！！")
+                        .foregroundColor(Asset.Colors.silver.swiftUIColor)
+                        .font(.system(size: 14))
                         .kerning(1)
                         .lineSpacing(3)
                         .padding(.vertical, 8)
                         .allowsHitTesting(false)
                 }
             }
-            .padding()
+            .padding(.horizontal, 20)
 
             Rectangle()
-                .frame(height: 0.5)
-                .foregroundColor(.gray)
+                .frame(height: 1)
+                .foregroundColor(Asset.Colors.silver.swiftUIColor)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+
+            HStack {
+                Spacer()
+                Text("\(vm.binding.text.count)/62")
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(Asset.Colors.secondText.swiftUIColor)
+            }
+            .padding(.horizontal, 20)
 
             Spacer()
 
             Button(action: {
                 vm.input.startToSaveWishList.send()
-            }) {
+                onTapRegister?(vm.binding.genre, vm.binding.text)
+            }, label: {
                 Text("登録する")
-                    .frame(maxWidth: 150, minHeight: 60)
                     .font(.system(size: 15, weight: .medium))
-            }
-            .accentColor(Color.black)
-            .background(.white)
-            .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black, lineWidth: 1))
+                    .frame(maxWidth: .infinity)
+            })
+            .frame(width: 120, height: 48)
+            .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
+            .background(Asset.Colors.chromeYellow.swiftUIColor)
+            .cornerRadius(24)
 
             Spacer()
 
         }
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(vm.binding.genre.text)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    Image(systemName: "chevron.backward")
+                }
+            }
+        }
         .onChange(of: vm.output.isSuccess) { newValue in
             if newValue {
                 path.path.removeLast(path.path.count)
             }
+        }
+        .onAppear {
+            focusedField = true
         }
     }
 }
