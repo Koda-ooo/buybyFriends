@@ -68,7 +68,6 @@ struct EditWishListView: View {
             Button(action: {
                 vm.input.startToSaveWishList.send()
                 onTapRegister?(vm.binding.genre, vm.binding.text)
-                presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("登録する")
                     .font(.system(size: 15, weight: .medium))
