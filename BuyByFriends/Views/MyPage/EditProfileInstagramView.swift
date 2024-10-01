@@ -26,6 +26,8 @@ struct EditProfileInstagramView: View {
                     .font(.system(size: 16))
                     .textFieldStyle(.plain)
                     .textInputAutocapitalization(.never)
+                    .keyboardType(.asciiCapable)
+                    .disableAutocorrection(true)
 
                 if !instagramID.isEmpty {
                     Button(action: {
