@@ -21,6 +21,8 @@ struct EditProfileUsername: View {
                     .font(.system(size: 16))
                     .textFieldStyle(.plain)
                     .textInputAutocapitalization(.never)
+                    .keyboardType(.asciiCapable)
+                    .disableAutocorrection(true)
 
                 if !username.isEmpty {
                     Button(action: {
