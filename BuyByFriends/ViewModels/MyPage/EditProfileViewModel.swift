@@ -15,6 +15,7 @@ final class EditProfileViewModel: ViewModelObject {
         let updateName = PassthroughSubject<String, Never>()
         let updateUsername = PassthroughSubject<String, Never>()
         let updateInstagramID = PassthroughSubject<String, Never>()
+        let updateSelfIntroduction = PassthroughSubject<String, Never>()
 
     }
 
@@ -62,6 +63,11 @@ final class EditProfileViewModel: ViewModelObject {
             input.updateInstagramID
                 .sink { newInstagramID in
                     binding.instagramID = newInstagramID
+                    output.isProfileUpdated = true
+                },
+            input.updateSelfIntroduction
+                .sink { newSelfIntroduction in
+                    binding.selfIntroduction = newSelfIntroduction
                     output.isProfileUpdated = true
                 }
         ])
