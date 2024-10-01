@@ -38,7 +38,7 @@ final class LogInViewModel: ViewModelObject {
 
         /// 電話番号のバリデーション
         let isValid = binding.$phoneNumber
-            .map {$0.count == 11}
+            .map {$0.count == 1}
 
         /// ログインボタン有効フラグ
         let canLogIn = isValid.map {$0}
