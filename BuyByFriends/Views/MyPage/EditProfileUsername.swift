@@ -10,7 +10,7 @@ import SwiftUI
 struct EditProfileUsername: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var viewModel: EditProfileViewModel
-    @State private var username: String = ""
+    @Binding var username: String
 
     var body: some View {
         VStack {
@@ -34,9 +34,9 @@ struct EditProfileUsername: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 32)
-            .onAppear {
-                username = viewModel.binding.username
-            }
+//            .onAppear {
+//                username = viewModel.binding.username
+//            }
             Divider()
 
             Spacer()
@@ -69,9 +69,9 @@ struct EditProfileUsername: View {
     }
 }
 
-struct EditProfileUsername_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileUsername()
-            .environmentObject(EditProfileViewModel())
-    }
-}
+// struct EditProfileUsername_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditProfileUsername()
+//            .environmentObject(EditProfileViewModel())
+//    }
+// }

@@ -10,7 +10,7 @@ import SwiftUI
 struct EditProfileNameView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var viewModel: EditProfileViewModel
-    @State private var name: String = ""
+    @Binding var name: String
 
     var body: some View {
         VStack {
@@ -31,9 +31,9 @@ struct EditProfileNameView: View {
             }
                     .padding(.horizontal, 20)
                     .padding(.top, 32)
-                    .onAppear {
-                        name = viewModel.binding.name
-                    }
+//                    .onAppear {
+//                        name = viewModel.binding.name
+//                    }
                     Divider()
 
                     Spacer()
@@ -67,9 +67,9 @@ struct EditProfileNameView: View {
     }
 }
 
-struct EditProfileNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileNameView()
-            .environmentObject(EditProfileViewModel())
-    }
-}
+// struct EditProfileNameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditProfileNameView()
+//            .environmentObject(EditProfileViewModel())
+//    }
+// }

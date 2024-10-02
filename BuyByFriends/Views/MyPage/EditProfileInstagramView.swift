@@ -10,7 +10,7 @@ import SwiftUI
 struct EditProfileInstagramView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var viewModel: EditProfileViewModel
-    @State private var instagramID: String = ""
+    @Binding var instagramID: String
 
     var body: some View {
         VStack {
@@ -39,9 +39,9 @@ struct EditProfileInstagramView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 32)
-            .onAppear {
-                instagramID = viewModel.binding.instagramID
-            }
+//            .onAppear {
+//                instagramID = viewModel.binding.instagramID
+//            }
             Divider()
 
             Spacer()
@@ -73,9 +73,9 @@ struct EditProfileInstagramView: View {
     }
 }
 
-struct EditProfileInstagramView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileInstagramView()
-            .environmentObject(EditProfileViewModel())
-    }
-}
+// struct EditProfileInstagramView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditProfileInstagramView()
+//            .environmentObject(EditProfileViewModel())
+//    }
+// }

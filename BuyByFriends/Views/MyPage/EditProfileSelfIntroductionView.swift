@@ -10,7 +10,7 @@ import SwiftUI
 struct EditProfileSelfIntroductionView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var viewModel: EditProfileViewModel
-    @State private var selfIntroduction = ""
+    @Binding var selfIntroduction: String
 
     private let maxCharacters = 150
 
@@ -47,9 +47,9 @@ struct EditProfileSelfIntroductionView: View {
             Spacer()
 
         }
-        .onAppear {
-            selfIntroduction = viewModel.binding.selfIntroduction
-        }
+//        .onAppear {
+//            selfIntroduction = viewModel.binding.selfIntroduction
+//        }
          .navigationBarTitleDisplayMode(.inline)
          .navigationBarBackButtonHidden(true)
          .navigationTitle("自己紹介")
@@ -78,9 +78,9 @@ struct EditProfileSelfIntroductionView: View {
      }
  }
 
-struct EditProfileSelfIntroductionView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileSelfIntroductionView()
-            .environmentObject(EditProfileViewModel())
-    }
-}
+// struct EditProfileSelfIntroductionView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditProfileSelfIntroductionView()
+//            .environmentObject(EditProfileViewModel())
+//    }
+// }

@@ -33,7 +33,7 @@ final class EditProfileViewModel: ViewModelObject {
     }
 
     let input: Input
-    @BindableObject private(set) var binding: Binding
+    @BindableObject var binding: Binding
     let output: Output
     private var cancellables = Set<AnyCancellable>()
     @Published private var isBusy: Bool = false
