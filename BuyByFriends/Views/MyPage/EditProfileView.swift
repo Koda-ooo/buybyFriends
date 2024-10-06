@@ -67,13 +67,18 @@ struct EditProfileView: View {
         .navigationDestination(for: Destination.EditProfile.self) { selected in
             switch selected {
             case .name:
-                EditProfileNameView()
+                EditProfileNameView(name: $vm.binding.name)
+                    .environmentObject(vm)
             case .username:
-                EditProfileUsername()
+                EditProfileUsername(username: $vm.binding.username)
+                    .environmentObject(vm)
             case .selfIntroduction:
-                EditProfileSelfIntroductionView()
+                EditProfileSelfIntroductionView(selfIntroduction: $vm.binding.selfIntroduction)
+                    .environmentObject(vm)
             case .instagram:
-                EditProfileInstagramView()
+                EditProfileInstagramView(instagramID: $vm.binding.instagramID)
+                    .environmentObject(vm)
+
             }
         }
         .toolbar {
@@ -85,16 +90,6 @@ struct EditProfileView: View {
                         .foregroundColor(.black)
                 }
             }
-
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    path.path.removeLast()
-                }) {
-                    Text("保存")
-                        .foregroundColor(.red)
-                        .bold()
-                }
-            }
         }
         .onAppear {
             vm.binding.profileImageURL = appState.session.userInfo.profileImage
@@ -102,6 +97,19 @@ struct EditProfileView: View {
             vm.binding.username = appState.session.userInfo.userID
             vm.binding.selfIntroduction = appState.session.userInfo.selfIntroduction
             vm.binding.instagramID = appState.session.userInfo.instagramID
+        }
+        // プロフィールが更新されたときの処理を追加
+        .onChange(of: vm.binding.name) { newName in
+            appState.session.userInfo.name = newName
+        }
+        .onChange(of: vm.binding.username) { newUsername in
+            appState.session.userInfo.userID = newUsername
+        }
+        .onChange(of: vm.binding.selfIntroduction) { newSelfIntroduction in
+            appState.session.userInfo.selfIntroduction = newSelfIntroduction
+        }
+        .onChange(of: vm.binding.instagramID) { newInstagramID in
+            appState.session.userInfo.instagramID = newInstagramID
         }
     }
 }
