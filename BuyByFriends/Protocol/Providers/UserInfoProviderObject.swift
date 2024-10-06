@@ -29,4 +29,6 @@ protocol UserInfoProviderObject {
     func removeBookmarkPosts(postID: String) -> AnyPublisher<Bool, Error>
 
     func saveWishList(genre: InventoryGenre, text: String) -> AnyPublisher<Bool, Error>
+
+    func updateUserInfo(userInfo: UserInfo) -> AnyPublisher<Bool, Error>
 }

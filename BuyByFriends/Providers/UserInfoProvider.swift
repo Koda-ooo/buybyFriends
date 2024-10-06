@@ -267,4 +267,24 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
+
+    func updateUserInfo(userInfo: UserInfo) -> AnyPublisher<Bool, Error> {
+        return Future<Bool, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let document = Firestore.firestore().collection("UserInfos").document(uid)
+            let updateList: [String: Any] = [
+                "name": userInfo.name,
+                "userID": userInfo.userID,
+                "selfIntroduction": userInfo.selfIntroduction,
+                "instagramID": userInfo.instagramID
+            ]
+
+            document.updateData(updateList) { err in
+                if let err = err {
+                    return promise(.failure(err))
+                }
+                promise(.success(true))
+            }
+        }.eraseToAnyPublisher()
+    }
 }
