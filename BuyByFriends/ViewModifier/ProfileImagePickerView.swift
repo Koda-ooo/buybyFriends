@@ -51,8 +51,7 @@ struct ProfileImagePickerView: View {
                         height: UIScreen.main.bounds.height*0.11
                     )
 
-                Image(systemName: "pencil")
-                    .foregroundColor(Asset.Colors.white.swiftUIColor)
+                Asset.Icons.edit.swiftUIImage
 
             }
         }

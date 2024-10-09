@@ -41,6 +41,7 @@ internal enum Asset {
   }
   internal enum Icons {
     internal static let circleCross = ImageAsset(name: "Icons/CircleCross")
+    internal static let edit = ImageAsset(name: "Icons/Edit")
     internal static let bookmark = ImageAsset(name: "Icons/bookmark")
     internal static let bug = ImageAsset(name: "Icons/bug")
     internal static let camera = ImageAsset(name: "Icons/camera")
