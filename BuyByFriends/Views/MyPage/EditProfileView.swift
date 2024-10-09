@@ -6,29 +6,20 @@
 //
 
 import SwiftUI
+import PhotosUI
+import Combine
 
 struct EditProfileView: View {
     @EnvironmentObject var path: Path
     @EnvironmentObject var appState: AppState
     @StateObject var vm = EditProfileViewModel()
+    @State private var selectedItem: PhotosPickerItem?
+
+    @State private var profileImage: Image?
 
     var body: some View {
         VStack {
-            Button(action: {
-
-            }) {
-                AsyncImage(url: URL(string: vm.binding.profileImageURL)) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-            }
-            .frame(
-                width: UIScreen.main.bounds.height*0.11,
-                height: UIScreen.main.bounds.height*0.11
-            )
-            .clipShape(Circle())
-            .padding(.vertical, 16)
+            ProfileImagePickerView(profileImageURL: $vm.binding.profileImageURL, selectedItem: $selectedItem)
 
             Text("About you")
                 .bold()
@@ -111,11 +102,55 @@ struct EditProfileView: View {
         .onChange(of: vm.binding.instagramID) { newInstagramID in
             appState.session.userInfo.instagramID = newInstagramID
         }
+        .onChange(of: selectedItem) { newItem in
+                    Task {
+                        if let image = await loadImage(from: newItem) {
+                            await uploadImage(image)
+                        }
+                    }
+                }
+            }
+
+    private func loadImage(from item: PhotosPickerItem?) async -> UIImage? {
+        guard let data = try? await item?.loadTransferable(type: Data.self),
+              let uiImage = UIImage(data: data) else {
+            return nil
+        }
+        return uiImage
+    }
+
+    private func uploadImage(_ image: UIImage) async {
+        guard let compressedData = image.jpegData(compressionQuality: 0.5) else { return }
+        do {
+            let url = try await withCheckedThrowingContinuation { continuation in
+                vm.updateProfileImage(imageData: compressedData)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            break
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    }, receiveValue: { url in
+                        continuation.resume(returning: url)
+                    })
+//                    .store(in: &vm.cancellables) // Assuming vm has a cancellables set
+            }
+
+            await MainActor.run {
+                vm.binding.profileImageURL = url
+                appState.session.userInfo.profileImage = url
+            }
+        } catch {
+            print("Error updating profile image: \(error)")
+        }
     }
 }
 
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
         EditProfileView()
+            .environmentObject(Path())
+            .environmentObject(AppState())
     }
 }

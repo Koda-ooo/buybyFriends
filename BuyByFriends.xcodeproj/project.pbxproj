@@ -185,6 +185,7 @@
 		56F997F52A065E2A00A39C6B /* Firestore+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F997F42A065E2A00A39C6B /* Firestore+Combine.swift */; };
 		56F997F72A0667CB00A39C6B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F997F62A0667CB00A39C6B /* Post.swift */; };
 		6C3D6B222BDF85710011AFEE /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3D6B212BDF85710011AFEE /* Assets.swift */; };
+		78576D6C2CB5F7EE00A90649 /* ProfileImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78576D6B2CB5F7EE00A90649 /* ProfileImagePickerView.swift */; };
 		DF367C392AD5B7DA0029056C /* WishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C382AD5B7DA0029056C /* WishListView.swift */; };
 		DF367C3B2AD5B9E80029056C /* EditWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3A2AD5B9E80029056C /* EditWishListView.swift */; };
 		DF367C3F2AD61CEE0029056C /* HalfWishListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */; };
@@ -372,6 +373,7 @@
 		56F997F42A065E2A00A39C6B /* Firestore+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firestore+Combine.swift"; sourceTree = "<group>"; };
 		56F997F62A0667CB00A39C6B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6C3D6B212BDF85710011AFEE /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		78576D6B2CB5F7EE00A90649 /* ProfileImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImagePickerView.swift; sourceTree = "<group>"; };
 		DF367C382AD5B7DA0029056C /* WishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListView.swift; sourceTree = "<group>"; };
 		DF367C3A2AD5B9E80029056C /* EditWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishListView.swift; sourceTree = "<group>"; };
 		DF367C3E2AD61CEE0029056C /* HalfWishListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfWishListView.swift; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				5655FE0D2A0B38D7002B2E0A /* CustomBackButton.swift */,
+				78576D6B2CB5F7EE00A90649 /* ProfileImagePickerView.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -1052,6 +1055,7 @@
 				5653EFE92A1B851A000688EF /* NotificationProviderObject.swift in Sources */,
 				5653EFF52A1EF757000688EF /* NotificationViewModel.swift in Sources */,
 				5632E55F29E10E330024C19C /* UsernameView.swift in Sources */,
+				78576D6C2CB5F7EE00A90649 /* ProfileImagePickerView.swift in Sources */,
 				568A1D6329F5212E005DEA24 /* Inventory.swift in Sources */,
 				56ED87EE2A55BF25001045C1 /* EditProfileUsername.swift in Sources */,
 				56460AE929FA3CD300908E41 /* RootPresentationModeKey.swift in Sources */,

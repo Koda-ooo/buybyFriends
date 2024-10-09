@@ -110,4 +110,8 @@ final class EditProfileViewModel: ViewModelObject {
             })
             .store(in: &cancellables)
     }
+
+    func updateProfileImage(imageData: Data) -> AnyPublisher<String, Error> {
+        return userInfoProvider.updateProfileImage(image: imageData)
+    }
 }

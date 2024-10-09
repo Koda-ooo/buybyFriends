@@ -31,4 +31,6 @@ protocol UserInfoProviderObject {
     func saveWishList(genre: InventoryGenre, text: String) -> AnyPublisher<Bool, Error>
 
     func updateUserInfo(userInfo: UserInfo) -> AnyPublisher<Bool, Error>
+
+    func updateProfileImage(image: Data) -> AnyPublisher<String, Error>
 }

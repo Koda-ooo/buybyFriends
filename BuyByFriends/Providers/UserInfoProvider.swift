@@ -287,4 +287,46 @@ final class UserInfoProvider: UserInfoProviderObject {
             }
         }.eraseToAnyPublisher()
     }
+
+    func updateProfileImage(image: Data) -> AnyPublisher<String, Error> {
+        return Future<String, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else {
+                promise(.failure(NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "ユーザーIDが取得できません"])))
+                return
+            }
+
+            let fileName = "profile_\(uid).jpg"
+            let storageRef = Storage.storage().reference().child("profile_image").child(fileName)
+
+            storageRef.putData(image, metadata: nil) { (_, err) in
+                if let err = err {
+                    print("Firestorageへの保存に失敗しました。\(err)")
+                    promise(.failure(err))
+                    return
+                }
+                storageRef.downloadURL { (url, err) in
+                    if let err = err {
+                        print("Firestorageからのダウンロードに失敗しました。\(err)")
+                        promise(.failure(err))
+                        return
+                    }
+                    guard let urlString = url?.absoluteString else {
+                        promise(.failure(NSError(domain: "URLError", code: 0, userInfo: [NSLocalizedDescriptionKey: "URLの取得に失敗しました"])))
+                        return
+                    }
+
+                    // Firestoreのユーザー情報も更新
+                    let userRef = Firestore.firestore().collection("UserInfos").document(uid)
+                    userRef.updateData(["profileImage": urlString]) { err in
+                        if let err = err {
+                            print("Firestoreの更新に失敗しました。\(err)")
+                            promise(.failure(err))
+                        } else {
+                            promise(.success(urlString))
+                        }
+                    }
+                }
+            }
+        }.eraseToAnyPublisher()
+    }
 }
