@@ -8,19 +8,91 @@
 import SwiftUI
 
 struct HalfWishListView: View {
+    @Environment(\.presentationMode) var presentationMode
 
     @StateObject private var vm: HalfWishListViewModel
     @FocusState private var focusedField: Bool
+    private var onTap: (() -> Void)?
+    private var onTapEdit: (() -> Void)?
+    private var onTapRemove: (() -> Void)?
 
-    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo) {
+    init(vm: HalfWishListViewModel = HalfWishListViewModel(), userInfo: UserInfo, onTap: (() -> Void)? = nil, onTapEdit: (() -> Void)? = nil, onTapRemove: (() -> Void)? = nil) {
         vm.binding.userInfo = userInfo
         _vm = StateObject(wrappedValue: vm)
+        self.onTap = onTap
+        self.onTapEdit = onTapEdit
+        self.onTapRemove = onTapRemove
     }
 
     var body: some View {
-        if let key = vm.binding.userInfo.wishList.keys.first {
-            Text("\(key)")
+        VStack(spacing: 24) {
+            if vm.binding.userInfo.wishList.isEmpty {
+                Text("ウィッシュリストを登録しよう")
+                    .font(.system(size: 20, weight: .bold))
+                    .padding(.top, 12)
+                Text("あなたが気になっている物や\n欲しい物を登録しましょう！\n友達が知らせてくれるかも👀")
+                    .font(.system(size: 16, weight: .semibold))
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(Asset.Colors.silver.swiftUIColor)
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                    onTap?()
+                }, label: {
+                    Text("ウィッシュリストを登録する")
+                        .font(.system(size: 14, weight: .bold))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .lineSpacing(3)
+                })
+                .frame(height: 44)
+                .foregroundColor(Asset.Colors.white.swiftUIColor)
+                .background(Asset.Colors.jetBlack.swiftUIColor)
+                .cornerRadius(22)
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+            } else {
+                Spacer(minLength: 0)
+                Text(vm.binding.userInfo.inventoryGenre()?.text ?? "")
+                    .font(.system(size: 20, weight: .bold))
+                    .padding(.top, 12)
+                Text(vm.binding.userInfo.wishListText())
+                    .font(.system(size: 16, weight: .semibold))
+                    .frame(minHeight: 74)
+                    .padding(.horizontal, 20)
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(Asset.Colors.silver.swiftUIColor)
+                VStack(spacing: 16) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                        onTapEdit?()
+                    }, label: {
+                        Text("ウィッシュリストを編集する")
+                            .font(.system(size: 14, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                            .lineSpacing(3)
+                    })
+                    .frame(height: 44)
+                    .foregroundColor(Asset.Colors.white.swiftUIColor)
+                    .background(Asset.Colors.jetBlack.swiftUIColor)
+                    .cornerRadius(22)
+                    .padding(.horizontal, 20)
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                        onTapRemove?()
+                    }, label: {
+                        Text("ウィッシュリストを削除する")
+                            .font(.system(size: 14, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                            .lineSpacing(3)
+                    })
+                    .frame(height: 44)
+                    .foregroundColor(Asset.Colors.jetBlack.swiftUIColor)
+                }
+                Spacer(minLength: 0)
+            }
         }
+        .padding(.vertical, 12)
     }
 }
 
